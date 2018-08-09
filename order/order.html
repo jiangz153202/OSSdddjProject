@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=0,minimal-ui">
+		<title>填写订单-dd订酒</title>
+		<link rel="stylesheet" href="/build/css/all.css" />
+		<link rel="stylesheet" type="text/css" href="/plugin/style/web/phone/cart/index.css" />
+		
+		<style type="text/css">
+			input[type=radio] {
+				width: 22px;
+				height: 22px;
+			}
+			
+			input[type=checkbox]:checked,
+			input[type=radio]:checked {
+				border-color: #32B3AF;
+			}
+			
+			input[type=radio]:checked::after {
+				top: 6px;
+				left: 6px;
+				width: 8px;
+				height: 8px;
+			/*	background: #db343d;
+				border-color: #db343d;*/
+			}
+			
+			.mui-input-group:after,
+			.mui-input-group:before {
+				background-color: #e2e2e2;
+			}
+			
+			.qc-bar-navs {
+				bottom: 0;
+				height: 50px;
+				line-height: 50px;
+				position: fixed;
+				width: 100%;
+				background: #fff;
+				max-width: 640px;
+				font-size: 14px;
+				z-index: 2;
+				box-shadow: 0 0 6px rgba(0, 0, 0, 0.13);
+			}
+			
+			.qc-bar-navs .bar-item {
+				padding-right: 120px;
+				line-height: 50px;
+			}
+			
+			.qc-bar-navs .bar-item .item {
+				width: 100%;
+				padding: 0px 15px;
+				color: #db343d;
+			}
+			
+			.qc-bar-navs .bar-button {
+				width: 120px;
+				float: right;
+				line-height: 50px;
+				letter-spacing: .14rem;
+			}
+			
+			#popover {
+				min-height: 308px;
+				width: 100%;
+			}
+			
+			#popover .mui-table-view-radio .mui-table-view-cell.mui-selected .mui-radio-selected {
+				display: inline-block;
+			}
+			
+			#popover.mui-popover .mui-table-view {
+				background-color: rgba(255, 255, 255, 0.95);
+			}
+			.mui-bg-address .mui-not-ads{
+				background: url('/framwork/global_icon/lazyload/address-noscope.png') no-repeat right 5px;
+			    -webkit-background-size: 58px 58px;
+			    -moz-background-size: 58px 58px;
+			    background-size: 58px 58px;
+			    background-position-y: 12px;
+			   /* background-color: #E8E8E8;*/
+			}
+			.clear-input-group.mui-input-group:after,.clear-input-group.mui-input-group:before {
+			    height:0px;
+			}
+			.clear-input-group.mui-input-group .mui-checkbox input[type=checkbox]:before, .mui-radio input[type=radio]:before{
+				font-size: 24px;
+			}
+			.shop-popover .shop-close {
+			    top: 3px;
+			    height: 40px;
+			}
+			.mui-checkbox input[type=checkbox], .mui-radio input[type=radio]{
+				top:7px;
+			}
+			.mui-radio input[type=radio]:checked:before,.mui-radio input[type=radio]:before {
+			    content: '\e443';
+			}
+			.mui-popover.mui-popover-action .mui-table-view .mui-table-view-cell:after{
+				height: 0px;
+			}
+			.shop-popover .shop-close span {
+			    font-size: 45px !important;
+			    color: #333;
+			}
+			
+			.mui-table-view-radio .mui-table-view-cell.mui-selected .mui-navigate-right:after {
+			    color: #32b3af;
+			}
+			.mui-table-view-radio .mui-table-view-cell .mui-navigate-right:after {
+			    content: '\e472' !important;
+			    color: #DDDDDD;
+			}
+			/*.mui-radial.mui-table-view-cell:after, .mui-table-view-divider:after{
+			    height: 20px;
+			    left: 0px;
+			    background: radial-gradient(#32b3af 0, #32b3af 7px, rgba(50, 179, 175, 0) 10px);
+			    background-size: 20px 40px;
+			    background-position: 0px -20px;
+			    bottom: -5px;
+			}*/
+			.mui-color-red {
+			    color: #F25D57 !important;
+			}
+			.qc-bg-order-red-imp{
+				background-color: #F25D57 !important;
+			}
+			.mui-card {
+			    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+			}
+			.mui-card.mui-selected:after{
+				content: "\e656";
+				color: #32B3AF;
+			}
+			.mui-card:after{
+				content: "\e64f";
+				font-style: normal;
+			    -webkit-font-smoothing: antialiased;
+			    -webkit-text-stroke-width: 0.2px;
+				right: 15px;
+				font-family: iconfont;
+			    font-size: inherit;
+			    line-height: 1;
+			    font-size: 28px;
+			    position: absolute;
+			    bottom: 5px;
+			    display: inline-block;
+			  
+			    text-decoration: none;
+			    color: #bbb;
+			    -webkit-font-smoothing: antialiased;
+				
+			}
+			
+			.mui-card .mui-card-content-outer:before,.mui-card .mui-card-content-outer:after{
+				content: "";
+				position: absolute;
+			    width: 16px;
+			    height: 16px;
+			    border-radius: 100%;
+			    background: #efeff4;
+			    bottom: 0px;
+			}
+			.mui-card .mui-card-content-outer:before{
+				left: -8px;
+			}
+			.mui-card .mui-card-content-outer:after{
+				right: -8px;
+			}
+			
+			#choose_store .mui-radio input[type=radio]:checked:before{
+				 content: '\e442';
+			}
+			#choose_store .mui-radio input[type=radio]:before {
+			    content: '\e411';
+			   
+			}
+			
+			.mui-collapse.mui-active .mui-collapse-content, .mui-collapse.mui-active {
+			    display: block;
+			}
+			
+			.mui-collapse .mui-collapse-content {
+			    position: relative;
+			    display: none;
+			    overflow: hidden;
+			    -webkit-transition: height .35s ease;
+			    -o-transition: height .35s ease;
+			    transition: height .35s ease;
+			    background: #fff;
+			}
+			
+			.mui-bg-ccc{
+				background: #666666;
+			}
+			
+			.buy_additional_kind_item_action,
+			.buy_additional_kind_item_text {
+				font-family: arial
+			}
+			
+			.buy_additional {
+				position: relative;
+				margin-top: 10px;
+				padding: 10px 0;
+				background-color: #fef5f5
+			}
+			
+			.buy_additional::before {
+				content: "";
+				position: absolute;
+				top: -10px;
+				left: 33px;
+				width: 0;
+				height: 0;
+				border-style: solid;
+				border-width: 5px;
+				border-color: transparent transparent #fef5f5;
+				z-index: 1
+			}
+			
+			.buy_additional_kind {
+				display: -webkit-box;
+				display: -webkit-flex;
+				display: flex;
+				color: #999;
+				font-size: 12px
+			}
+			
+			.buy_additional_kind:not(:first-child) {
+				margin-top: 7px
+			}
+			
+			.buy_additional_kind_label {
+				margin: 0 10px;
+				color: #666;
+				line-height: 1.4em
+			}
+			
+			.buy_additional_kind_list {
+				-webkit-box-flex: 1;
+				-webkit-flex: 1;
+				flex: 1;
+				padding-right: 10px;
+				overflow: hidden
+			}
+			
+			.buy_additional_kind_item:not(:first-child) {
+				margin-top: 5px
+			}
+			
+			.buy_additional_kind_item_block {
+				display: -webkit-box;
+				display: -webkit-flex;
+				display: flex;
+				width: 100%;
+				color: inherit
+			}
+			
+			.buy_additional_kind_item_block:visited {
+				color: #999
+			}
+			
+			.buy_additional_kind_item_text {
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+				-webkit-box-flex: 1;
+				-webkit-flex: 1;
+				flex: 1;
+				margin-right: 10px;
+				line-height: 1.4em
+			}
+		</style>
+	</head>
+
+	<body class="" id="body-container">
+		<header class="mui-bar mui-bar-nav mui-bar-nav-hide default-abs-bg-color">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left qc-color-fff"></a>
+			<h1 class="mui-title qc-color-fff  qc-font-size16">提交订单</h1>
+			<a class="mui-icon mui-pull-right mui-icon-chatbubble-filled mui-hide" href="javascript:;"></a>
+		</header>
+		<div class="mui-content mui-scroll-wrapper" id="pullrefresh">
+			<div class="mui-scroll">
+				<span class="iconfont "></span>
+				<div class="" id="list-container">
+				</div>
+			</div>
+		</div>
+		<div class="qc-bar-navs">
+			<div class="bar-item">
+				<div class="mui-pull-left item mui-text-left mui-color-red">
+					合计: &yen;<i class="total-pay"id="total-Pay">0.00</i><i class="" id="discount-pay"></i>
+				</div>
+			</div>
+			<div class="bar-button mui-text-center qc-color-fff default-abs-bg-color" id="total-submit">
+				立即购买
+			</div>
+		</div>
+		<div class="shop-popover">
+	        <div id='coupon-popover' class="mui-popover mui-popover-action mui-popover-bottom a"style="left: auto !important;max-width: 640px;background-color: #F8F8F8;">
+		        <!--下拉刷新容器-->
+		        <div class="mui-scroll-wrapper fn_clearmargintop">
+		            <div class="mui-scroll">
+			            <!--数据列表-->
+			            <ul class="mui-table-view clearUl" id="list-table">
+			                <li class="mui-table-view-cell mui-media">
+			                    <div class="mui-media-body mui-text-center">
+			                        	我的优惠劵
+			                    </div>
+			                    <div class="shop-close">
+			                        <span class="mui-icon mui-icon-closeempty"></span>
+			                    </div>
+			                </li>
+				        </ul>
+			            <div id="list-table-content">
+			        	</div>
+			         </div>
+		        </div>
+	        </div>
+	    </div>
+	    <div class="shop-popover">
+	        <div id="form-popover" class="mui-popover mui-popover-action mui-popover-bottom " >
+	            <ul class="mui-table-view qc-bg-color-fff-imp">
+	                <li class="mui-table-view-cell mui-media">
+	                    <div class="mui-media-body mui-text-center">
+	                        	更多门店
+	                    </div>
+	                    <div class="shop-close">
+	                        <span class="mui-icon mui-icon-closeempty"></span>
+	                    </div>
+	                </li>
+	            </ul>
+	            <ul class="mui-table-view mui-table-view-radio" id="list-store-content">
+	            </ul>
+	            <!--<ul class="mui-table-view">
+	                <li class="mui-table-view-cell mui-text-center">
+	                    <div class="mui-segmented-control mui-segmented-control-negative">
+	                        <a id="form-btn-save" class="mui-control-item mui-active mui-btn-default" href="javascript:;">确认</a>
+	                        <a id="form-btn-del" class="mui-control-item mui-btn-undefault" href="javascript:;">返回</a>
+	                    </div>
+	                </li>
+	            </ul>-->
+	        </div>
+	    </div>
+	    <script type="text/html" id="tmpl-store-null">
+	    	<li class="mui-table-view-cell mui-media mui-selected" data-storeid='0'>
+	    		<a href="javascript:;" >
+	                <img class="mui-media-object mui-pull-left update55" src="/framwork/global_icon/lazyload/LOGO.png">
+	                <div class="mui-media-body qc-font-size14">
+	                    <i class="mui-color-red store-name mui-ellipsis-2">抱歉,您当前收货地址附近暂无商家或商家库存不足。</i>
+	                    <p class="mui-ellipsis qc-color-666 store-distance qc-font-size12">距离:未知</p>
+	                </div>
+	            </a>
+	    	</li>
+	    </script>
+	    <script type="text/html" id="tmpl-store">
+	    	<li class="mui-table-view-cell mui-media mui-selected" data-storeid='{{$data.id}}'>
+		    	<a href="javascript:;" class="mui-navigate-right" >
+	                <img class="mui-media-object mui-pull-left update55" src="{{$data.imgUrl}}">
+	                
+	            <!--    <h5 class="mui-pull-right fn_marginright15 fn_margintop20"><span class="mui-badge mui-badge-danger mui-badge-inverted mui-select-more">查看更多</span></h5>-->
+	                <div class="mui-media-body qc-font-size14">
+	                    <i class="store-name mui-ellipsis-2">{{$data.name}}为您服务</i>
+	                    {{if $data.userId != null || $data.userId != undefined}}
+	                    	<p class="mui-ellipsis qc-color-666 store-distance">距离:<i class="qc-store-distance">暂无距离</i></p>
+	                    {{else}}
+	                     	<p class="mui-ellipsis qc-color-666 store-distance">距离:{{Math_PI_DIS $data.distance}}</p>
+	                    {{/if}}
+	                    
+	                </div>
+	            </a>
+            </li>
+	    </script>
+	    <script type="text/html" id="tmpl-stores">
+	    	{{each data as $value i}}
+	    		{{if i < 3}}
+		    	<li class="mui-table-view-cell mui-media {{if i == 0}}mui-selected{{/if}}" data-storeid='{{$value.id}}' data-distance="{{$value.isInDeliveryDistance ? 1 : 0}}">
+	                <a href="javascript:;" class="mui-navigate-right" >
+	                    <img class="mui-media-object mui-pull-left update55" src="{{$value.imgUrl}}">
+	                    {{if $value.type == 1}}
+							<img src="/framwork/global_icon/lazyload/100.png" style="position: absolute;left: 15px;bottom: 10px;width: 20px;" />
+						{{/if}}
+	                    <div class="mui-media-body qc-font-size14">
+	                        {{$value.name}}
+	                        <p class="mui-ellipsis qc-color-666">距离:{{Math_PI_DIS $value.distance}}</p>
+	                    </div>
+	                </a>
+	            </li>
+	            {{/if}}
+            {{/each}}
+            {{if data.length > 3}}
+            	{{include 'tmpl-stores-more'}}
+            {{/if}}
+	    </script>
+	    <script type="text/html" id="tmpl-stores-more">
+	    	<div class="mui-collapse ">
+				<p class="fn_padding15 fn_clearmarginbottom default-abs-color mui-navigate-right" id="store-hide" style="position: relative;">查看更多商家</p>
+				<div class="mui-collapse-content">
+				{{each data as $value i}}
+		    		{{if i > 2}}
+						<li class="mui-table-view-cell mui-media " data-storeid='{{$value.id}}' data-distance="{{$value.isInDeliveryDistance ? 1 : 0}}">
+			                <a href="javascript:;" class="mui-navigate-right" >
+			                    <img class="mui-media-object mui-pull-left update55" src="{{$value.imgUrl}}">
+			                    {{if $value.type == 1}}
+									<img src="/framwork/global_icon/lazyload/100.png" style="position: absolute;left: 15px;bottom: 10px;width: 20px;" />
+								{{/if}}
+			                    <div class="mui-media-body qc-font-size14">
+			                        {{$value.name}}
+			                        <p class="mui-ellipsis qc-color-666">距离:{{Math_PI_DIS $value.distance}}</p>
+			                    </div>
+			                </a>
+			            </li>
+					
+					{{/if}}
+           		{{/each}}
+           		</div>
+			</div>
+	    </script>
+	    <script type="text/html" id="tmpl-coupon">
+	    	{{each $data as $value i}}
+		    	<div class="mui-card {{if i == 0}}mui-selected{{/if}}" data-amount="{{$value.amount}}"  data-couponid="{{$value.id}}" data-name="{{$value.name}}" >
+					<div class="fn_padding15 fn_paddingbottom10 mui-card-content-outer" style="    position: relative;">
+					 	<div class="mui-row">
+					 		<div class="mui-col-xs-9">
+					 			<h4 class="fn_marginbottom10">{{$value.name}}</h4>
+					 			<span class="qc-color-666 ">有效值至{{$value.endTime}}</span>
+					 		</div> 	
+					 		<div class="mui-col-xs-3 mui-text-right">
+					 			<span class="mui-block mui-color-red fn_marginbottom5 " style="font-size: 38px;"><i class="qc-font-size16 fn_marginright5">&yen;</i>{{$value.amount}}</span>
+					 			<span class="qc-color-666 qc-font-size12">
+					 					满{{$value.amount}}可用
+					 			</span>
+					 		</div> 	
+					 	</div>
+					</div>
+					<p class="qc-font-size12 qc-color-999 fn_paddingtop10" style="    margin: 0px 15px 10px 15px;border-top: 1px dashed #999;">
+					 	{{$value.typeName}}
+					</p>
+				</div>
+	    	{{/each}}
+	    </script>
+	    <script type="text/html">
+	    	<li class="mui-table-view-cell mui-radio">
+                <label class="qc-font-size16">不使用优惠劵 </label>
+				<input name="radio1" type="radio" {{if $data.content.length == 0}}checked="checked"{{/if}} data-amount="0" data-couponid="" data-name="不使用"/>
+            </li>
+	    	{{each $data.content as $value i}}
+	    		<li class="mui-table-view-cell mui-radio">
+                    <label class="qc-font-size16">优惠{{$value.amount}}:{{$value.name}}</label>
+					<input name="radio1" type="radio" {{if i == 0}}checked="checked"{{/if}} data-amount="{{$value.amount}}"  data-couponid="{{$value.id}}" data-name="{{$value.name}}" />
+	            </li>
+	    	{{/each}}
+	    </script>
+		<script type="text/html" id="tmpl-model">
+			<!--地址信息-->
+			<!--如果没有-->
+			<!--如果有地址的情况-->
+			<ul class="mui-table-view mui-bg-address">
+				<li class="mui-table-view-cell" id="ads-container">
+					<a class="mui-navigate-right mui-color-red qc-font-size14 fn_margintop10 fn_marginbottom10" href="javascript:;" data-aid="0">
+						<span class="iconfont icon-dingwei1 fn_marginright5"></span> 请添加收货地址
+					</a>
+				</li>
+			</ul>
+			<!--商品信息-->
+			<div class="mui-input-group qc-font-size14-imp clear-input-group fn_margintop10" id="choose_store">
+				<div class="mui-input-row mui-radio">
+					<label>商家配送</label>
+					<input name="radio1" value="0" type="radio" checked="checked">
+				</div>
+				<div class="mui-input-row mui-radio ">
+					<label>到店自提</label>
+					<input name="radio1" value="1" type="radio" >
+				</div>
+			</div>
+			<!--商品信息-->
+			<ul class="mui-table-view clearUl fn_margintop10 mui-list-store" style="box-shadow: 0 1px 1px #ccc;">
+				<li class="mui-table-view-cell mui-radial">
+					<a class="qc-font-size14 qc-color-888 " href="javascript:;" >
+						<span class="qc-font-size14 ">
+						     选择配送商家
+						</span>
+						<!--<h5 class="qc-color-333 mui-pull-right fn_marginright15">商家配送</h5>-->
+					</a>
+				</li>
+				<!--<li class="mui-table-view-cell mui-media" id="choose-store">
+	                <a href="javascript:;" class="mui-navigate-right" data-storeid='0'>
+	                    <img class="mui-media-object mui-pull-left update55" src="/framwork/global_icon/lazyload/LOGO.png">
+	                    <div class="mui-media-body qc-font-size14">
+	                        <i class="mui-color-red store-name mui-ellipsis-2">抱歉,您当前收货地址附近暂无商家或商家库存不足。</i>
+	                        <p class="mui-ellipsis qc-color-666 store-distance">距离:未知</p>
+	                    </div>
+	                </a>
+	            </li>-->
+			</ul>
+			<ul class="mui-table-view mui-table-view-radio" id="list-stores">
+				<li class="mui-table-view-cell mui-media mui-selected" data-storeid='0'>
+		    		<a href="javascript:;">
+		                <img class="mui-media-object mui-pull-left update55" src="/framwork/global_icon/lazyload/LOGO.png">
+		                <div class="mui-media-body qc-font-size14-imp">
+		                    <i class="mui-color-red store-name mui-ellipsis-2">抱歉,您当前收货地址附近暂无商家或商家库存不足。</i>
+		                    <p class="mui-ellipsis qc-color-666 store-distance">距离:未知</p>
+		                </div>
+		            </a>
+		    	</li>
+	        </ul>
+			<ul class="mui-table-view clearUl fn_margintop10">
+				<li class="mui-table-view-cell">
+					<a class="qc-font-size14 qc-color-888 " href="javascript:;" id="choose-store">
+						<span class="qc-font-size14 ">
+						        商品列表
+						</span>
+						<h5 class="qc-color-333 mui-pull-right fn_marginright15"></h5>
+					</a>
+				</li>
+				{{each $data.data as value}}
+				<li class="mui-table-view-cell mui-media" data-gid="{{value.gid}}" data-gname="{{value.name}}" data-quantity="{{value.quantity}}" data-gact="{{value.activity.index}}">
+					<a href="javascript:;">
+						<img class="mui-media-object mui-pull-left update65" src="{{value.imgUrl}}">
+						<div class="mui-media-body">
+							<p class="mui-ellipsis fn_font-size12 qc-color-333">{{value.name}}</p>
+							<p class="mui-ellipsis">
+								{{value.props}}
+							</p>
+							<p class="mui-ellipsis">
+								<span class="default-abs-color">
+									&yen;<i class="goods-price" data-gid="{{value.gid}}" data-price="{{value.price}}" data-selfPickupPrice="{{value.selfPickupPrice}}" >
+									{{value.price}} 
+									</i>
+								</span>
+								<span class="mui-badge fn_border-radius mui-btn-red mui-toStore mui-hide">到店自提优惠</span>
+								{{if value.activity.index != undefined && value.activity.index != 3 && value.activity.index != 0}}
+									{{if value.activity.name != ""}}<span class="mui-badge fn_border-radius mui-btn-red">{{value.activity.name}}</span>{{/if}}
+								{{/if}}
+								<span class="mui-pull-right qc-font-size12 fn_marginright10">x{{value.quantity}}</span>
+							</p>
+							
+						</div>
+					</a>
+					
+				</li>
+				
+				{{if value.activity.index != undefined && value.activity.index == 3}}
+	    			<div class="mui-input-group clear-input-group">
+						<div class="mui-input-row mui-checkbox">
+							<label class="qc-font-size14">
+                               	<span class="mui-badge mui-badge-danger qc-font-size12" style="border-radius: 2px;">
+							  			{{value.activity.name }}
+							 	</span>
+							 	<span class="qc-font-size12 qc-color-6868">
+							 	  	记得勾选噢
+							 	</span>
+							</label>
+							<input name="checkbox{{value.gid }}" class="activity-checkbox" data-price="1" value="" type="checkbox">
+						</div>
+					</div>
+	    		{{/if}}
+				{{/each}}
+				<li class="mui-table-view-cell mui-hide">
+					<a class="qc-font-size14 qc-color-333 mui-navigate-right" href="javascript:;">
+						发票信息
+						<h5 class="qc-color-333 mui-pull-right fn_marginright15">不开发票</h5>
+					</a>
+				</li>
+				<li class="mui-table-view-cell">
+					<a class="qc-font-size14 qc-color-333 " href="javascript:;">
+						买家留言:
+						<input type="text" placeholder="选填,可填写您与卖家达成一致的要求" class="qc-font-size14 mui-clear-remark" name="" id="order-remark" />
+					</a>
+				</li>
+			</ul>
+			<!--支付方式-->
+			<ul class="mui-table-view clearUl fn_margintop10">
+				<li class="mui-table-view-cell">
+					<a class="qc-font-size14 qc-color-333 mui-text-right" href="javascript:;">
+						共{{$data.totalQuantity}}件商品 实付款: <span class="default-abs-color">&yen;<i class="total-pay">{{MathPayFee $data.totalPayFee}}</i></span>
+					</a>
+				</li>
+				<li class="mui-table-view-cell">
+					<a class="qc-font-size14 qc-color-888 " href="javascript:;">
+						<span class="qc-font-size14 ">
+						支付方式
+						</span>
+						<h5 class="qc-color-333 mui-pull-right ">在线</h5>
+					</a>
+				</li>
+				<li class="mui-table-view-cell ">
+					<a class="qc-font-size14 qc-color-333 mui-navigate-right" href="#coupon-popover" id=""><!--javascript:;-->
+						<span>选择优惠劵<span class="mui-badge mui-badge-big mui-badge-red fn_marginleft5 qc-bg-order-red-imp"><i class="mui-coupon-amount">0</i> 张可用</span></span>
+						<h5 class="mui-pull-right fn_paddingright15 mui-coupon-status">不使用</h5>
+					</a>
+				</li>
+			</ul>
+		</script>
+		<script type="text/html" id="tmpl-ads">
+			{{if $data  == null }}
+			<a class="mui-navigate-right mui-color-red qc-font-size14 fn_margintop10 fn_marginbottom10" href="javascript:;" data-aid="0">
+				<span class="iconfont icon-dingwei1 fn_marginright5"></span> 请添加收货地址
+			</a>
+			{{else if $data != null }}
+				<a href="javascript:;" class="mui-navigate-right " data-lng="{{$data.longitude}}" data-lat="{{$data.latitude}}" data-aid="{{$data.id}}">
+					<p class="qc-color-333 mui-ellipsis-2 qc-font-size14 fn_paddingtop5">
+						{{$data.city}}{{$data.street}}{{$data.town}}{{$data.address}}
+						<!--<span>{{$data.street}}</span><span>{{$data.address}}</span>-->
+					</p>
+					<p class="qc-color-333  qc-font-size14 fn_clearmarginbottom fn_margintop10 fn_paddingbottom5 ">
+						<span class="iconfont icon-geren default-abs-color fn_marginright5"></span><i>{{$data.name}}</i>
+						<span class="mui-pull-right fn_paddingright15">
+				 	  		<i class="iconfont icon-shouji default-abs-color fn_marginright5"></i><i>{{$data.mobile}}</i>
+				 	  	</span>
+					</p>
+				</a>
+			{{/if}}
+		</script>
+		<script type="text/html" id="tmpl-additional">
+			{{if $data.quantity > 0}}
+			<div class="buy_additional">
+				<div class="buy_additional_kind">
+					<span class="buy_additional_kind_label">赠品</span>
+					<div class="buy_additional_kind_item_text ">
+						{{$data.name}}
+					</div>
+					<span class="buy_additional_kind_label" style="color: #999999;">x{{$data.quantity}}</span>    
+				</div>
+			</div>
+			{{/if}}
+		</script>
+		<script src="/build/script/all.js"></script>
+		<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=1300d75f931f2d8d9b062fa0d048c03f"></script>
+		<script src="/plugin/javascript/web/phone/order/order.js?v=0726"></script>
+		<script>
+			
+			template.helper('Math_PI', function(lng,lat){  
+			    //return Math.ceil((distance / 1000) * 20);
+				var body=document.body;
+				if(body.dataset.lng == undefined){
+					console.log('参数失效');
+					return;
+				}
+				
+				var map = new BMap.Map();
+				var selfPoint=new BMap.Point(body.dataset.lng,body.dataset.lat);
+				var bPoint= new BMap.Point(lng,lat);
+				
+				var distance= parseInt(map.getDistance(selfPoint,bPoint));
+				console.log(distance+"米");
+				var countDistance = distance / 1000;
+				var storeDistance = dis / 1000;
+				if(countDistance > storeDistance){
+					return 'mui-not-ads';
+				}
+			});
+			
+			template.helper('Math_PI_DIS', function(distance){  
+				var selfDistance=(distance/1000).toFixed(2);
+				return selfDistance+"KM";
+			});
+			template.helper('MathPayFee',function(Fee){
+				return parseFloat(Fee).toFixed(2);
+			});
+			
+			mui.ready(function() {
+				/*每个页面都要mui.init*/
+				window.orderSubmit.init();
+				/*mui('.shop-popover').on('change','.mui-radio',function(){
+	                console.log(this);
+	            });*/
+			});
+		</script>
+		<div style="display:none;">
+			<script src="https://s19.cnzz.com/z_stat.php?id=1262309795&web_id=1262309795 " language="JavaScript"></script>
+		</div>
+		<!--开据发票-->
+		<!--<div class="mui-table qc-font-size14 fn_padding10 fn_paddingleft15 fn_paddingright15 qc-bg-color-fff fn_margintop10">
+						<div class="mui-table-cell mui-col-xs-3 mui-font-middle">
+						 	  开据发票
+						</div>
+						<div class="mui-table-cell mui-col-xs-9 mui-font-middle qc-font-size14 mui-text-right mui-radios">
+						 	<input class="mui-radio" name="radio" type="radio" data-type=""
+						 		 checked><i class="fn_paddingleft5 fn_paddingright5">不开发票</i>
+						 	<input class="mui-radio" name="radio" type="radio" data-type="个人" ><i class="fn_paddingleft5 fn_paddingright5">个人</i>
+						 	<input class="mui-radio" name="radio" type="radio" data-type="公司" ><i class="fn_paddingleft5">公司</i>
+						</div>
+					</div>
+					<div class="">
+						
+					</div>
+					<div class="mui-input-group mui-hide" id="invoice-group">
+						<div class="mui-input-row mui-color-6868 fn_font-size14">
+							<label class="mui-color-000" style="margin-top: 2.5px;">发票抬头</label>
+							<input type="text" class="mui-text-right fn_font-size14 qc-color-333" id="invoice-text" placeholder="选填" />
+						</div>
+						<ul class="mui-table-view clearUl">
+					        <li class="mui-table-view-cell">
+					            <a class="qc-color-333 qc-font-size12" href="javascript:;">
+					                	提示:发票将会在10~15个工作日内寄出
+					            </a>
+					        </li>
+						</ul>
+					</div>-->
+	</body>
+
+</html>

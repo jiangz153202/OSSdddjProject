@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<base href="../../../" />
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=0,minimal-ui">
+		<title></title>
+		<link rel="stylesheet" href="framwork/mui/dist/css/mui.min.css" />
+		
+		<link rel="stylesheet" type="text/css" href="plugin/style/basic/loading.css" />
+		<link rel="stylesheet" type="text/css" href="plugin/style/basic/main.css" />
+		<link rel="stylesheet" type="text/css" href="plugin/style/basic/aboutprogess.css" />
+		<!--对mui css 的优化-->
+		<link rel="stylesheet/less" type="text/css" href="plugin/style/global/module.less.html" />
+		<!--一些颜色  字体字号 -->
+		<link rel="stylesheet/less" type="text/css" href="plugin/style/global/orther.less.html" />
+		<!--对商品列表排版 的优化 如 demo1 demo2【在其他地方】 demo3 -->
+		<link rel="stylesheet/less" type="text/css" href="plugin/style/global/goodslist.less.html" />
+		<!--本地字体文件库-->
+		<link rel="stylesheet" href="framwork/iconfonts/basic/iconfont.css" />
+		<!--一些对于单页面的描述 可以在HTML临时写在本页面  当接入jsp的时候，在写入css文件-->
+		<!--当前页面css-->
+		<link rel="stylesheet" href="plugin/style/item/message.css" />
+	</head>
+	<body class="">
+		<header class="mui-bar mui-bar-nav head-bg-color">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left mui-color-fff"></a>
+			<h1 class="mui-title mui-color-fff">注册成功</h1>
+		</header>
+		<div class="mui-content mui-scroll-wrapper ms-bg-cl" id="pullrefresh">
+			<ul class="mui-table-view clearUl ms-items ms-bg-cl  pd-t20">
+				<li class="mui-table-view-cell mui-media mui-text-center pd-t20">
+					<img class="mg-t20" src="framwork/global_icon/mipmap-xhdpi/ic_bespeak_ok.png" width="85"/>
+			  		 <dl class="mg-t5 mg-b10 cl-s6">
+			  		 	<dt class="ft-s16 cl-s6">注册成功</dt>
+			  		 </dl>
+		  		</li>
+		  		<li class="mui-table-view-cell mui-media mui-transitioning  boreder-raius-a5 pd-a20 ps-rt ms-bg-cl">
+					<button id="submit" type="button" class="mui-btn-default but-submit mui-btn-success1 ft-s16 pd-a10 no_mg max-width">完成</button>
+				</li>
+			</ul>
+		</div>
+		
+		<script src="framwork/mui/dist/js/mui.min.js"></script>
+		<!--这是解析less 为css 的文件  本地编辑时用-->
+		<script src="framwork/less/dist/less.min.js"></script>
+		<!--这是写的一个辅助js库-->
+		<script src="framwork/plugins/common.js"></script>
+		<!--tmpl模板本件 用户加载模板文件-->
+		<script src="framwork/plugins/artTemplate/3.0.3/dist/template.js"></script>
+		<!--这就是HTML 模板 用于数据加载 -->
+		<script type="text/html" id="tmpl-model-null">
+			<p class="qc-color-888 mui-text-center" style="letter-spacing: 0px;margin-top: 50px;">暂无任何数据</p>
+		</script>
+		<script>
+			mui.ready(function() {
+				/*每个页面都要mui.init*/
+				mui.init();
+			});
+		</script>
+		<div style="display:none;">
+			<script src="https://s19.cnzz.com/z_stat.php?id=1262309795&web_id=1262309795 " language="JavaScript"></script>
+		</div>
+	</body>
+
+</html>

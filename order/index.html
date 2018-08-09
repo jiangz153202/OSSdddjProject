@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=0,minimal-ui">
+		<title>订单中心-DD订酒</title>
+		<link rel="stylesheet" href="/build/css/all.css" />
+		<!--一些对于单页面的描述 可以在HTML临时写在本页面  当接入jsp的时候，在写入css文件-->
+		<!--当前页面css-->
+		<style>
+			.mui-slider.mui-fullscreen .mui-segmented-control.mui-segmented-control-inverted .mui-control-item {
+				color: #333;
+			}
+			
+			.mui-control span.progress-badge-333,
+			.mui-control span.progress-badge {
+				margin-left: 10px;
+			}
+			.qc-car-null {
+				margin-top: 33px;
+			}
+			.mui-badge.mui-badge-blue {
+			    color: rgb(255, 255, 255);
+			    background-color: #007aff;
+			}
+			
+			.progress-badge {
+			    background-color: #32b3af;
+			    border-color: transparent;
+			    color: #ffffff;
+			}
+			.progress-badge-333 {
+				background-color: #ffffff;
+				
+				border-color: #32b3af;
+				color: #32b3af;
+			}
+			
+			
+		</style>
+	</head>
+
+	<body class="mui-focusin">
+		<!--头部  和 底部 放在mui-content 上面 -->
+		<header class="mui-bar mui-bar-nav mui-bar-nav-hide qc-bg-color-fff">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left qc-color-333"></a>
+			<h1 class="mui-title qc-color-333 qc-font-size16">商品订单</h1>
+		</header>
+		<div class="mui-content" id="pull-body">
+
+		</div>
+		<script src="/build/script/all.js"></script>
+		<!--这是加减按钮-->
+		<script src="/framwork/plugins/plusminusbtn/1.0.2/js/plusminusbtn.min.js"></script>
+		<!--多页上拉加载-->
+		<script src="/framwork/mui/pullToRefresh/mui.pullToRefresh.js"></script>
+		<script src="/framwork/mui/pullToRefresh/mui.pullToRefresh.material.js"></script>
+		<!--当页逻辑页面-->
+		<script src="/plugin/javascript/web/phone/order/index.js"></script>
+		
+		<script type="text/html" id="tmpl-model-null">
+			<div class="qc-car-null mui-text-center">
+				<div class="qc-car-null-img-empty"></div>
+				<p class="qc-color-888 mui-text-center qc-car-null-text">哎呀！页面还没数据哦~</p>
+			</div>
+		</script>
+		<script type="text/html" id="tmpl-menus">
+			<div class="mui-slider mui-fullscreen">
+				<div id="segmentedControls" class="mui-bg-fff mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+					<div class="mui-scroll" id="menu-container">
+						{{each data as $value i}}
+						<a class="mui-control-item {{sliderSelected $value.id i}}" href="#item{{i}}" data-itemid="{{i}}">
+							{{$value.name}}
+						</a>
+						{{/each}}
+					</div>
+				</div>
+				<div id="segmentedControlContents" class="mui-slider-group">
+					{{each data as $value i}}
+					<div class="mui-slider-item  mui-control-content {{sliderSelected $value.id i}}" id="item{{i}}">
+						<div class="mui-scroll-wrapper">
+							<div class="mui-scroll">
+								<!--这里放置真实显示的DOM内容-->
+								<div class="spinner-child">
+									<div class="rect1"></div>
+									<div class="rect2"></div>
+									<div class="rect3"></div>
+									<div class="rect4"></div>
+									<div class="rect5"></div>
+								</div>
+								<div class="list-container" data-index="{{i}}" data-id="{{$value.id}}" data-pageindex='0'></div>
+							</div>
+						</div>
+					</div>
+					{{/each}}
+				</div>
+			</div>
+		</script>
+		<script type="text/html" id="tmpl-model">
+			{{each content as $values i}}
+			<ul class="mui-table-view clearUl fn_margintop10 qc-font-size14 order-ul-{{$values.orderNumber}}">
+				<li class="mui-table-view-cell">
+					<a href="/order/view.html?orderNumber={{$values.orderNumber}}" class="qc-color-333-imp">
+						#DD{{$values.orderNumber}}
+						<span class="mui-pull-right default-abs-color mui-font-size14">{{$values.statusText}}</span>
+					</a>
+				</li>
+				{{each $values.items as value i}}
+				<li class="mui-table-view-cell mui-media good-body">
+					<a href="/order/view.html?orderNumber={{$values.orderNumber}}">
+						<div class="mui-table">
+							<div class="mui-table-cell mui-col-xs-10">
+								<img class="mui-media-object mui-pull-left goods-img" src="{{value.imgUrl}}">
+								<div class="mui-media-body">
+									<p class='mui-ellipsis-2 goods-text mui-color-000'>{{value.name}}</p>
+									<p class="mui-ellipsis">
+										{{value.props}}
+									</p>
+									{{if value.activity.index != undefined && value.activity.index != 0}}
+										<span class="mui-badge fn_border-radius mui-btn-red">{{value.activity.name}}</span>
+									{{/if}}
+									
+									
+								</div>
+							</div>
+							<div class="mui-table-cell mui-col-xs-2 mui-text-right">
+								<h5 class="qc-color-333">&yen;{{value.price}}</h5>
+								<h5 class="qc-color-333">X{{value.quantity}}</h5>
+							</div>
+						</div>
+					</a>
+				</li>
+				{{/each}}
+				<li class="mui-table-view-cell">
+					<a href="javascript:;" class="qc-color-333-imp mui-text-right  mui-ellipsis-2">
+						{{orderActText $values.status $values.orderNumber}}
+						<!--<i class="">下单时间:{{$values.createTime}}</i><br />-->
+						共{{$values.quantity}}件,总计：<span class="shop-color">&yen;{{$values.total}}</span>已付：<span class="shop-color">&yen;{{$values.paid}}</span>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-control">
+					<a href="javascript:;" class="qc-color-333-imp">
+						
+						{{if $values.status ==
+						4}}
+						<span class="mui-pull-right progress-badge progress-badge-big" data-type="confirm" data-ordernumber="{{$values.orderNumber}}">确认收货</span> {{/if}} {{if $values.status ==
+						2}}
+						<span class="mui-pull-right progress-badge progress-badge-big" data-type="wxpay" data-ordernumber="{{$values.orderNumber}}">立即支付</span> {{/if}} {{if $values.status ==
+						1 || $values.status ==
+						2}}
+						<span class="mui-pull-right progress-badge-333 progress-badge-big" data-type="close" data-ordernumber="{{$values.orderNumber}}">取消订单</span> {{/if}} {{if $values.status ==
+						5}}
+						<span class="mui-pull-right progress-badge progress-badge-big" data-type="review" data-ordernumber="{{$values.orderNumber}}">等待评价</span> {{/if}}
+					</a>
+				</li>
+			</ul>
+			{{/each}}
+		</script>
+		<script>
+			template.helper('sliderSelected', function(id, i) {
+				var _thisGid = common.queryToJSON().tagId === undefined ? '' : common.queryToJSON().tagId;
+				if(_thisGid == '' && i == 0) {
+					return 'mui-active';
+				} else {
+					if(id == _thisGid) {
+						return 'mui-active';
+					}
+				}
+			});
+
+			template.helper("subStr", function(str) {
+				var result;
+				if(str.length > 5) {
+					result = str.substr(0, 5) + '...';
+				} else {
+					result = str;
+				}
+				return result;
+			});
+
+			template.helper('setUpRows', function(rows) {
+				var maxRows = 12;
+				var rowStr = "mui-col-xs-" + (maxRows / rows);
+				//console.log(rowStr);
+				return rowStr;
+			});
+			template.helper('isWrapper', function(rows) {
+
+				if(rows > 4) {
+					/*setTimeout(function(){
+						mui('.mui-slider-indicator').scroll()
+					},1000);*/
+					return "mui-scroll-wrapper";
+				}
+
+			});
+			
+			template.helper('orderActText', function(orderStatus,orderNumber) {
+				var dbStatus='5';
+				var endDbStatus='6';
+				var sid=parseInt(orderNumber.substr(5,1));
+				var month=parseInt(orderNumber.substr(6,2));
+				var day=parseInt(orderNumber.substr(8,2));
+				//console.log(orderNumber+'的month'+month+"day"+day);
+				/*var orderDate=new Date();
+				orderDate.setMonth(month);
+				orderDate.setDate(day);*/
+				
+				if(orderStatus == dbStatus || orderStatus == endDbStatus){
+					if(sid == 1){ //东莞地区参加
+						if(month == 4 && day >=7 && day <11){
+							return '<span class="mui-badge mui-badge-danger mui-pull-left">Twins买酒送票第一轮抽奖资格 × 1</span>';
+						}else if(month == 4 && day >=11 && day <15){
+							return '<span class="mui-badge mui-badge-blue mui-pull-left">Twins买酒送票第二轮抽奖资格 × 2</span>';
+						}
+					}
+					
+				}
+				
+			});
+
+			var menuResult = {
+				"status": 0,
+				"data": [
+					{ id: '2', name: '待付款', type: 'waitPay2' },
+					{ id: '1', name: '待接单', type: 'waitPay1' },
+					{ id: '3', name: '待配送', type: 'waitPay3' },
+					{ id: '4', name: '配送中', type: 'waitPay4' },
+					{ id: '9', name: '待确认', type: 'waitPay9' },
+					{ id: '5', name: '待评价', type: 'waitPay5' },
+					{ id: '6', name: '已完成', type: 'waitPay6' }
+					/*{id:'7',name:'已取消',type:'waitPay7'}*/
+				],
+				"message": null,
+				"count": 7,
+				"retType": null
+			};
+			mui.ready(function() {
+
+				window.orderIndex.init({
+					navResult: menuResult
+				});
+
+			});
+		</script>
+		<div style="display:none;">
+			<script src="https://s19.cnzz.com/z_stat.php?id=1262309795&web_id=1262309795 " language="JavaScript"></script>
+		</div>
+	</body>
+
+</html>

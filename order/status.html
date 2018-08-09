@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=0,minimal-ui">
+		<title>支付结果</title>
+		<link rel="stylesheet" href="/build/css/all.css" /> 
+		<!--一些对于单页面的描述 可以在HTML临时写在本页面  当接入jsp的时候，在写入css文件-->
+		<!--当前页面css-->
+		<style type="text/css">
+			.payStatus {
+				padding: 15px 0px;
+			}
+			.payStatus li {
+				width: 85%;
+				margin: 0px auto;
+			}
+			/*产品列表*/
+			.z-content {}
+			
+			.z-content .list-layout-demo.demo1 {
+				margin: 10px!important;
+			}
+			
+			.z-content .list-layout-demo.demo1 a {
+				display: block;
+			}
+			
+			.z-content img {
+				display: block;
+			}
+			
+			.z-content .z-headImg {
+				overflow: hidden;
+				/*  max-height: 135px; */
+			}
+			
+			.z-content .list-layout-demo.demo1 .detail-content-default {
+				margin-top: 10px;
+				padding: 0px 5px 5px 5px;
+			}
+			
+			.z-content .list-layout-demo.demo1 .detail-content-default .text {
+				min-height: 28px;
+				line-height: 14px;
+				color: #686868;
+				margin-bottom: 10px;
+			}
+			
+			.z-content .list-layout-demo.demo1 .detail-content-default h5 {
+				border-top: 1px dotted #bdbdbd;
+			}
+			
+			.z-content .list-layout-demo.demo1 .detail-content-default .mui-text-decoration {
+				text-decoration: line-through;
+			}
+			
+			.z-content .list-layout-demo.demo1 .demo-model:nth-child(2n) .active.detail-body {
+				margin-right: 0px;
+				margin-left: 5px;
+			}
+		</style>
+	</head>
+
+	<body class="">
+		<!--<header class="mui-bar mui-bar-nav mui-bar-nav-hide default-abs-bg-color">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left mui-color-fff"></a>
+			<h1 class="mui-title mui-color-fff qc-font-size16">支付结果</h1>
+		</header>-->
+		<div class="mui-content mui-scroll-wrapper" id="pullrefresh">
+			<div class="mui-scroll">
+				<div class="" id="list-container">
+					
+				</div>
+			</div>
+		</div>
+		<script src="/framwork/mui/dist/js/mui.min.js"></script>
+		<!--这是写的一个辅助js库-->
+		<script src="/framwork/plugins/common.min.js"></script>
+		<!--tmpl模板本件 用户加载模板文件-->
+		<script src="/framwork/plugins/artTemplate/3.0.3/dist/template.js"></script>
+		<script src="/plugin/javascript/web/ajax.js"></script>
+		<script src="/plugin/javascript/web/phone/order/orderStatus.js"></script>
+		<!--这就是HTML 模板 用于数据加载 -->
+		<script type="text/html" id="tmpl-model-loading">
+			<div class="spinner-child">
+				<div class="rect1"></div>
+				<div class="rect2"></div>
+				<div class="rect3"></div>
+				<div class="rect4"></div>
+				<div class="rect5"></div>
+			</div>
+		</script>
+		<!--这就是HTML 模板 用于数据加载 -->
+		<script type="text/html" id="tmpl-model-null">
+			<div class="qc-car-null mui-text-center">
+				<div class="qc-car-null-img-empty"></div>
+				<p class="qc-color-888 mui-text-center qc-car-null-text">哎呀！页面还没数据哦~</p>
+			</div>
+		</script>
+		<script type="text/html" id="result-true">
+			<div class="qc-bg-color-fff fn_padding15">
+				<ul class="mui-table-view clearUl clearBg payStatus">
+					<li class="mui-table-view-cell mui-media">
+						<a href="javascript:;">
+							<img class="mui-media-object mui-pull-left update65" src="\framwork\_global_icon\mipmap-xhdpi\ic_bespeak_ok.png" />
+							<div class="mui-media-body qc-font-size14 qc-color-333 fn_margintop15">
+								<span>支付结果:</span><span class="qc-color-red">微信支付</span>
+								<p class="mui-ellipsis qc-color-333">订单金额: <span class="qc-color-red">&yen;{{$data.paid}}</span></p>
+							</div>
+						</a>
+					</li>
+				</ul>
+				<!--返回结果-->
+				<div class="mui-table mui-text-center">
+					<div class="mui-table-cell mui-col-xs-6 fn_paddinglr10">
+						<button type="button" class="mui-btn mui-btn-undefault w100" data-type="order">查看订单</button>
+					</div>
+					<div class="mui-table-cell mui-col-xs-6 fn_paddinglr10">
+						<button type="button" class="mui-btn mui-btn-undefault w100" data-type="home">回首页</button>
+					</div>
+				</div>
+				<p class="qc-font-size12 qc-color-666 fn_margintop10 fn_clearmarginbottom">
+					小提示:如商家长时间未接单,可电话咨询DD订酒客服哦!
+				</p>
+			</div>
+		</script>
+		<script type="text/html" id="result-fail">
+			<div class="qc-bg-color-fff fn_padding15">
+				<ul class="mui-table-view clearUl clearBg payStatus">
+					<li class="mui-table-view-cell mui-media">
+						<a href="javascript:;">
+							<img class="mui-media-object mui-pull-left update65" src="\framwork\_global_icon\mipmap-xhdpi\ic_bespeak_err.png" />
+							<div class="mui-media-body qc-font-size14 qc-color-333 fn_margintop15">
+								<span>支付状态:</span><span class="qc-color-red">支付失败</span>
+								<p class="mui-ellipsis qc-color-333">订单金额: <span class="qc-color-red">暂无数据</span></p>
+							</div>
+						</a>
+					</li>
+				</ul>
+				<!--返回结果-->
+				<div class="mui-table mui-text-center">
+					<div class="mui-table-cell mui-col-xs-6 fn_paddinglr10">
+						<button type="button" class="mui-btn mui-btn-undefault w100" data-type="order">查看订单</button>
+					</div>
+					<div class="mui-table-cell mui-col-xs-6 fn_paddinglr10">
+						<button type="button" class="mui-btn mui-btn-undefault w100" data-type="home">回首页</button>
+					</div>
+				</div>
+				<p class="qc-font-size12 qc-color-666 fn_margintop10 fn_clearmarginbottom">
+					小提示:稍等一会儿在去订单详情看看!
+				</p>
+			</div>
+		</script>
+		<script type="text/html" id="tmpl-guess">
+			<!--猜你喜欢模块-->
+			<div class="mui-text-center fn_paddingtop10 ">
+				<i class="iconfont icon-wanyouxi fn_marginlr10"></i><span class="qc-font-size16 ">猜你喜欢</span>
+			</div>
+			<div class="z-content">
+				<div class="list-layout-demo demo1">
+					{{each $data.content as $value i}}
+					<div class="demo-model w50 fn_marginbottom10">
+						<div class="detail-body active mui-bg-fff">
+							<a href="/p/goods/view/{{$value.id}}">
+								<img src="{{$value.imgUrl}}" class="goodsImg">
+								<div class="detail-content-default">
+									<p class="mui-ellipsis-2 fn_font-size12 text gname">{{$value.name}}</p>
+									<h5 class="qc-font-size16 mui-color-red mui-ellipsis fn_paddingtop10 fn_clearmargintop">
+		 	  	 		 				<span class="fn_font-size12">¥</span>{{$value.price}}
+		 	  	 		 				<span class="fn_paddingleft5 mui-color-ccc mui-text-decoration qc-font-size12">¥{{$value.marketPrice}}</span>
+	 	  	 						</h5>
+								</div>
+							</a>
+						</div>
+					</div>
+					{{/each}}
+				</div>
+			</div>
+			<!--End-->
+		</script>
+		<script type="text/html" id="tmpl-model">
+			<!--订单状态-->
+			{{if $data.status != 2 }}
+				{{include 'result-true'}} 
+			{{else}}
+				{{include 'result-fail'}} 
+			{{/if}}
+			<!--END 订单状态-->
+			<!--广告模块-->
+			<!--End广告模块-->
+		</script>
+		<script>
+			mui.ready(function() {
+				/*每个页面都要mui.init*/
+				window.orderStatus.init();
+
+			});
+		</script>
+		<div style="display:none;">
+			<script src="https://s19.cnzz.com/z_stat.php?id=1262309795&web_id=1262309795 " language="JavaScript"></script>
+		</div>
+	</body>
+
+</html>

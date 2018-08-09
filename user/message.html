@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=0,minimal-ui">
+		<title></title>
+		<link rel="stylesheet" href="/build/css/all.css" />
+		<!--当前页面css-->
+		<link rel="stylesheet" href="/plugin/style/item/message.css" />
+	</head>
+	<body class="">
+		<header class="mui-bar mui-bar-nav mui-bar-nav-hide qc-bg-color-fff">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left mui-color-333"></a>
+			<h1 class="mui-title mui-color-333 qc-font-size16">消息中心</h1>
+		</header>
+		<div class="mui-content mui-scroll-wrapper mui-bg-fff ">
+			<ul id="list-container" class="mui-table-view ms-items">
+				<li class="mui-table-view-cell mui-media">
+					<a href="/user/systemMessage.html">
+						<img class="mui-media-object mui-pull-left" src="/framwork/global_icon/mipmap-xhdpi/xiaoxi_01.png">
+						<div class="mui-media-body">
+							系统消息<span class="mui-pull-right mg-r15 ft-s12 cl-s9">12:00</span>
+							<p class="mui-ellipsis">优惠促销优惠促销优惠促销优惠促销优惠促销优惠促销优惠促销</p>
+						</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media">
+					<a href="/user/orderMessage.html" class="">
+						<img class="mui-media-object mui-pull-left" src="/framwork/global_icon/mipmap-xhdpi/xiaoxi_02.png">
+						<div class="mui-media-body">
+							商品订单消息<span class="mui-pull-right mg-r15 ft-s12 cl-s9">12:00</span>
+							<p class="mui-ellipsis">优惠促销优惠促销优惠促销优惠促销优惠促销优惠促销优惠促销</p>
+						</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media">
+					<a href="javascript:;.html">
+						<img class="mui-media-object mui-pull-left" src="/framwork/global_icon/mipmap-xhdpi/xiaoxi_03.png">
+						<div class="mui-media-body">
+							门店预约消息<span class="mui-pull-right mg-r15 ft-s12 cl-s9">12:00</span>
+							<p class="mui-ellipsis">优惠促销优惠促销优惠促销优惠促销优惠促销优惠促销优惠促销</p>
+						</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media">
+					<a href="/user/logisticsMessage.html" class="">
+						<img class="mui-media-object mui-pull-left" src="/framwork/global_icon/mipmap-xhdpi/xiaoxi_04.png">
+						<div class="mui-media-body">
+							交易物流消息<span class="mui-pull-right mg-r15 ft-s12 cl-s9">12:00</span>
+							<p class="mui-ellipsis">优惠促销优惠促销优惠促销优惠促销优惠促销优惠促销优惠促销</p>
+						</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media">
+					<a href="javascript:;.html">
+						<img class="mui-media-object mui-pull-left" src="/framwork/global_icon/mipmap-xhdpi/xiaoxi_02.png">
+						<div class="mui-media-body">
+							积分兑换消息<span class="mui-pull-right mg-r15 ft-s12 cl-s9">16/05/10</span>
+							<p class="mui-ellipsis">优惠促销优惠促销优惠促销优惠促销优惠促销优惠促销优惠促销</p>
+						</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media">
+					<a href="javascript:;.html" class="">
+						<span class="ms-sign-num">3</span>
+						<img class="mui-media-object mui-pull-left" src="/framwork/global_icon/mipmap-xhdpi/mess_kefu.png">
+						<div class="mui-media-body">
+							活动消息<span class="mui-pull-right mg-r15 ft-s12 cl-s9">16/12/11</span>
+							<p class="mui-ellipsis">大牙仔风口，12.13隆重返场</p>
+						</div>
+					</a>
+				</li>
+			</ul>
+		</div>
+		
+		<script src="/build/script/all.js"></script>
+		
+		<script type="text/javascript" src="plugin/javascript/web/phone/user/index.js" ></script>
+		<script type="text/html" id="tmpl-messages">
+			<li class="mui-table-view-cell mui-media">
+				<a href="javascripe:;.html" class="">
+					<img class="mui-media-object mui-pull-left" src="/framwork/global_icon/mipmap-xhdpi/mess_kefu.png">
+					<div class="mui-media-body ft-s14">
+						客服消息<span class="mui-pull-right mg-r15 ft-s12 cl-s9"></span>
+						<p class="mui-ellipsis cl-s9">暂无信息</p>
+					</div>
+				</a>
+			</li>
+			{{each $data as $value i}}
+				<li class="mui-table-view-cell mui-media">
+					<a undefined.")[2]}}Message?id={{$value.msgCatId}}" class="">
+						<span class="{{$value._unReadCount>0?'ms-sign-num':'mui-hidden'}}">{{$value._unReadCount}}</span>
+						<img class="mui-media-object mui-pull-left" src="{{$value.msgCatIcon}}">
+						<div class="mui-media-body ft-s14">
+							{{$value.msgCatName}}
+							<span class="mui-pull-right ft-s12 cl-s9">
+								{{$value._newestMessage.msgCatId!=undefined?$value._newestMessage.createTime:""}}
+							</span>
+							<p class="mui-ellipsis cl-s9">{{$value._newestMessage.msgCatId!=undefined?$value._newestMessage.msgContent:"暂无信息"}}</p>
+						</div>
+					</a>
+				</li>
+			{{/each}}
+		</script>
+		<script>
+			mui.ready(function() {
+				var options={};
+				options.messageUrl=common.config.carAppPath+"/capi/message/cat/list.json";
+				options.bodyContainer=document.getElementById("list-container");
+				options.data={};
+				//carUser.message(options);
+				mui.init();
+			});
+		</script>
+		<div style="display:none;">
+			<script src="https://s19.cnzz.com/z_stat.php?id=1262309795&web_id=1262309795 " language="JavaScript"></script>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=0,minimal-ui">
+		<title>商品搜索</title>
+		<link rel="stylesheet" href="/build/css/all.css" />
+		<style type="text/css">
+			.mui-search-row .mui-badge{
+				padding: 6px 12px;
+				background-color: transparent;
+				border: 1px solid #e6e6e6;
+				margin-bottom: 10px;
+    			margin-right: 5px;
+			}
+			.list-container .mui-media-block{
+				height: 20px;
+			}
+			.list-container .mui-media-object.update80{
+				width: 80px;
+			    max-width: 80px;
+			    height: 80px;
+			}
+			.mui-bg-cart{
+				background: #4abfbc;
+			}
+			.mui-bg-buy{
+				background: #32b3af;
+			}
+
+		</style>
+	</head>
+	<body class="">
+		<div class="mui-scroll-wrapper mui-content" id="pullrefresh">
+		    <div class="mui-scroll ">
+		        <!--这里放置真实显示的DOM内容-->
+		        <div class="fn_padding10">
+		       		<div class="mui-input-row mui-search">
+					    <input type="search" class="mui-input-clear qc-font-size14" style="border-radius: 50px;" placeholder="输入关键字搜索商品" id="search-input"/>
+					</div>
+					<!--搜索记录-->
+					<div class="mui-search-row mui-hide" id="search-logs">
+						<p>搜索记录</p>
+						<div class="list-container"></div>
+					</div>
+		        </div>
+				<!--搜索结果-->
+				<div class="" id="list-container">
+					<p class="fn_paddinglr10">搜索结果</p>
+					<ul class="mui-table-view clearUl list-container">
+					</ul>
+				</div>
+		    </div>
+		</div>
+		
+		<script src="/build/script/all.js"></script>
+		<!--多页上拉加载-->
+		<script src="/framwork/mui/pullToRefresh/mui.pullToRefresh.js"></script>
+		<script src="/framwork/mui/pullToRefresh/mui.pullToRefresh.material.js"></script>
+		<!--这是加减按钮-->
+		<script src="/framwork/plugins/plusminusbtn/1.0.2/js/plusminusbtn.min.js"></script>
+		
+		<script src="/plugin/javascript/web/phone/goods/search.js"></script>
+		<script type="text/html" id="tmpl-model-null">
+			<div class="qc-car-null mui-text-center">
+				<div class="qc-car-null-img-empty"></div>
+				<p class="qc-color-888 mui-text-center qc-car-null-text">哎呀！页面还没数据哦~</p>
+			</div>
+		</script>
+		<script type="text/html" id="tmpl-model-loading">
+			<div class="spinner-child spinner-child-fixed">
+				<div class="rect1"></div>
+				<div class="rect2"></div>
+				<div class="rect3"></div>
+				<div class="rect4"></div>
+				<div class="rect5"></div>
+			</div>
+		</script>
+		<script type="text/html" id="tmpl-goods">
+			{{each $data.content as $value i }}
+				<li class="mui-table-view-cell mui-media">
+			        <a href="/goods/view.html?goodsId={{$value.id}}">
+			            <img class="mui-media-object mui-pull-left update80" src="" data-lazyload="{{$value.imgUrl}}">
+			            <div class="mui-media-body qc-font-size14">
+			                <p class="mui-ellipsis-2 qc-color-333">{{$value.name}}</p>
+			                <div class="mui-media-block"></div>
+			                <div class="mui-media-price">
+			                	<i class="mui-color-red">
+			                		&yen;<i class="qc-font-size16">{{$value.price}}</i>
+			                	</i>
+			                	{{if $value.sold > 0}}
+			                		<i class="fn_marginleft10 qc-color-666">销量:{{$value.sold}}</i>
+			                	{{else}}
+			                		<i class="fn_marginleft10 qc-color-666">销量:暂无数据</i>
+			                	{{/if}}
+			                	<span class="iconfont icon-jiarugouwuche qc-font-size30-imp mui-pull-right default-abs-color mui-media-cart" data-gid="{{$value.id}}"></span>
+			                </div>
+			            </div>
+			         </a>
+			    </li>
+			{{/each}}
+		</script>
+		<script type="text/html" id="tmpl-cart">
+			<div id="popover-cart" class="mui-popover mui-popover-bottom mui-popover-action mui-cart-sku qc-bg-color-fff-imp">
+				<div class="mui-sku-head">
+					<img src="{{$data.imgUrl}}" class="mui-sku-object"/>
+					<div class="mui-sku-body">
+						<p class="mui-color-red fn_marginbottom5"><i class="qc-font-size14">&yen;</i><i class="sku-price qc-font-size16">{{$data.price}}</i></p>
+					 	<p class="qc-font-size14 qc-color-333 fn_marginbottom5">库存:<i class="sku-stock">{{$data.stock}}</i>件</p>
+					 	<p class="qc-font-size14 qc-color-333 fn_marginbottom5">
+					 	<i class="sku-attrStr">请选择
+					 	{{if $data.skus != null}}
+						 	{{each $data.skus.short_vals}}
+						 		{{$value.name}}
+						 	{{/each}}
+					 	{{/if}}
+					 	</i>
+					 	</p>
+					</div>
+					<span class="mui-icon mui-icon-close mui-sku-close"></span>
+				</div>
+				<div class="mui-sku-attrs fn_clearmarginbottombyp">
+					{{if $data.skus != null}}
+						{{each $data.skus.short_vals as $shorts i}}
+							<div class="qc-color-333 mui-sku-attr" >
+							 	<p class="qc-color-333 mui-sku-attrname">{{$shorts.name}}</p>
+							 	{{each $shorts.vals}}
+							 	<button class="mui-button mui-button-online" data-itemId="{{$value.id}}">{{$value.name}}</button>
+							 	{{/each}}
+							</div>
+						{{/each}}
+					{{/if}}
+				</div>
+				<div class="mui-sku-button qc-color-333 fn_padding15 mui-text-right">
+					<span class="mui-pull-left qc-font-size14">
+					 	购买数量
+					</span>
+					<div class="input-group _self-group" data-stock="0" data-qty="1" data-price="0" data-goodsattrid="0"></div>
+				</div>
+				<div class="mui-table mui-sku-footer qc-font-size14 mui-text-center qc-color-fff">
+					 <div class="mui-table-cell mui-col-xs-6 mui-bg-cart mui-sku-btn" data-type="cart">
+					 	  加入购物车
+					 </div>
+					 <div class="mui-table-cell mui-col-xs-6 mui-bg-buy mui-sku-btn" data-type="order">
+					 	  立即购买
+					 </div>
+				</div>	
+			</div>
+		</script>
+		<script>
+			mui.ready(function() {
+				window.goodsSearch.init();
+			});
+		</script>
+		<div style="display:none;">
+			<script src="https://s19.cnzz.com/z_stat.php?id=1262309795&web_id=1262309795 " language="JavaScript"></script>
+		</div>
+	</body>
+
+</html>

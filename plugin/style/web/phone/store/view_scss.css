@@ -1,0 +1,218 @@
+@charset "UTF-8";
+.mui-bg-cart {
+  background: #4abfbc; }
+
+.mui-bg-buy {
+  background: #32b3af; }
+
+.mui-media-cart {
+  padding: 8px 15px; }
+
+.marquee-ul {
+  padding-left: 0px; }
+
+.marquee-title {
+  text-align: left; }
+
+#segmentedControls .mui-control-item {
+  width: 100% !important; }
+
+#segmentedControls .mui-control-item {
+  border-bottom: 1px solid #f8f8f8 !important;
+  border-right: 1px solid #f8f8f8 !important;
+  background: #FFFFFF;
+  position: relative; }
+
+#segmentedControls .mui-control-item.mui-active:before {
+  content: "";
+  width: 0.04rem;
+  height: 100%;
+  background: #32B3AF;
+  position: absolute;
+  left: 0;
+  bottom: 0; }
+
+.mui-address-after {
+  font-size: 0.32rem; }
+
+.mui-address-after:after {
+  content: "";
+  line-height: 1;
+  position: absolute;
+  height: 20px;
+  width: 1px;
+  top: 50%;
+  background: #E4E4E4;
+  display: inline-block;
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
+  right: 65px; }
+
+.mui-icon-position {
+  line-height: 1;
+  position: absolute;
+  top: 50%;
+  display: inline-block;
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%); }
+
+.mui-icon-position.mui-icon-position-left {
+  left: 13px; }
+
+.mui-icon-position.mui-icon-position-right {
+  right: 15px; }
+
+.qc-bar-nav .bar-cart .mui-icon {
+  position: relative;
+  line-height: 50px !important;
+  top: -20px;
+  background: #32b3af;
+  width: 50px;
+  border-radius: 100%;
+  color: #fff;
+  box-shadow: 0 1px 6px #ccc;
+  left: 5px; }
+
+a:hover {
+  text-decoration: none !important; }
+
+.mui-store-head {
+  width: 100%;
+  height: 3.7333333333rem;
+  background-image: url(/framwork/global_icon/index/staticImg/storeBg.png);
+  background-repeat: no-repeat;
+  background-color: #F8F8F8;
+  background-size: 100%; }
+  .mui-store-head-back {
+    display: block;
+    height: 0.8533333333rem;
+    padding-left: 13px;
+    padding-top: 0.2133333333rem; }
+    .mui-store-head-back a, .mui-store-head-back a:hover {
+      color: #FFFFFF !important; }
+  .mui-store-head ul {
+    padding-top: 0.1466666667rem; }
+    .mui-store-head ul li {
+      padding-top: 0 !important;
+      padding-bottom: 0 !important; }
+      .mui-store-head ul li a {
+        margin-top: 0 !important;
+        margin-bottom: 0 !important; }
+        .mui-store-head ul li a .mui-media-object {
+          border: 1px solid #fdd077;
+          width: 2.2666666667rem;
+          height: 2.2666666667rem;
+          max-width: 2.2666666667rem;
+          line-height: 2.2666666667rem; }
+          @media only screen and (-webkit-min-device-pixel-ratio: 2) {
+            .mui-store-head ul li a .mui-media-object {
+              border-width: .5px; } }
+        .mui-store-head ul li a .mui-media-body-title {
+          font-size: 0.4rem;
+          color: #fff;
+          padding: 0.1866666667rem 0 0.2133333333rem 0; }
+        .mui-store-head ul li a .mui-media-body-icon span {
+          padding: 0.0666666667rem 0.1333333333rem;
+          border-radius: 0.0533333333rem;
+          background: #c1b152; }
+          .mui-store-head ul li a .mui-media-body-icon span .icon {
+            width: 0.32rem;
+            height: 0.32rem;
+            display: inline-block;
+            background: url(/framwork/global_icon/index/staticImg/金牌荣誉@2x.png) no-repeat;
+            background-size: contain; }
+        .mui-store-head ul li a .mui-media-body-section {
+          padding-top: 0.2133333333rem; }
+          .mui-store-head ul li a .mui-media-body-section span {
+            font-size: 0.32rem; }
+
+#segmentedControl {
+  background-color: #e0f7f7;
+  color: #000000;
+  font-size: 0.4rem;
+  text-align: center; }
+  #segmentedControl .mui-control-item {
+    position: relative; }
+  #segmentedControl .mui-control-item.mui-active:after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 0px;
+    margin-left: -0.4rem;
+    height: 0.04rem;
+    width: 0.8rem;
+    background: #32b3af; }
+  #segmentedControl .mui-control-item.mui-active {
+    border-width: 0; }
+
+#segmentedControlContents .mui-control-content ul li .mui-media-object {
+  width: 1.9733333333rem;
+  max-width: 1.9733333333rem;
+  height: 1.9733333333rem; }
+#segmentedControlContents .mui-control-content ul li .mui-media-body .qc-title {
+  font-size: 0.32rem;
+  color: #000000;
+  letter-spacing: 0;
+  line-height: 0.48rem; }
+
+.mui-cart-sku {
+  height: 0.6666666667rem;
+  vertical-align: bottom; }
+  .mui-cart-sku .input-stock {
+    margin-top: 0.1866666667rem;
+    font-size: 0.2933333333rem;
+    color: #888888; }
+  .mui-cart-sku .input-group.animate-btn {
+    animation: all ease-in; }
+    .mui-cart-sku .input-group.animate-btn input[type=text] {
+      width: 0; }
+    .mui-cart-sku .input-group.animate-btn button.input-group-btn:first-child {
+      width: 0;
+      border: 0; }
+  .mui-cart-sku .input-group {
+    display: inline-block;
+    float: right;
+    padding-right: 0.4rem; }
+    .mui-cart-sku .input-group input[type=text] {
+      border: 0;
+      font-size: 0.2933333333rem;
+      color: #000000;
+      height: 0.6666666667rem;
+      width: 0.6666666667rem; }
+    .mui-cart-sku .input-group button.input-group-btn {
+      border-radius: 100% !important;
+      width: 0.6666666667rem;
+      height: 0.6666666667rem;
+      padding: 0 !important; }
+    .mui-cart-sku .input-group button.input-group-btn:last-child {
+      background: #32B3AF;
+      border: 1px solid #FFFFFF;
+      color: #FFFFFF; }
+    .mui-cart-sku .input-group button.input-group-btn:first-child {
+      border: 1px solid #32B3AF;
+      color: #32B3AF; }
+
+.mui-table-view-distance {
+  height: 1.3333333333rem;
+  line-height: 1.3333333333rem; }
+  .mui-table-view-distance li {
+    padding: 0 15px; }
+    .mui-table-view-distance li p {
+      color: #000000;
+      font-size: 0.32rem; }
+    .mui-table-view-distance li:after {
+      content: "";
+      height: 1px !important;
+      width: 100%; }
+      @media only screen and (-webkit-min-device-pixel-ratio: 2) {
+        .mui-table-view-distance li:after {
+          transform: scaleY(0.5); } }
+  .mui-table-view-distance .mui-icon {
+    color: #32B3AF;
+    font-size: 0.4266666667rem; }
+
+.mui-table-view-store li a {
+  color: #000000;
+  font-size: 0.32rem; }
+
+/*# sourceMappingURL=view_scss.css.map */

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=0,minimal-ui">
+		<title></title>
+		<link rel="stylesheet" href="/build/css/all.css" />
+		<link rel="stylesheet" href="/plugin/style/item/message.css" />
+	</head>
+	<body class="">
+		<header class="mui-bar mui-bar-nav mui-bar-nav-hide default-abs-bg-color">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left mui-color-fff"></a>
+			<h1 class="mui-title mui-color-fff qc-font-size16">系统消息</h1>
+		</header>
+		<div class="mui-content">
+			<div class="mui-scroll-wrapper mui-not-scroll" id="pullrefresh">
+				<div class="mui-scroll">
+					<ul id="list-container" class="mui-table-view ms-item clearUl clearBg"></ul>
+				</div>
+			</div>
+		</div>
+		<script src="/build/script/all.js"></script>
+		<script type="text/javascript" src="/plugin/javascript/web/phone/user/index.js" ></script>
+		<!--这就是HTML 模板 用于数据加载 -->
+		<script type="text/html" id="tmpl-message">
+			{{each $data.items as $value i}}
+				{{if i==0 && $data.pageTime!=$value.createTime || i>0 && $data.items[i-1].createTime != $value.createTime}}
+					<li class="mui-table-view-cell mui-media mui-text-center no_pd">
+						<span class="ms-time">{{$value.createTime}}</span>
+					</li>
+				{{/if}}
+				<li class="mui-table-view-cell mui-media mui-text-center no_pd mg-tb15">
+					<dl class="ms-news">
+						<dt>{{$value.msgTitle}}</dt>
+						<dd>{{$value.msgContent}}</dd>
+					</dl>
+				</li>
+			{{/each}}
+			{{if $data.items==undefined}}
+				<div class="qc-car-null mui-text-center">
+					<div class="qc-car-null-img-empty"></div>
+					<p class="qc-color-888 mui-text-center qc-car-null-text">哎呀！页面还没数据哦~</p>
+				</div>
+			{{/if}}
+		</script>
+		<script>
+			mui.ready(function() {
+				var options={};
+				options.pullrefresh=mui('#pullrefresh');
+				options.messageUrl=common.config.appPath+"/api/user/getUserAddresses";
+				options.bodyContainer=document.getElementById("list-container");
+				options.data={
+					"limit": 5,
+			        "page": 1,
+			        "msgCatId":common.getParameterString("id")
+				};
+				carUser.messageInitPage(options);
+				mui.init();
+			});
+		</script>
+		<div style="display:none;">
+			<script src="https://s19.cnzz.com/z_stat.php?id=1262309795&web_id=1262309795 " language="JavaScript"></script>
+		</div>
+	</body>
+
+</html>

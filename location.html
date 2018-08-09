@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=0,minimal-ui">
+		<title>我的收货地址</title>
+		<link rel="stylesheet" href="/framwork/mui/dist/css/mui.min.css?v=1517561016067" />
+
+		<link rel="stylesheet" type="text/css" href="/plugin/style/basic/loading.css?v=1517561016067" />
+		<link rel="stylesheet" type="text/css" href="/plugin/style/basic/main.css?v=1517561016067" />
+		<link rel="stylesheet" type="text/css" href="/plugin/style/basic/aboutprogess.css?v=1517561016067" />
+		<!--对mui css 的优化-->
+		<link rel="stylesheet" type="text/css" href="/plugin/style/global/module.css?v=1517561016067" />
+		<!--一些颜色  字体字号 -->
+		<link rel="stylesheet" type="text/css" href="/plugin/style/global/orther.css?v=1517561016067" />
+		<!--对商品列表排版 的优化 如 demo1 demo2【在其他地方】 demo3 -->
+		<link rel="stylesheet" type="text/css" href="/plugin/style/global/goodslist.css?v=1517561016067" />
+		<!--本地字体文件库-->
+		<link rel="stylesheet" href="/framwork/iconfonts/basic/iconfont.css?v=1517561016067" />
+		<!--一些对于单页面的描述 可以在HTML临时写在本页面  当接入jsp的时候，在写入css文件-->
+		<link rel="stylesheet" href="/plugin/style/web/phone/main/location.css?v=1517561016067" />
+	</head>
+	<body class="dddj-location">
+		<header class="mui-bar mui-bar-nav mui-bar-nav-hide default-abs-bg-color qc-color-fff">
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left "><span class="qc-font-size16 ">选择收货地址</span></a>
+		    <h1 class="mui-title"></h1>
+		    <a class="mui-icon mui-icon-right-nav mui-pull-right" href="javascript:;.html"><i class="qc-font-size14">新增地址</i></a>
+		</header>
+		<div class="mui-content qc-font-size14">
+			<!--搜索定位模块-->
+			<div class="lcoation-search">
+				 <div class="mui-input-row">
+				     <label id="showCityPicker" class="mui-ellipsis">定位中</label>
+				     <input type="text" placeholder="输入收货地址" id="search-input">
+				 </div>
+			</div>
+		    <!--定位当前模块-->
+		    <ul class="mui-table-view clearUl fn_margintop10 mui-text-center" id="reload-btn">
+	            <li class="mui-table-view-cell">
+	                <a class="qc-font-size14 qc-color-333" href="javascript:;.html">
+	                    <span class="iconfont icon-dingwei default-abs-color fn_marginright5"></span>定位到当前位置
+	                </a>
+	            </li>
+	        </ul>
+	        <!--我的收货地址-->
+	        <ul class="mui-table-view clearUl clearBg">
+	            <li class="mui-table-view-cell">
+	                <a class="qc-font-size14 qc-color-666-imp" href="javascript:;.html">
+	                   	<span class="iconfont icon-yuyue fn_marginright5"></span>我的收货地址
+	                </a>
+	            </li>
+	        </ul>
+	        <ul class="mui-table-view clearUl" id="userads-container"></ul>
+	        <!--附近地址-->
+	        <ul class="mui-table-view clearUl clearBg">
+	            <li class="mui-table-view-cell">
+	                <a class="qc-font-size14 qc-color-666-imp" href="javascript:;.html">
+	                   <span class="iconfont icon-dingwei2 fn_marginright5"></span>附近地址
+	                </a>
+	            </li>
+	        </ul>
+	        <ul class="mui-table-view clearUl" id="pois-container"></ul>
+	       
+		</div>
+		
+		<!--使用选择城市的方法-->
+		
+		<script src="/framwork/mui/dist/js/mui.min.js?v=1517561016067 "></script>
+		<!--这是写的一个辅助js库-->
+		<script src="/framwork/plugins/common.js?v=1517561016067 "></script>
+		<!--tmpl模板本件 用户加载模板文件-->
+		<script src="/framwork/plugins/artTemplate/3.0.3/dist/template.js?v=1517561016067 "></script>
+		
+		<!--弹出picker选择器-->
+		<!--选择器-->
+		<link rel="stylesheet" type="text/css" href="/framwork/mui/picker/css/mui.picker.css?v=1517561016067"/>
+		<link rel="stylesheet" type="text/css" href="/framwork/mui/picker/css/mui.poppicker.css?v=1517561016067"/>
+		<script src="/framwork/mui/picker/js/mui.picker.js"></script>
+		<script src="/framwork/mui/picker/js/mui.poppicker.js"></script>
+		<script src="/framwork/mui/picker/js/city.data.js"></script>
+		
+		<!--百度地图-->
+		<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=1300d75f931f2d8d9b062fa0d048c03f"></script>
+		<script src="/plugin/javascript/web/ajax.js?v=1517561016067"></script>
+		<script src="/plugin/javascript/web/location.js?v=1517561016067"></script>
+		<script type="text/html" id="poi-model">
+			{{each $data as $value i}}
+			<li class="mui-table-view-cell" data-lng="{{$value.point.lng}}" data-lat="{{$value.point.lat}}" data-title="{{$value.title}}">
+                <a class="qc-font-size14 qc-color-333" href="javascript:;.html">
+                  	{{$value.title}}
+                </a>
+            </li>
+            {{/each}}
+		</script>
+		<script type="text/html" id="ads-model">
+			{{each data as $value i}}
+			<li class="mui-table-view-cell mui-media" data-lng="{{$value.longitude}}" data-lat="{{$value.latitude }}" data-title="{{$value.street}}">
+                <a href="javascript:;.html">
+                    <div class="mui-media-body qc-font-size14">
+                        <i>{{$value.street}}</i>
+                        <p class="mui-ellipsis fn_margintop10"><i class="fn_marginright15">{{$value.name}}</i><i class="fn_marginleft15">{{$value.mobile}}</i></p>
+                    </div>
+                </a>
+            </li>
+            {{/each}}
+		</script>
+		<script type="text/html" id="tmpl-model-loading">
+			<div class="spinner-child spinner-child-fixed">
+				<div class="rect1"></div>
+				<div class="rect2"></div>
+				<div class="rect3"></div>
+				<div class="rect4"></div>
+				<div class="rect5"></div>
+			</div>
+		</script>
+		<!--这就是HTML 模板 用于数据加载 -->
+		<script type="text/html" id="tmpl-model-null">
+			<div class="qc-car-null mui-text-center">
+				<div class="qc-car-null-img-empty"></div>
+				<p class="qc-color-888 mui-text-center qc-car-null-text fn_clearmarginbottom">哎呀！页面还没数据哦~</p>
+			</div>
+		</script>
+		<script>
+			mui.ready(function() {
+				/*每个页面都要mui.init*/
+				window.homeLocation.init();
+			});
+		</script>
+		<div style="display:none;">
+			<script src="https://s19.cnzz.com/z_stat.php?id=1262309795&web_id=1262309795 " language="JavaScript"></script>
+		</div>
+	</body>
+
+</html>

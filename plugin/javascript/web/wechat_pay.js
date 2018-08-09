@@ -1,0 +1,1 @@
+var WechatPay=function(){return{pay:function(e,a){try{window.WeixinJSBridge&&WeixinJSBridge.invoke("getBrandWCPayRequest",{appId:e.appId,timeStamp:e.timeStamp,nonceStr:e.nonceStr,package:e.package,signType:e.signType,paySign:e.paySign},a)}catch(e){alert(e)}}}}();

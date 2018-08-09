@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=0,minimal-ui">
+		<title>一键下单-DD订酒</title>
+		<link rel="stylesheet" type="text/css" href="/build/css/all.css" />
+		<!--一些对于单页面的描述 可以在HTML临时写在本页面  当接入jsp的时候，在写入css文件-->
+		<link rel="stylesheet" type="text/css" href="/plugin/style/web/phone/store/map.css" />
+		<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=1300d75f931f2d8d9b062fa0d048c03f"></script>
+		<style type="text/css">
+			.mui-action-search{
+				position: absolute;
+			    right: 0px;
+			    width: 40px;
+			    height: 40px;
+			    font-size: 14px;
+			    top: 0px;
+			    line-height: 40px;
+			    color: #009688;
+			}
+		</style>
+	</head>
+	<body class="didilocationstore">
+		<div class="mui-content"></div>
+		<!--百度地图-->
+		<div id="template-maps"></div>
+		<!--首页地址栏-->
+		<div class="template-search">
+			<div class="template-search-item">
+			 	<span class="mui-icon mui-icon-arrowleft mui-pull-left template-search-item-arrowleft mui-action-back"></span>
+			 	<input type="text" class="template-search-item-input qc-font-size14" placeholder="正在定位中..." id="template-input" />
+			 	<span class="mui-action-search" id="template-search">搜索</span>
+			</div>
+		</div>
+		<!--加载状态-->
+		<div id="template-marker" class="mui-hide "></div>
+		<!--菜单排-->
+		<div id="template-menus">
+			<span class="iconfont icon-zxbb qc-font-size20-imp default-abs-color"></span>
+		</div>
+		<!--店铺列表-->
+		<div id="template-store"></div>
+		<div class="abs-footer" >
+ 	    	<div class="fn_padding10">
+ 	    		<div id="list-container" class="clearBg">
+				</div>
+				<div class="mui-table mui-bg-ffff mui-color-6868 qc-font-size14 abs-tabs">
+					<div class="mui-table-cell mui-col-xs-6 mui-text-center mui-active">
+						一键订酒
+					</div>
+					<div class="mui-table-cell mui-col-xs-6 mui-text-center">
+						<a href="/index.html" class="qc-color-333">DD商城</a><!-- 暂时不用 p/goods/recommendation -->
+					</div>
+				</div>
+ 	    	</div>
+ 	    </div>
+		<script src="/build/script/all.js"></script>
+		<script src="/plugin/javascript/web/phone/store/map.js"></script>
+		<script type="text/html" id="tmpl-model-loading">
+			<div class="spinner-child spinner-child-fixed">
+				<div class="rect1"></div>
+				<div class="rect2"></div>
+				<div class="rect3"></div>
+				<div class="rect4"></div>
+				<div class="rect5"></div>
+			</div>
+		</script>
+		<script type="text/html" id="tmpl-model">
+			<div class="mui-slider" id="slider">
+				<div class="mui-slider-group">
+					{{each $data.content as $value i}}
+					    <!--第一个内容区容器-->
+					    {{if $value.status != 0}}
+						    <div class="mui-slider-item">
+						        <ul class="mui-table-view">
+						            <li class="mui-table-view-cell mui-media">
+										<img class="mui-media-object mui-pull-right fn_margintop10" data-href="/store/view.html?storeId={{$value.id}}&sid={{$value.shopId}}" src="/framwork/global_icon/lazyload/dddjBuy.png">
+					                    <div class="mui-media-body fn_font-size14">
+										    <a href="/store/view.html?storeId={{$value.id}}&sid={{$value.shopId}}">
+					                            <p class="mui-color-000 mui-ellipsis">
+					                                {{$value.name}}
+					                            </p>                		
+					                            <p class="mui-ellipsis fn_font-size12 mui-color-6868">{{$value.address}}</p>
+					                            <!--<p class="fn_font-size12">预计<span class="fn_shop-color">{{$value.distance | Math_PI}}分钟</span>送达</p>-->
+					                        </a>
+									    </div>
+						            </li>
+						        </ul>
+						    </div>
+					    {{/if}}
+					{{/each}}
+				</div>
+				<div class="mui-slider-indicator">
+					{{each $data.content as $value i}}
+						{{if $value.status != 0}}
+							<div class="mui-indicator {{if i== 0}}mui-active{{/if}}"></div>
+						{{/if}}
+					{{/each}}
+				</div>
+			</div>
+		</script>
+		<script type="text/html" id="tmpl-model-null">
+			<div class="mui-slider" id="slider">
+				<div class="mui-slider-group">
+					<!--容器为空-->
+				    <div class="mui-slider-item">
+				        <ul class="mui-table-view">
+				            <li class="mui-table-view-cell mui-media">
+				            	<span class="fn_bg-shop-color mui-color-fff abs-tab mui-hide">0</span>
+			                    <img class="mui-media-object mui-pull-right fn_margintop10 mui-hide" src="/framwork/global_icon/lazyload/LOGO.png" />
+			                    <div class="mui-media-body fn_font-size14">
+			                        <p class="mui-color-000">
+			                           	附近5KM无门店
+			                        </p>                		
+			                        <p class="mui-ellipsis fn_font-size12 mui-color-6868">请点击订酒商城</p>
+			                        <p class="fn_font-size12">24小时以内发货</p>
+			                    </div>
+				            </li>
+				        </ul>
+				    </div>
+			    </div>
+		    </div>
+		</script>
+		
+		<script type="text/javascript">
+			template.helper('Math_PI', function(distance){  
+			    //return Math.ceil((distance / 1000) * 20);
+				var countDistance = distance - 1000;
+				var rd = countDistance / 1000;
+				if (rd > 0)
+					return 19 + Math.round(rd * 8);
+				else 
+					return  19;
+			});
+			mui.ready(function() {
+				window._storemap.init();
+			});
+		</script>
+		<div style="display:none;">
+			<script src="https://s19.cnzz.com/z_stat.php?id=1262309795&web_id=1262309795 " language="JavaScript"></script>
+		</div>
+	</body>
+
+</html>

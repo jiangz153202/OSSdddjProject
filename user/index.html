@@ -1,0 +1,377 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=0,minimal-ui">
+		<title>个人中心-DD订酒</title>
+		<link rel="stylesheet" href="/build/css/all.css" />
+		<link rel="stylesheet" href="/plugin/style/web/phone/user/user.css" />
+		<link rel="stylesheet" href="/plugin/style/web/nav_tab.min.css" />
+		<!--background-color: #373b3e;-->
+		<style>
+			.mui-content,
+			body {			
+				color: #333;
+			}
+			li {
+				list-style-type: none;
+			}
+			/*用户基本信息*/
+			.user-headerinfo {
+				height: 135px;
+				background: url(../framwork/activities/new_ui_luz/Head_background.jpg) no-repeat center top;
+				background-size: 100%;
+			}
+			.user-avatarinfo {
+				padding: 0;
+				height: inherit;
+				text-align: center;
+			}
+			
+			.user-avatarinfo .image {
+				margin-top: 16px;
+				width: 60px;
+				height: 60px;
+				border-radius: 100%;
+				border: 2px solid #2ab9b9;
+			}
+			
+			.user-basicinfo p {
+				margin-bottom: 0;
+			}
+			/*地址和优惠，店铺*/
+			
+			.user-tableinfo {
+				display: table;
+			}
+			
+			.user-tableinfo .iconimg {
+				width: 30px;
+		
+				height: 30px;
+		
+
+				margin-right: 2.5px;
+			}
+			
+			.myaddressbox {
+				background: #FFFFFF;
+				position: relative;
+				text-align: center;
+				display: table-cell;
+				width: 1%;
+			}
+			
+			.myaddressbox:after {
+				content: "";
+				height: 100%;
+				width: 1px;
+				background: #C4C8CC;
+				position: absolute;
+				top: 0;
+				right: 0;
+			}
+			
+			.mycouponbox {
+				background: #FFFFFF;
+				position: relative;
+				text-align: center;
+				display: table-cell;
+				width: 1%;
+			}
+			
+			.mystorebox {
+				background: #FFFFFF;
+				position: relative;
+				text-align: center;
+				display: table-cell;
+				width: 1%;
+			}
+			
+			.mystorebox:before {
+				content: "";
+				height: 100%;
+				width: 1px;
+				background: #C4C8CC;
+				position: absolute;
+				top: 0;
+				left: 0;
+			}
+			
+			.user-myaddress {
+				display: block;
+				margin-top: 11.5px;
+				margin-bottom: 11.5px;
+				color: #000000;
+			}
+			
+			.user-myaddress .iconimg {
+				color: #ff988a;
+				vertical-align: middle;
+			}
+			
+			.user-myaddress .text {
+				font-size: 14px;
+			}
+			
+			.user-mycoupon {
+				display: block;
+				margin-top: 11.5px;
+				margin-bottom: 11.5px;
+				color: #000000;
+			}
+			
+			.user-mycoupon .iconimg {
+				color: #ffdb8a;
+				vertical-align: middle;
+			}
+			
+			.user-mycoupon .text {
+				font-size: 14px;
+			}
+			
+			.user-mystore {
+				display: block;
+				margin-top: 11.5px;
+				margin-bottom: 11.5px;
+				color: #000000;
+			}
+			
+			.user-mystore .iconimg {
+				color: #7ed0e3;
+				vertical-align: middle;
+			}
+			
+			.user-mystore .text {
+				font-size: 14px;
+			}
+			/*关于我们。。*/
+			
+			.user-helpinfo {
+				font-size: 12px;
+			}
+			.user-helpinfo .iconimg {
+				width: 25px;
+	
+				height: 25px;
+
+				font-size: 16px;
+				color: #2ab9b9;
+				margin-right: 10px;
+				float: left;
+			}
+			
+			.user-helpinfo .telphoneline {
+				padding: 0;
+				width: 35px;
+				height: 22px;
+				border:none;
+				border-radius: 5px;
+				line-height: 22px;
+				font-size: 12px;
+				color:#fff;
+				background: #2ab9b9;
+			}
+			
+			.user-signout {
+				margin: 0 auto;
+				padding: 0;
+				width: 92px;
+				height: 30px;
+				border:none;
+				border-radius: 20px;
+			    font-size: 14px;
+			    line-height: 30px;
+				color:#fff;
+				background: #2ab9b9;
+			}
+			
+			.mui-hide {
+				display: none !important;
+			}
+			
+			
+
+		</style>
+
+	</head>
+
+	<body class="">
+		<nav class="mui-bar mui-bar-tab">
+			<a class="mui-tab-item " href="/index.html">
+				<span class="mui-icon mui-icon-tab1"></span>
+				<span class="mui-tab-label">首页</span>
+			</a>
+			<a class="mui-tab-item" href="/goods/dailygroups.html">
+				<span class="mui-icon mui-icon-tab2"></span>
+				<span class="mui-tab-label">分类</span>
+			</a>
+			<a class="mui-tab-item" href="/order/summary.html">
+				<span class="mui-icon mui-icon-tab3"></span>
+				<span class="mui-tab-label">订单</span>
+			</a>
+			<a class="mui-tab-item mui-active" href="javascript:;">
+				<span class="mui-icon mui-icon-tab4"></span>
+				<span class="mui-tab-label">我的</span>
+			</a>
+		</nav>
+		<div class="mui-content mui-scroll-wrapper">
+			<div class="mui-scroll">
+
+				<!--用户基本信息-->
+				<div class="user-headerinfo fn_marginbottom20">
+					<div class="user-avatarinfo">
+						<img id="avatar" src="/framwork/global_icon/lazyload/logo2.png" alt="" class="image" />
+						<p id="userName" class="qc-font-size16 mui-color-fff">暂无ID</p>
+						<p id="userNo" class="mui-color-fff" style="font-size: 14px;">ID:000000</p>
+					</div>
+				</div>
+
+				<div class="" id="list-container">
+				</div>
+
+				<div style="text-align: center; margin-top: 20%;" id="login-out">
+					<a class="mui-btn user-signout">退出登录</a>
+				</div>
+
+			</div>
+		</div>
+
+		<script type="text/html" id="tmpl-model">
+			<!--地址和优惠，店铺-->
+
+			<div class="user-tableinfo fn_marginbottom20">
+
+				<div class="myaddressbox">
+
+					<a class="user-myaddress" href="/user/address.html">
+						<!--<span class="iconfont">&#xe67a;</span>-->
+						<img src="/framwork/activities/new_ui_luz/myaddress.png" alt="" class="iconimg"/>
+						<span class="text">我的地址</span>
+					</a>
+				</div>
+				<div class="mycouponbox">
+					<a class="user-mycoupon" href="/user/coupon.html">
+						<!--<span class="iconfont">&#xe6a4;</span>-->
+						<img src="/framwork/activities/new_ui_luz/mycoupon.png" alt="" class="iconimg"/>
+						<span class="text">优惠券</span>
+					</a>
+				</div>
+
+				<div class="mystorebox mui-hide" id="store-container">
+					<a class="user-mystore" href="http://s.dddingjiu.com/views/home.html?type=index">
+						<!--<span class="iconfont">&#xe62a;</span>-->
+						<img src="/framwork/activities/new_ui_luz/mystore.png" alt="" class="iconimg"/>
+						<span class="text">商家店铺</span>
+					</a>
+				</div>
+
+				<!--<div class="mystorebox mui-hide" id="delivery-container">
+					<a class="user-mystore" href="http://s.dddingjiu.com/delivery/index.html">
+						<span class="iconfont">&#xe62a;</span>
+						<span class="text">配送中心</span>
+					</a>
+				</div>-->
+
+			</div>
+
+			<!--关于我们..-->
+			<div class="user-helpinfo">
+				<ul class="mui-table-view fn_marginbottom20">
+					<li class="mui-table-view-cell">
+						<a class="mui-navigate-right" href="/article/view.html?aid=3">
+							<!--<span class="iconfont">&#xe624;</span>-->
+							<img src="/framwork/activities/new_ui_luz/about us.png" alt="" class="iconimg"/>
+							关于我们
+						</a>
+					</li>
+					<li class="mui-table-view-cell">
+						<a class="mui-navigate-right" href="/user/commonproblem.html">
+							<!--<span class="iconfont">&#xe628;</span>-->
+							<img src="/framwork/activities/new_ui_luz/common problem.png" alt=""  class="iconimg"/>
+							常见问题
+						</a>
+					</li>
+					<li class="mui-table-view-cell">
+						<a class="mui-navigate-right" href="/user/service.html">
+							<!--<span class="iconfont">&#xe629;</span>-->
+							<img src="/framwork/activities/new_ui_luz/contact customer service.png" alt="" class="iconimg"/>
+							联系客服
+						</a>
+					</li>
+				</ul>
+
+				<ul class="mui-table-view">
+					<li class="mui-table-view-cell">
+					<!--	<span class="iconfont">&#xe685;</span>-->
+					<img src="/framwork/activities/new_ui_luz/hotline.png" alt="" class="iconimg"/>
+						热线电话：400-839-3979
+						<a class="mui-btn telphoneline" href="tel:400-839-3979.html">呼叫</a>
+					</li>
+				</ul>
+			</div>
+		</script>
+
+		<script type="text/javascript" src="/build/script/all.js"></script>
+		<script type="text/javascript" src="/plugin/javascript/web/phone/user/index.js"></script>
+		<script>
+			mui.ready(function() {
+				window.carUser.init();
+				if(document.getElementById('login-out') != null) {
+					document.getElementById('login-out').addEventListener('tap', function() {
+//						var opts = {
+//							urlPath: common.config.appPath + '/api/user/logout',
+//							onSuccess: function(result) {
+//								console.log(result.status);
+//								if(result.status == 0) {
+//									
+//								} else {
+//									common.alert({
+//										msg: '退出失败'
+//									})
+//								}
+//
+//							}
+//						}
+//						AjaxCommon.getAjaxRequestJson(opts);
+						localStorage.removeItem('accessGrant');
+						common.alert({
+							msg: '退出成功',
+							onHidden: function() {
+								window.location.href = common.config.homeUrl;
+							}
+						})
+
+					});
+				}
+				
+				AjaxCommon.pageInit('.mui-bar');
+			});
+			
+			
+		</script>
+
+
+	<script type="text/html" id="tmpl-model-loading">
+		<div class="spinner-child spinner-child-fixed">
+			<div class="rect1"></div>
+			<div class="rect2"></div>
+			<div class="rect3"></div>
+			<div class="rect4"></div>
+			<div class="rect5"></div>
+		</div>
+	</script>
+	<!--这就是HTML 模板 用于数据加载 -->
+	<script type="text/html" id="tmpl-model-null">
+		<div class="qc-car-null mui-text-center">
+			<div class="qc-car-null-img-empty"></div>
+			<p class="qc-color-888 mui-text-center qc-car-null-text">哎呀！页面还没数据哦~</p>
+		</div>
+	</script>
+	<div style="display:none;">
+		<script src="https://s19.cnzz.com/z_stat.php?id=1262309795&web_id=1262309795 " language="JavaScript"></script>
+	</div>
+</body>
+
+</html>

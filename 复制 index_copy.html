@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=0,minimal-ui">
+		
+		<title>DD订酒-即刻就有</title>
+		<link rel="stylesheet" type="text/css" href="/build/css/all.css?v=1517625812658" />
+		<!--一些对于单页面的描述 可以在HTML临时写在本页面  当接入jsp的时候，在写入css文件-->
+		<link rel="stylesheet" type="text/css" href="/plugin/style/web/phone/main/updateindex.css?v=1517625812658" />
+		<script src="/build/script/all.js"></script>
+		<style type="text/css">
+			.act_icon{
+				width: 55px;position: fixed;right: 10px;bottom: 65px;z-index: 10;
+			}
+			.md-modal {
+			    position: fixed;
+			    top: 0%;
+			    width: 100%;
+			    max-width: 630px;
+			    min-width: 320px;
+			    height: auto;
+			    z-index: 2000;
+			    visibility: hidden;
+			    -webkit-backface-visibility: hidden;
+			    -moz-backface-visibility: hidden;
+			    backface-visibility: hidden;
+			    /*-webkit-transform: translateX(0%) translateY(-50%);
+			    -moz-transform: translateX(0%) translateY(-50%);
+			    -ms-transform: translateX(0%) translateY(-50%);
+			    transform: translateX(0%) translateY(-50%);*/
+			}
+			.md-effect-3 .md-content {
+			    -webkit-transform: translateY(0%);
+			    -moz-transform: translateY(0%);
+			    -ms-transform: translateY(0%);
+			    transform: translateY(0%);
+			    opacity: 0;
+			    -webkit-transition: all 0.3s;
+			    -moz-transition: all 0.3s;
+			    transition: all 0.3s;
+			}
+			
+			.md-show {
+			    visibility: visible;
+			    background: rgba(0,0,0,.7);
+			}
+			.md-show.md-effect-3 .md-content{
+				opacity: 1;
+			}
+			
+			.mui-bar-nav.mui-bar .mui-icon{
+    
+			    border-radius: 26px;
+			    padding: 5px 10px !important;
+			    margin-top: 10px;
+			    /*width:-moz-calc(50% - (10px + 5px)); 
+			    width:-webkit-calc(50% - (10px + 5px)); 
+			    width: calc(50% - (10px + 5px));*/
+			} 
+			.mui-bar-nav.mui-bar .mui-icon:first-child{
+				margin-left: 0px;
+				background: rgba(0,0,0,.5);
+				 width:-moz-calc(70% - (10px + 5px)); 
+			    width:-webkit-calc(70% - (10px + 5px)); 
+			    width: calc(70% - (10px + 5px));
+			}
+			.mui-bar-nav.mui-bar .mui-icon:last-child{
+				margin-right: 0px;
+				background: #FFFFFF;
+				box-shadow: 0 0 10px #E8E8E8;
+				 width:-moz-calc(30% - (10px + 5px)); 
+			    width:-webkit-calc(30% - (10px + 5px)); 
+			    width: calc(30% - (10px + 5px));
+			}
+			.daily-time-container {}
+			
+			.daily-time-container i {
+				display: inline-block;
+				padding: 3px 3px;
+				border-radius: 3px;
+				max-width: 16px;
+				width:16px;
+			/*	box-shadow: 0 0px 7px #484848;*/
+			}
+			
+			.daily-time-container i.bg-000 {
+				background-color: #000000;
+				color: #fff;
+			}
+			
+			.daily-time-container i.bg-red {
+				background-color: #D32F2F;
+				color: #fff;
+			}
+			
+			.daily-time-container b {
+				font-size: 12px;
+				color: #333333;
+				font-weight: 100;
+			}
+			
+			/*产品列表*/
+			.z-content {}
+			
+			.z-content .list-layout-demo.demo1 {
+				margin: 10px!important;
+			}
+			
+			.z-content .list-layout-demo.demo1 a {
+				display: block;
+			}
+			
+			.z-content img {
+				display: block;
+			}
+			
+			.z-content .z-headImg {
+				overflow: hidden;
+				/*  max-height: 135px; */
+			}
+			
+			.z-content .list-layout-demo.demo1 .detail-content-default {
+				margin-top: 10px;
+				padding: 0px 5px 5px 5px;
+			}
+			
+			.z-content .list-layout-demo.demo1 .detail-content-default .text {
+				min-height: 28px;
+				line-height: 14px;
+				color: #686868;
+				margin-bottom: 10px;
+			}
+			
+			.z-content .list-layout-demo.demo1 .detail-content-default h5 {
+				border-top: 1px dotted #bdbdbd;
+			}
+			
+			.z-content .list-layout-demo.demo1 .detail-content-default .mui-text-decoration {
+				text-decoration: line-through;
+			}
+			
+			.z-content .list-layout-demo.demo1 .demo-model:nth-child(2n) .active.detail-body {
+				margin-right: 0px;
+				margin-left: 5px;
+			}
+			/*左右滚动*/
+			.mall_headlines{
+				margin: 10px 0;
+			    height: 105px;
+			    overflow: hidden;
+			}
+			
+			.mall_headlines_list{
+				font-size: 0;
+			    font-family: none;
+			    white-space: nowrap;
+			    -webkit-overflow-scrolling: touch;
+			    overflow: hidden;
+			    overflow-x: auto;
+			    padding: 0px;
+			    padding-bottom: 20px;
+			}
+			
+			.mall_headlines_list_item.type_title {
+			    width: 75px;
+			}
+			.mall_headlines_list_item{
+				position: relative;
+    			height: 100px;
+    			display: inline-block;
+    			vertical-align: top;
+    			font-family: -apple-system,Helvetica,sans-serif;
+			}
+			
+			.mall_headlines_list_item.type_title::before {
+			    content: "";
+			    display: block;
+			    width: 65px;
+			    height: 100px;
+			    margin: 0px auto;
+			    background-image: url('data:image/png;base64,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');
+			    background-repeat: no-repeat;
+			    background-position: 50%;
+			    background-size: 60px;
+			}
+			
+			.mall_headlines_list_item:not(.type_title) {
+				width: 95px;
+				background-color: #fff;
+				border-radius: 2px;
+				margin-right: 10px;
+				/*box-shadow: 0 1px 4px hsla(0,0%,67%,.2)*/
+			}
+		</style>
+		<!-- build:js js/libs/libs.min.js -->
+		<script src="/framwork/mui/dist/js/mui.js?v=1517625812658" inline></script>
+		<script src="/framwork/plugins/common.js?v=1517625812658" inline></script>
+		<script src="/framwork/plugins/artTemplate/3.0.3/dist/template.js?v=1517625812658" inline></script>
+		<script src="/framwork/plugins/muilazyload/1.7.0/js/mui.lazyload.js?v=1517625812658" inline></script>
+		<script src="/framwork/plugins/muilazyload/1.7.0/js/mui.lazyload.img.js?v=1517625812658" inline></script>
+		<script src="/plugin/javascript/web/ajax.js?v=1517625812658" inline></script>	
+		
+		<script src="/framwork/plugins/popup/js/mui-popup-add.js?v=1517625812658"></script>
+		<script src="http://api.map.baidu.com/api?v=2.0&ak=1300d75f931f2d8d9b062fa0d048c03f" <!--onerror="window.location.reload()"-->></script>
+		<script src="/plugin/javascript/web/wxShare.js"></script>
+		<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+		<script src="/plugin/javascript/web/index.js?v=1517625812658"></script>
+		<!-- /build --> <!--process-html插件需要用到这个注释-->
+	</head>
+	<body class="">
+	
+		<header class="mui-bar mui-bar-nav mui-bar-nav-hide mui-bar-transparent mui-transitioning" style="background-color: rgba(50, 179, 175, 0);">
+			<a class="mui-pull-left mui-icon qc-font-size12-imp mui-ellipsis qc-color-fff" href="/location.html" style="padding: 7px 10px !important;">
+				<i class="lable-position">定位中...</i>
+			</a>
+			<!--<h1 class="mui-title  qc-font-size16 default-abs-color">滴滴订酒</h1>-->
+			<a class=" mui-pull-right mui-icon qc-font-size12-imp qc-color-999 mui-ellipsis" href="/goods/search.html">
+				<span class="iconfont icon-search fn_marginright10"></span>酒水aBc
+			</a>
+		</header>
+		<!--底部菜单-->
+		<script type="text/javascript" id="js-footer">
+			AjaxCommon.pageInit('.mui-bar-tab');
+			var DEFAULT_ACTIVE_PATHNAME = window.location.pathname.toUpperCase();
+			var DEFAUTL_SPLIT = '/'.toUpperCase();
+			var splitStr = DEFAULT_ACTIVE_PATHNAME.substr(DEFAULT_ACTIVE_PATHNAME.indexOf(DEFAUTL_SPLIT) + DEFAUTL_SPLIT.length, DEFAULT_ACTIVE_PATHNAME.length);
+			//console.log('获取'+splitStr);
+			var items = document.querySelectorAll('.tails .mui-tab-item');
+			for(var i = 0; i < items.length; i++) {
+				var _this_default_href = items[i].pathname.toUpperCase();
+		
+				var hrefStr = _this_default_href.substr(_this_default_href.indexOf(DEFAUTL_SPLIT) + DEFAUTL_SPLIT.length, _this_default_href.length);
+				if(splitStr == '' || splitStr == "P") {
+					items[0].classList.add('mui-active');
+				}
+				//console.log(hrefStr + '当前url'+splitStr);
+				if(hrefStr == splitStr) {
+					items[i].classList.add('mui-active');
+				}
+			};
+			mui('.mui-bar-tab').on('tap', '.mui-tab-item', function() {
+				if(this.classList.contains('car-footer')) {
+					carSecretaryTmpl.init(function() {}, function() {
+						//console.log('加载完成后');
+					});
+				}
+			});
+		</script>
+		<script type="text/html" id="tmpl-footer">
+			<nav class="tails mui-bar mui-bar-tab qc-bg-color-fff-imp">
+				<a class="mui-tab-item " href="/index.html">
+					<span class="mui-icon iconfont icon-tuijian"></span>
+					<span class="mui-tab-label">首页</span>
+				</a>
+				<a class="mui-tab-item" href="/goods/dailygroups.html">
+					<span class="mui-icon iconfont ">&#xe658;</span>
+					<span class="mui-tab-label">分类</span>
+				</a>
+				<!--<a class="mui-tab-item dddj-footer" href="/store/list.html">
+					<div class="menu-icon">
+						<div class="fn_bg-shop-color menu-inline">
+							<img src="/framwork/global_icon/lazyload/logo2.png" class="w100 menu-logo">
+						</div>
+					</div>
+					<span class="mui-tab-label menu-text">一键下单</span>
+				</a>-->
+				<a class="mui-tab-item" href="/order/summary.html">
+					<span class="mui-icon iconfont">
+						&#xe657;
+						<!--<span class="mui-badge mui-hide">0</span>-->
+					</span>
+					<span class="mui-tab-label">订单</span>
+				</a>
+				<a class="mui-tab-item" href="/user/index.html">
+					<span class="mui-icon iconfont ">&#xe664;</span>
+					<span class="mui-tab-label">我的</span>
+				</a>
+			</nav>
+		</script>
+		<script type="text/html" id="tmpl-model-loading">
+			<div class="spinner-child spinner-child-fixed">
+				<div class="rect1"></div>
+				<div class="rect2"></div>
+				<div class="rect3"></div>
+				<div class="rect4"></div>
+				<div class="rect5"></div>
+			</div>
+		</script>
+		<!--这就是HTML 模板 用于数据加载 -->
+		<script type="text/html" id="tmpl-model-null">
+			<div class="qc-car-null mui-text-center">
+				<div class="qc-car-null-img-empty"></div>
+				<p class="qc-color-888 mui-text-center qc-car-null-text">哎呀！页面还没数据哦~</p>
+			</div>
+		</script>
+		<!--下拉刷新容器-->
+		<div id="refreshContainer" class="mui-content  fn_clearpaddingtop">
+			<!--<div class="mui-scroll">-->
+				<div class="" id="body-container">
+					 <p class="mui-text-center" style="margin-top: 60px;">加载中...</p>
+				</div>
+			<!--</div>-->
+		</div>
+		<!--弹出样式表-->
+		<style>
+			.new-popup-container{
+			    position: fixed;
+			    background-color: rgba(0,0,0,0.5);
+			    top: 0px;
+			    left: 0px;
+			    z-index: 11;
+			    bottom: 0px;
+			    right: 0px;
+			    opacity: 0;
+			    -webkit-transition: all .5s ease-in;
+		        -moz-transition: all .5s ease-in;
+		        transition: all .5s ease-in;
+			}
+			.new-popup-container.hide{
+				display: none;
+			}
+			
+			.new-popup-container.active{
+				opacity: 1;
+			}
+			.popup-container{
+				padding: 80px 36px 84px 36px;
+			    height: 100%;
+			}
+			.popup-container .popup-cmt{
+				position: relative;
+			}
+			.popup-container .popup-cmt .popup-cmtButton{
+				position: absolute;
+			    text-align: center;
+			    bottom: 29px;
+			    width: 46%;
+			    left: 50%;
+			    margin-left: -22%;
+			}
+			
+			.popup-container-closeCmt{
+				text-align: center;
+				margin-top: 24px;
+			}
+			
+			/*老用户*/
+			.old-user-container{
+				width: 100%;
+				height: 260px;
+				padding: 20px;
+				text-align: center;
+				background-color: #FFFFFF;
+				margin: auto;
+				margin-top:  25%;
+				border-radius:  4px;
+				box-shadow: 0 0 5px #000;
+			}
+			.old-user-container h3 {
+			    /* font-size: 24px; */
+			    font-size: 18px;
+			    line-height: 24px;
+			    line-height: 1;
+			    margin-top: 5px;
+			    margin-bottom: 10px;
+			}
+			
+			@media screen and (max-width: 320px) {
+			   .old-user-container h3 {
+			   	  font-size: 16px;
+			   }
+			}
+			
+			.mui-old-share{
+				background-color: #ff4048;
+				border-color: #FF4048;
+				box-shadow: 0 0 5px #3b3b3b;
+				border-radius: 20px;
+			}
+			
+			/*滑动菜单*/
+			.active-module{
+				position: fixed;
+				bottom: 100px;
+				
+				-webkit-transition: all 0.3s ease;
+			    -moz-transition: all 0.3s ease;
+			    transition: all 0.3s ease;
+			}
+			.cbp-menu-right.cbp-menu-open{
+				right: 15px;
+			}
+			.cbp-menu-right{
+				right: -38px;
+			}
+			
+			.hide{
+				display: none;
+			}
+		</style>
+		
+		
+		<div class="new-popup-container hide" id="new-user-container">
+			<!--图片容器-->
+			<div class="popup-container">
+			 	<div class="popup-cmt">
+			 		<img style="width: 100%;" src="framwork/activities/new_user_coupon/组24拷贝.png"/> 
+			 		<img class="popup-cmtButton" src="framwork/activities/new_user_coupon/按钮.png"/> 
+			 	</div>
+			 	<div class="old-user-container hide">
+			 		<div class="fn_marginbottom15">
+			 		 	<h3>这是个新用户专享红包哦,</h3>
+			 		 	<h3>快分享给好友吧！</h3>
+			 		</div>
+			 		<div class="fn_paddingtop10">
+			 			<img width="60px" src="../framwork/activities/new_user_coupon/图层1256.png"/>
+			 			<p class="fn_font-size12 mui-color-000">微信群聊</p>
+			 		</div>
+			 		<div class="">
+			 			 <button class="mui-button mui-btn-primary w80 mui-old-share">点击分享</button>
+			 		</div>
+			 	</div>
+			 	<div class="popup-container-closeCmt">
+			 		<img width="45px" id="popup-close" src="framwork/activities/new_user_coupon/close.png"/>
+			 	</div>
+			</div>
+		</div>
+		<!--END-->
+		<div class="active-module cbp-menu-right cbp-menu-open hide" id="new_user_icon">
+			<img width="60px" src="framwork/activities/new_user_coupon/页面静止时状态.png"/>
+		</div>
+		<script type="text/html" id="tmpl-body">
+			<div id="slider" class="mui-slider" style="min-height: 120px;background-color: #efefef;">
+				{{include 'tmpl-slider' $data.carousels}}
+			</div>
+			<!--数据列表-->
+			<div class="mui-action-banner">
+				<img class="w100 mui-block" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAoAAAAAwCAIAAAF5/Wy+AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMDY3IDc5LjE1Nzc0NywgMjAxNS8wMy8zMC0yMzo0MDo0MiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTUgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjI0OEZBQURBNkMyQjExRTdBRUI5RTJBRTY2RkJBQUJGIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjI0OEZBQURCNkMyQjExRTdBRUI5RTJBRTY2RkJBQUJGIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6MjQ4RkFBRDg2QzJCMTFFN0FFQjlFMkFFNjZGQkFBQkYiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6MjQ4RkFBRDk2QzJCMTFFN0FFQjlFMkFFNjZGQkFBQkYiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz75JjFlAAAUfElEQVR42mL8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" />
+			</div>
+			<div class="shop-bar-order ">
+				<ul class="fn_paddinglr10 clear">
+					
+					<li class="js-all-goods w20 fn_clearmargin ">
+						<a href="/goods/dailygroups.html?tagId=1">
+							<div class="border-radius-all fn_padding5" >
+								<img src="/framwork/global_icon/lazyload/index/1.png?v=12"
+									class="w100 fn_padding5 border-radius-all mui-block" />
+							</div>
+							<span class="text qc-color-333-imp qc-font-size12-imp ">红酒</span>
+						</a>
+					</li>
+					<li class="js-all-goods w20 fn_clearmargin ">
+						<a href="/goods/dailygroups.html?tagId=2">
+							<div class="border-radius-all fn_padding5" >
+								<img src="/framwork/global_icon/lazyload/index/2.png?v=12"
+								 class="w100 fn_padding5 border-radius-all mui-block" />
+							</div>
+							<span class="text qc-color-333-imp qc-font-size12-imp ">洋酒</span>
+						</a>
+					</li>
+					<li class="js-all-goods w20 fn_clearmargin ">
+						<a href="http://mp.weixin.qq.com/s/aYcRxzB-vSpCEGpMJDqs7w">
+							<div class="border-radius-all fn_padding5" >
+								<img src="/framwork/global_icon/lazyload/index/3.png?v=12"
+								 class="w100 fn_padding5 border-radius-all mui-block" />
+							</div>
+							<span class="text qc-color-333-imp qc-font-size12-imp ">新客有礼</span>
+						</a>
+					</li>
+					<li class="js-all-goods w20 fn_clearmargin ">
+						<a href="/goods/dailygroups.html?tagId=3">
+							<div class="border-radius-all fn_padding5" >
+								<img src="/framwork/global_icon/lazyload/index/4.png?v=12"
+								 class="w100 fn_padding5 border-radius-all mui-block" />
+							</div>
+							<span class="text qc-color-333-imp qc-font-size12-imp ">白酒</span>
+						</a>
+					</li>
+					<li class="js-all-goods w20 fn_clearmargin ">
+						<a href="/goods/dailygroups.html?tagId=4">
+							<div class="border-radius-all fn_padding5" >
+								<img src="/framwork/global_icon/lazyload/index/5.png?v=12"
+								 class="w100 fn_padding5 border-radius-all mui-block" />
+							</div>
+							<span class="text qc-color-333-imp qc-font-size12-imp ">啤酒</span>
+						</a>
+					</li>
+				</ul>
+			</div>
+			<!--限时秒杀-->
+			<div class="fn_margintop10">
+				<p class="vux-divider vux-divider-blod vux-divider-byact">限时秒杀</p>
+				<div class="qc-bg-color-fff" id="daily-container">
+				</div>
+			</div>
+			<!--8090-->
+			<div class="fn_margintop10">
+				<p class="vux-divider vux-divider-blod vux-divider-byact">8090专区</p>
+				{{include 'tmpl-act1111' $data}}
+			</div>
+			
+			<div class="fn_margintop10">
+				<p class="vux-divider vux-divider-blod vux-divider-byact">特惠专区</p>
+				{{include 'tmpl-act1112' $data}}
+			</div>
+			<!--限量秒杀-->
+			{{if $data.timeLimits.name != undefined }}
+				{{include 'tmpl-timelimits' $data.timeLimits}}
+			{{/if}}
+			<!--热门推荐-->
+			<!--送礼.宴会-->
+			{{include 'tmpl-Tags' $data.tags}}
+			<!--19分钟速达联盟商-->
+			<div class="">
+				<p class="vux-divider vux-divider-blod vux-divider-byact">19分钟速达联盟商</p>
+				<div class="shop-Tmpls">
+					{{include 'tmpl-shops' $data.indexStores}}
+				</div>
+			</div>
+			<!--推荐文章-->
+			{{include 'tmpl-article' $data.articles}}
+			<!--结束语-->
+			<div class="fn_margintop10">
+				<p class="vux-divider">底线在此,不要再拉啦</p>
+			</div>
+		</script>
+		<script type="text/html" id="tmpl-timelimits">
+			{{if $data.length > 0}}
+			<div class="fn_margintop10">
+				<p class="vux-divider vux-divider-blod">周年庆· &yen;0.9元抢购</p>
+				{{each $data as $value i}}
+				<a href="/goods/view.html?goodsId={{$value.goodsId}}"  class="qc-color-666">
+					<div class="mui-card mui-card-">
+						<div class="mui-card-header mui-card-media" style="height:40vw;background-image:url('http://dddj-cdn-oss-01.oss-cn-shenzhen.aliyuncs.com/images/goods/0.9_323_01.jpg');"></div>
+						<div class="mui-card-content">
+							<div class="mui-card-content-inner">
+								<p class="qc-color-333">{{$value.goodsDetail.name}}</p>
+								<div>
+									<span class="qc-color-red">&yen;{{$value.price}}</span>
+									<i class="qc-font-size10">全网最低</i>
+									<span class="mui-pull-right qc-font-size10 qc-color-666 " id="timeLimits"
+										 data-starttime="{{$value.startTime}}" data-endtime="{{$value.endTime}}" id="lastlimiti">
+										 <i class="time-status">离开抢还剩:</i> <i class="tm">0</i>天<i class="tm">0</i>时<i class="tm">0</i>分<i class="tm">0</i>秒
+									</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</a>
+				{{/each}}
+			</div>
+			
+			{{/if}}
+		</script>
+		<script type="text/html" id="tmpl-article">
+			{{if $data.length > 0}}
+			<div class="fn_margintop10">
+				<p class="vux-divider vux-divider-blod vux-divider-byact">推荐文章</p>
+				{{each $data as $value i}}
+					<a href="/article/view.html?aid={{$value.id}}" class="qc-color-666">
+					<div class="mui-card mui-card-">
+						<div class="mui-card-header mui-card-media" style="height:40vw;background-image:url('{{$value.imgUrl}}');"></div>
+						<div class="mui-card-content">
+							<div class="mui-card-content-inner">
+								<p class="qc-color-333">{{$value.title}} </p>
+								<div>
+									<i class="qc-color-666">DD订酒</i>
+								<!--	<span class="mui-pull-right qc-font-size14"><i class="iconfont">&#xe68b;</i>10</span>-->
+									<span class="mui-pull-right qc-font-size14 fn_marginright10"><i class="iconfont">&#xe680;</i>{{$value.readCount}}</span>
+									
+								</div>
+							</div>
+						</div>
+					</div>
+					</a>
+				{{/each}}
+				<ul class="mui-table-view clearUl mui-card">
+			        <li class="mui-table-view-cell ">
+			            <a class="mui-navigate-right mui-text-right qc-font-size14 qc-color-333" href="/article/index.html">
+			                <i class="fn_marginright15">查看更多</i>      
+			            </a>
+			        </li>
+			    </ul>
+			</div>
+			{{/if}}
+		</script>
+		<!---->
+		<script type="text/html" id="tmpl-Tags">
+			{{if $data.length > 0}}
+			<div class="fn_margintop10 fn_margin10">
+				<p class="vux-divider vux-divider-blod vux-divider-byact">送礼.宴会</p>
+				<div class="mui-table mui-text-center qc-bg-color-fff " id="group-container">
+					{{each $data as $value i}}
+						{{if i<3}}
+							<div class="mui-col-xs-4 mui-table-cell">
+								<a class="" href="/goods/brands.html?tagId={{$value.id}}">
+									<div class="fn_padding5">
+										<img src="{{$value.imgUrl}}" class="mui-block w100">
+										<p class="qc-font-size12 qc-color-333 fn_clearmarginbottom ">{{$value.name}}</p>
+										<!--<i class="qc-font-size10 qc-color-999 ">{{$value.name}}</i>-->
+									</div>
+								</a>
+							</div>
+						{{/if}}
+					{{/each}}
+				</div>
+			</div>
+			{{/if}}
+		</script>
+		<script type="text/html" id="tmpl-slider">
+			<!--这里放置真实显示的DOM内容-->
+			
+			{{if $data.length > 0}}
+			<div class="mui-slider-group mui-slider-loop">
+				<!-- 额外增加的一个节点(循环轮播：第一个节点是最后一张轮播) -->
+				<div class="mui-slider-item mui-slider-item-duplicate">
+					<a href="{{$data[$data.length - 1].link}}">
+						<img src="{{$data[$data.length - 1].imgUrl}}" />
+					</a>
+				</div>
+				{{each $data as $value i}}
+				<!-- 第i张 -->
+				<div class="mui-slider-item">
+					<a href="{{$value.link}}">
+						<img src="{{$value.imgUrl}}" />
+					</a>
+				</div>
+				{{/each}}
+				<!-- 额外增加的一个节点(循环轮播：最后一个节点是第一张轮播) -->
+				<div class="mui-slider-item mui-slider-item-duplicate">
+					<a href="{{$data[0].link}}">
+						<img src="{{$data[0].imgUrl}}" />
+					</a>
+				</div>
+			</div>
+			<div class="mui-slider-indicator mui-text-right" style="bottom: 0px;">
+				{{each $data as $value i}}
+				<div class="mui-indicator {{if i == 0}}mui-active{{/if}}"></div>
+				{{/each}}
+			</div>
+			{{/if}}
+		</script>
+		<!--活动抢购   -->
+		<script type="text/html" id="tmpl-car-activity">
+			<div class="brand fn_margintop10">
+				{{each $data as $value i}}
+				<!-- 根据身份判断 -->
+				<a href="{{$value.href == ''?'javascript:;': $value.href}}" class="brand-link {{setRecommend i}}">
+					<img class="brand-photo w100" src="{{$value.pic_path}}" />
+				</a>
+				{{/each}}
+			</div>
+		</script>
+		<script type="text/html" id="tmpl-shops">
+			{{if $data.length > 0}}
+				<ul class="mui-table-view clearUl fn_margintop10" id="shop-container">
+				{{each $data as $value i}} 
+				{{if $value.status != 0}}
+				<li class="mui-table-view-cell mui-media qc-font-size12">
+					<div class="mui-media-object mui-pull-left fn_border-radius">
+						<a href="/store/view.html?storeId={{$value.id}}">
+							<img class="fn_border-radius shop-img" src="{{$value.imgUrl}}" onerror="this.src='/framwork/global_icon/lazyload/LOGO.png'">
+							<!--{{if $value.status == 1}}
+									<div class="shop-status status1">
+										<span>店铺繁忙</span>
+									</div>
+									{{/if}} -->
+							{{if $value.type == 1}}
+							<img src="/framwork/global_icon/lazyload/100.png" style="position: absolute;left: 0px;bottom: 0px;width: 30px;" /> {{/if}} {{if $value.status == 0}}
+							<div class="shop-status status2">
+								<span>店铺休息</span>
+							</div>
+							{{/if}}
+						</a>
+					</div>
+					<div class="mui-media-body">
+						<a href="/store/view.html?storeId={{$value.id}}">
+							<p class='mui-ellipsis qc-font-size14 qc-color-333' style="font-weight: bold;">{{$value.name}}</p>
+							<div class="start-line">
+								<span class="iconfont icon-shoucang2 qc-font-size12-imp"></span>
+								<span class="iconfont icon-shoucang2 qc-font-size12-imp"></span>
+								<span class="iconfont icon-shoucang2 qc-font-size12-imp"></span>
+								<span class="iconfont icon-shoucang2 qc-font-size12-imp"></span>
+								<span class="iconfont icon-shoucang2 qc-font-size12-imp"></span>
+								<!--<i class="qc-color-333">销量{{$value.orderCount}}笔 </i>-->
+								<!--<span class="mui-badge mui-badge-warning mui-pull-right fn_border-radius">商家配送</span>-->
+							</div>
+							{{Math_PI $value.longitude $value.latitude}}
+						</a>
+	
+					</div>
+				</li>
+				{{/if}} 
+				{{/each}}
+				</ul>
+				{{else}}
+					<p class="qc-font-size14 mui-text-center fn_margintop10">附近暂无商家服务哦</p>
+				{{/if}}
+		</script>
+		<script type="text/html" id="tmpl-daily">
+			<div class="qc-bg-color-fff mui-text-center fn_padding10  time-container" data-startTime="{{data.startTime}}" data-endTime="{{data.endTime}}">
+				<i class="mui-color-red qc-font-size14 down-title time-status">距离今日秒杀活动结束还有</i>
+				<div class="daily-time-container fn_margintop5">
+					<i class="bg-000">0</i>
+					<i class="bg-000">0</i>
+					<b>时</b>
+					<i class="bg-000">0</i>
+					<i class="bg-000">0</i>
+					<b>分</b>
+					<i class="bg-000">0</i>
+					<i class="bg-000">0</i>
+					<b>秒</b>
+					<i class="bg-red">0</i>
+					<i class="bg-red">0</i>
+				</div>
+			</div>
+			<div class="mui-row">
+				{{each data.items as $value i}}
+				<div class="mui-col-xs-4 mui-text-center fn_padding10">
+					<a href="/goods/view.html?goodsId={{$value.id}}">
+						<img src="{{$value.imgUrl}}" class="w100 mui-block" />
+						<i class="mui-block mui-ellipsis qc-color-333 qc-font-size12">{{$value.name}}</i>
+						<i class="mui-color-red qc-font-size14">&yen;{{$value.price}}</i>
+						<i class="qc-font-size12 qc-color-999 mui-text-decoration">&yen;{{$value.goodsPrice}}</i>
+					</a>
+				</div>
+				{{/each}}
+			</div>
+		</script>
+		<script type="text/html" id="tmpl-act1111">
+			<div class="">
+				<a href="/act/activity.html?type=8090">
+					<img src="/framwork/activities/1111/indexStore/8090banner.jpg" class="w100 mui-block"/>
+				</a>
+				<div class="mall_headlines">
+					<ul class="mall_headlines_list">
+						<li class="mall_headlines_list_item ">
+							<a href="/goods/view.html?goodsId=262">
+								<img src="/framwork/activities/1111/indexStore/banner1.jpg" class="w100"/>
+							</a>
+						</li>
+						<li class="mall_headlines_list_item ">
+							<a href="/goods/view.html?goodsId=195">
+								<img src="/framwork/activities/1111/indexStore/banner2.jpg" class="w100"/>
+							</a>
+						</li>
+						<li class="mall_headlines_list_item ">
+							<a href="/goods/view.html?goodsId=134">
+								<img src="/framwork/activities/1111/indexStore/banner3.jpg" class="w100"/>
+							</a>
+						</li>
+						<li class="mall_headlines_list_item ">
+							<a href="/goods/view.html?goodsId=194">
+								<img src="/framwork/activities/1111/indexStore/banner4.jpg" class="w100"/>
+							</a>
+						</li>
+						<li class="mall_headlines_list_item ">
+							<a href="/goods/view.html?goodsId=133">
+								<img src="/framwork/activities/1111/indexStore/banner5.jpg" class="w100"/>
+							</a>
+						</li>
+						<li class="mall_headlines_list_item type_title" onclick='javascript:window.location.href="/act/activity.html?type=8090"'>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</script>
+		<script type="text/html" id="tmpl-act1112">
+			<div class="">
+				<a href="/act/view.html?actId=13">
+					<img src="/framwork/activities/1111/indexStore/特惠专区banner.png" class="w100 mui-block"/>
+				</a>
+				<div class="mall_headlines">
+					<ul class="mall_headlines_list">
+						<li class="mall_headlines_list_item ">
+							<a href="/goods/view.html?goodsId=56">
+								<img src="/framwork/activities/1111/indexStore/banner6.jpg" class="w100"/>
+							</a>
+						</li>
+						<li class="mall_headlines_list_item ">
+							<a href="/goods/view.html?goodsId=329">
+								<img src="/framwork/activities/1111/indexStore/banner7.jpg" class="w100"/>
+							</a>
+						</li>
+						<li class="mall_headlines_list_item ">
+							<a href="/goods/view.html?goodsId=204">
+								<img src="/framwork/activities/1111/indexStore/banner8.jpg" class="w100"/>
+							</a>
+						</li>
+						<li class="mall_headlines_list_item ">
+							<a href="/goods/view.html?goodsId=335">
+								<img src="/framwork/activities/1111/indexStore/banner9.jpg" class="w100"/>
+							</a>
+						</li>
+						<li class="mall_headlines_list_item ">
+							<a href="/goods/view.html?goodsId=313">
+								<img src="/framwork/activities/1111/indexStore/banner10.jpg" class="w100"/>
+							</a>
+						</li>
+						<li class="mall_headlines_list_item type_title" onclick='javascript:window.location.href="/act/view.html?actId=13"'>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</script>
+		<script type="text/html" id="tmpl-popup">
+			<div class="popup_body">
+				<div class="popup_main">
+					<div class="popup_close">
+						<span class="popup_btnclose">x</span>
+					</div>
+					<div class="popup_content">
+						<img src="/framwork/activities/1111/indexStore/popup.png" class="popup_image" />
+					</div>
+				</div>
+			</div>
+		</script>
+		
+
+		<script type="text/javascript">
+			template.helper('setRecommend', function(i) {
+				switch(i) {
+					case 0:
+						return 'brand-half-floor';
+						break;
+					case 1:
+						return 'up-floor'
+						break;
+					case 2:
+						return 'down-floor';
+						break;
+					case 3:
+						return 'down-floor is-double-floor';
+						break;
+					default:
+						break;
+				}
+			});
+			
+			template.helper('Math_PI', function(lng, lat) {
+				//return Math.ceil((distance / 1000) * 20);
+
+				var body = document.body;
+				if(body.dataset.lng == undefined) {
+					console.log('参数失效');
+					return;
+				}
+				var map = new BMap.Map();
+				var selfPoint = new BMap.Point(body.dataset.lng, body.dataset.lat);
+				var bPoint = new BMap.Point(lng, lat);
+
+				var distance = parseInt(map.getDistance(selfPoint, bPoint));
+
+				var countDistance = distance - 1000;
+				var rd = countDistance / 1000;
+				var mins = 19;
+
+				if(rd > 0)
+					mins = mins + Math.round(rd * 8);
+
+				var selfDistance = (distance / 1000).toFixed(2);
+				/*	selfDistance = distance == 0 ? "距离不远" : selfDistance;*/
+				//			'<span class=" fn_paddingright5 qc-color-666">'+
+				//						+mins+'分钟'+
+				//					'</span>'+
+				return '<div class="mui-text-right fn_margintop5">' +
+					'<span class="fn_paddingleft5  qc-color-666 mui-pull-right">据您当前距离：' +
+					+selfDistance + 'KM' +
+					'</span>' +
+					'</div>';
+
+			});
+
+			mui.ready(function() {
+				window.home.init();
+			});
+		</script>
+		
+	</body>
+
+</html>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=0,minimal-ui">
+		<title></title>
+		<!--本地字体文件库-->
+		<link rel="stylesheet" href="/framwork/iconfonts/basic/iconfont.css" />
+		<style type="text/css">
+			.dddj-article * {
+			    max-width: 100%;
+			    box-sizing: border-box;
+			    word-wrap: break-word;
+			}
+			i,b{
+				 font-style:normal
+			}
+			.dddj-article {
+			    
+			    font-size: 15px;
+			}
+			.dddj-article section {
+		        margin-bottom: 1.5em;
+		    }
+			.dddj-article 	h1 {
+		        font-size: 18px;
+		        font-weight:400;
+		        margin-bottom: .9em;
+			}
+			.dddj-article .title{
+				font-size: 24px;
+			}
+			.dddj-article     h2 {
+		        font-size: 16px;
+		        font-weight:400;
+		        margin-bottom: .34em;
+			}
+			.dddj-article     h3 {
+		        font-weight:400;
+		        font-size: 15px;
+		        margin-bottom: .34em;
+			}
+			.dddj-article     p {
+			    margin: 0 0 .8em;
+			}
+			* {
+			    margin: 0;
+			    padding: 0;
+			}
+			.weui-toptips_warn {
+   				 background-color: #E64340;
+			}
+			.weui-toptips {
+			    position: fixed;
+			    -webkit-transform: translateZ(0);
+			    transform: translateZ(0);
+			    top: 0;
+			    left: 0;
+			    right: 0;
+			    padding: 5px;
+			    font-size: 14px;
+			    text-align: center;
+			    color: #FFF;
+			    z-index: 5000;
+			    word-wrap: break-word;
+			    word-break: break-all;
+			}
+			.article-func{
+				color: #888888;
+			}
+			.article-func .art-readed{
+				margin-right: 10px;
+			}
+			.article-func .art-icon{
+				font-size: 14px;margin-right: 5px;
+			}
+			.article-func .art-link{
+				float: right;
+				text-decoration: none;
+   				color: #586C94;
+			}
+			
+			img{
+				display: block;
+				max-width: 100%;
+			}
+			
+			
+			.buyBtn{
+				height: 65px;
+			    position: fixed;
+			    width: 65px;
+			    right: 15px;
+			    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+			    bottom: 15px;
+			    border-radius: 100%;
+			    background: #fff;
+			}
+		</style>
+	</head>
+	<body class="">
+		<div class="dddj-article" id="list-container">
+		</div>
+	</body>
+	<!--这就是HTML 模板 用于数据加载 -->
+	<script type="text/html" id="tmpl-model-null">
+		<div class="" style="margin-top: 50%;text-align: center;">
+			<p>哎呀！页面还没数据哦~</p>
+		</div>
+	</script>
+	<script type="text/html" id="tmpl-model">
+		<div class="">
+			{{# $data.content}}
+		</div>
+	</script>
+	<script src="/build/script/all.js"></script>
+	<script src="/plugin/javascript/web/wxShare.js?v=1234"></script>
+	<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+	<script src="/plugin/javascript/web/phone/article/view.js"></script>
+	<script type="text/javascript">
+		/** 
+		 * 对日期进行格式化， 
+		 * @param date 要格式化的日期 
+		 * @param format 进行格式化的模式字符串
+		 *     支持的模式字母有： 
+		 *     y:年, 
+		 *     M:年中的月份(1-12), 
+		 *     d:月份中的天(1-31), 
+		 *     h:小时(0-23), 
+		 *     m:分(0-59), 
+		 *     s:秒(0-59), 
+		 *     S:毫秒(0-999),
+		 *     q:季度(1-4)
+		 * @return String
+		 * @author yanis.wang
+		 * @see	http://yaniswang.com/frontend/2013/02/16/dateformat-performance/
+		 */
+		template.helper('title',function(titles){
+			document.title=titles;
+		});
+		template.helper('dateFormat', function(date, format) {
+
+			date = new Date(date);
+			var map = {
+				"M": date.getMonth() + 1, //月份 
+				"d": date.getDate(), //日 
+				"h": date.getHours(), //小时 
+				"m": date.getMinutes(), //分 
+				"s": date.getSeconds(), //秒 
+				"q": Math.floor((date.getMonth() + 3) / 3), //季度 
+				"S": date.getMilliseconds() //毫秒 
+			};
+			format = format.replace(/([yMdhmsqS])+/g, function(all, t) {
+				var v = map[t];
+				if(v !== undefined) {
+					if(all.length > 1) {
+						v = '0' + v;
+						v = v.substr(v.length - 2);
+					}
+					return v;
+				} else if(t === 'y') {
+					return(date.getFullYear() + '').substr(4 - all.length);
+				}
+				return all;
+			});
+			return format;
+		});
+		
+		mui.ready(function(){
+			window.articleView.init();  	
+			
+		});
+	</script>
+	<div style="display:none;">
+			<script src="https://s19.cnzz.com/z_stat.php?id=1262309795&web_id=1262309795 " language="JavaScript"></script>
+		</div>
+</html>

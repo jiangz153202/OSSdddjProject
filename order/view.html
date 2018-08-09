@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=0,minimal-ui">
+		<title>订单详情-DD订酒</title>
+		<link rel="stylesheet" href="/build/css/all.css" />
+		<link rel="stylesheet" href="/plugin/style/web/phone/order/orderview.css" />
+		<style type="text/css">
+			 .progress-badge {
+			    background-color: #32b3af;
+			    border-color: transparent;
+			    color: #ffffff;
+			}
+			.progress-badge-333 {
+				background-color: #ffffff;
+				border-color: #32b3af;
+				color: #32b3af;
+			}
+			.mui-phone-model{
+				font-size: 32px;
+			    border: 1px solid #bbb;
+			    right: 10px;
+			    padding: 10px;
+			    line-height: 32px;
+			    border-radius: 100%;
+			    position: absolute;
+			    top: 50%;
+			    display: inline-block;
+			    -webkit-transform: translateY(-50%);
+			    transform: translateY(-50%);
+			    text-decoration: none;
+			    color: #bbb;
+			    -webkit-font-smoothing: antialiased;
+			}
+			
+			.mui-phone-model.mui-selected{
+				color: #32B3AF;
+				border-color: #32B3AF;
+			}
+			
+			.mui-address-after:after {
+				content: "";
+				line-height: 1;
+				position: absolute;
+				height: 20px;
+				width: 1px;
+				top: 50%;
+				background: #E4E4E4;
+				display: inline-block;
+				-webkit-transform: translateY(-50%);
+				transform: translateY(-50%);
+				right: 65px;
+			}
+			
+			.mui-icon-position {
+				line-height: 1;
+				position: absolute;
+				top: 50%;
+				display: inline-block;
+				-webkit-transform: translateY(-50%);
+				transform: translateY(-50%);
+			}
+			
+			.mui-icon-position.mui-icon-position-left {
+				left: 13px;
+			}
+			
+			.mui-icon-position.mui-icon-position-right {
+				right: 15px;
+			}
+			
+			.clearLiAfter .mui-table-view-cell:after{
+				height: 0px;
+			}
+		</style>
+	</head>
+	<body class="" id="body-container">
+		<header class="mui-bar mui-bar-nav mui-bar-nav-hide qc-bg-color-fff">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left qc-color-333"></a>
+			<h1 class="mui-title qc-color-333 qc-font-size16">订单详情</h1>
+		</header>
+		<div class="mui-content" id="list-container">
+		</div>
+		<!--在线客服-->
+			<!--<div class="fn_padding15 qc-bg-color-fff mui-row mui-row-padding15 fn_margintop10">
+				<div class="mui-col-xs-6">
+			        <a type="button" href="tel:13138827179.html" class="mui-btn mui-btn-outlined w100" style="border-color: #333333 !important;"><i class="iconfont icon-dianhua1 fn_marginright5" ></i>电话客服</a>
+				</div>
+				<div class="mui-col-xs-6">
+			 		{{if $data.status == 4}}
+						<a type="button" undefined class="mui-btn mui-btn-outlined mui-btn-undefault w100 mui-ellipsis"><i class="iconfont icon-dianhua fn_marginright5"></i>联系配送员:{{$data.deliveryLog.name}}</a>
+			 	    {{else}} 
+			 	   		<a type="button" undefined class="mui-btn mui-btn-outlined mui-btn-undefault  w100"><i class="iconfont icon-dianhua fn_marginright5"></i>联系商家</a>
+			 	   	{{/if}}
+				</div>
+			</div>-->
+		<script type="text/html" id="tmpl-model">
+			<h5 class="fn_padding10 qc-font-size12 qc-color-333 qc-bg-color-fff fn_clearmarginbottom">
+				<i>订单号:{{$data.orderNumber}}</i>
+				<i class="mui-pull-right">已支付:{{$data.paid}}</i>
+			</h5>
+			<ul class="mui-table-view mui-table-view-store clearUl">
+			    <li class="mui-table-view-cell mui-media " >
+			    	<a href="javascript:;">
+		                <img class="mui-media-object mui-pull-left update65" src="{{$data.items[0].imgUrl}}">
+		                <div class="mui-media-body qc-font-size14">
+		                	<p class="mui-ellipsis qc-color-333 store-distance">{{$data.store.name}}</p>
+		                	<p><i class="default-abs-color qc-font-size12">联盟商家</i> </p>
+		                	<p class="qc-font-size12">  
+		                		<i class="fn_marginright10">{{$data.statusText}}</i>
+		                		<i class="">{{$data.store.distance / 1000}}km</i>
+		                	</p>
+		                </div>
+		                <div class="iconfont icon-dianhua mui-phone-model {{updateOrderStatus $data.status}}">
+		                </div>
+		                <!--联系电话-->
+		            </a>
+	            </li>
+			</ul>
+			<div class="didi-order-view">
+				<div class="content-card">
+					<div class="mui-table fn_padding10 mui-bg-fff qc-font-size12 mui-text-center mui-color-6868 fn_paddingbottom15 content-card-contentborder">
+						<div class="mui-table-cell mui-col-xs-3 {{if $data.status == 1}}active{{/if}}">
+							
+							<div class="order-progress-module progress-right">
+								<i></i>
+							</div>
+							<span>
+	 	  		    		 	待接单
+	 	  		    		</span>
+						</div>
+						<div class="mui-table-cell mui-col-xs-3 {{if $data.status == 3}}active{{/if}}">
+							
+							<div class="order-progress-module progress-all">
+								<i></i>
+							</div>
+							<span>
+	 	  		    		 	待配送
+	 	  		    		</span>
+						</div>
+						<div class="mui-table-cell mui-col-xs-3 {{if $data.status == 4}}active{{/if}}">
+							<div class="order-progress-module progress-all">
+								<i></i>
+							</div>
+							<span>
+	 	  		    		 	配送中
+	 	  		    		</span>
+						</div>
+						<div class="mui-table-cell mui-col-xs-3 {{checkActive $data.status}}">
+							<div class="order-progress-module progress-left">
+								<i></i>
+							</div>
+							<span>
+	 	  		    		 	已送达
+	 	  		    		</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<ul class="mui-table-view clear-after-height mui-control clearUl">
+		        <li class="mui-table-view-cell ">
+		            <a class="qc-color-333 qc-font-size14" href="javascript:;">
+		            	{{if $data.status == 2}}
+		               	    <span class="progress-badge progress-badge-big mui-pull-right fn_marginleft10  order-pay" id="pay-Order">立即付款</span>
+						{{/if}}
+						{{if $data.status == 1 || $data.status == 2 }}
+							 <span class="progress-badge-333 progress-badge-big mui-pull-right fn_marginleft10 order-cancel" id="cancel-Order">取消订单</span>
+						{{/if}}
+						{{if $data.status == 6}}
+					        <span class="progress-badge progress-badge-big mui-pull-right fn_marginleft10 mui-hide" id="finish-Order">申请退款</span>
+						{{/if}}
+						{{if $data.status == 5}}
+							<span class="progress-badge qc-bg-color-ccc-imp progress-badge-big mui-pull-right  " id="review-Order" >
+							          商品评价
+							</span> 
+						{{/if}}
+						{{if $data.status == 4 || $data.status ==  9 && $data.shipping == 0}}
+							<span class="progress-badge  progress-badge-big mui-pull-right " id="confirm-Order" >
+							         确认送达
+							</span> 
+						{{/if}}
+		            </a>
+		        </li>
+			</ul>
+			{{if $data.shipping  == 0}}
+			<ul class="mui-table-view clearUl fn_margintop10">
+				<li class="mui-table-view-cell">
+					<a class="qc-font-size14 qc-color-333 " href="javascript:;">
+						配送地址
+					</a>
+				</li>
+			</ul>
+			<ul class="mui-table-view">
+				<li class="mui-table-view-cell" id="ads-container">
+					<a href="javascript:;" class="mui-navigate-right">
+						<p class="qc-color-333 mui-ellipsis-2 fn_clearmarginbottom fn_margintop10 fn_paddingbottom5 qc-font-size12">
+							<span>{{$data.city}}{{$data.town}}{{$data.address}}</span>
+						</p>
+						<p class="qc-color-333 fn_paddingtop5 qc-font-size14">
+							<span class="iconfont icon-geren default-abs-color fn_marginright5"></span><i>{{$data.name}}</i>
+							<span class="mui-pull-right fn_paddingright15">
+					 	  		<i class="iconfont icon-shouji default-abs-color fn_marginright5"></i><i>{{$data.mobile}}</i>
+					 	  	</span>
+						</p>
+						
+					</a>
+				</li>
+			</ul>
+			{{else}}
+				<div class="" id="store-order">
+					<div class="fn_padding15 qc-bg-color-fff fn_margintop10">
+						<p class="qc-color-333 fn_clearmarginbottom">自提商品</p>
+						<span class="qc-font-size12 qc-color-666">将此二维码打开给商家扫码即可取酒</span>
+						<div class="" style="" class="mui-text-center">
+						 	<img src="" id="ship-qrcode" style="width: 192px;margin: 0px auto;display: inherit;background: #CCCCCC;"/>
+						</div>
+					</div>
+					<ul class="mui-table-view qc-font-size14 clearUl fn_margintop10 fn_padding10 clearLiAfter">
+						<li class="mui-table-view-cell">
+							<span class="mui-icon iconfont icon-dingwei2 qc-color-666 qc-font-size20 mui-icon-position mui-icon-position-left"></span>
+							<span class="mui-ellipsis-2 mui-address-after" id="storeMap" href="javascript:;" style="padding-right: 65px;padding-left: 36px;">
+								{{$data.store.name}}
+							</span>
+						</li>
+						<a class="mui-icon iconfont icon-dianhua1 mui-icon-position  mui-icon-position-right qc-font-size30-imp default-abs-color" href="javascript:;" ></a>
+					</ul>	
+				</div>
+			{{/if}}
+			<!--商品列表-->
+			<ul class="mui-table-view clearUl fn_margintop10">
+				<li class="mui-table-view-cell">
+					<a class="qc-font-size14 qc-color-333 " href="javascript:;">
+						商品详情
+					</a>
+				</li>
+			</ul>
+			<ul class="mui-table-view clearUl">
+				{{each $data.items as $goods i}}
+				<li class="mui-table-view-cell mui-media">
+					<a href="/goods/view.html?goodsId={{$goods.gid}}">
+						<div class="mui-media-object mui-pull-left qc-bg-color-eded update80">
+							<img src="{{$goods.imgUrl}}" data-lazyload="{{$goods.imgUrl}}" class="w100" />
+						</div>
+						<div class="mui-media-body qc-font-size14">
+							<p class="mui-ellipsis qc-color-333 qc-title">{{$goods.name}} </p>
+							<div class="padding-block fn_paddingtop5"></div>
+							
+							<div class="clear mui-screen-clear">
+								<p class="qc-font-size14 qc-price-body">
+									<!--<i class="qc-font-size14 ">
+	   		            		 		{{$goods.prop}}
+	   		            		 	</i>-->
+	   		            		 	<i class="qc-font-size12 mui-color-red fn_marginleft5">&yen;<i class="qc-font-size14">{{$goods.price}}</i></i>
+	   		            		 	
+	   		            		 	<i class="qc-color-666 mui-pull-right qc-font-size14">x{{$goods.quantity}}</i> 
+								</p>
+								<div class="fn_paddingtop5">
+									{{if $goods.activity.index != 0}}
+										<span class="mui-badge fn_border-radius mui-btn-red">{{$goods.activity.name}}</span>
+									{{/if}}
+									
+									<!--<span class="mui-badge mui-btn-grey  mui-pull-right fn_margintop10">申请售后</span>-->
+								</div>
+							</div>
+						</div>
+					</a>
+				</li>
+				{{/each}}
+			</ul>
+			<div class="fn_paddinglr15 qc-bg-color-fff">
+				<p class="content  qc-color-333">
+					商品合计: <b class="mui-pull-right" style="font-weight: normal;">&yen;{{$data.total}}</b>
+				</p>
+				<p class="content  qc-color-333">
+					配送费: <b class="mui-pull-right" style="font-weight: normal;">&yen;0.00</b>
+				</p>
+				<p class="content  qc-color-333 fn_clearmarginbottom fn_paddingbottom10">
+					优惠: <b class="mui-pull-right" style="font-weight: normal;">&yen;{{$data.couponPaid}}</b>
+				</p>
+			</div>
+			<!--配送方式-->
+			<ul class="mui-table-view">
+				<li class="mui-table-view-cell">
+					<a class="qc-font-size14 qc-color-333 " href="javascript:;">
+						发票
+						<h5 class="qc-color-999 mui-pull-right">
+							暂无发票
+						</h5>
+					</a>
+				</li>
+				<li class="mui-table-view-cell">
+					<a class="qc-font-size14 qc-color-333 " href="javascript:;">
+						支付方式
+						<h5 class="qc-color-999 mui-pull-right">
+							{{$data.payType == '' ? "微信支付" : "微信支付"}}
+						</h5>
+					</a>
+				</li>
+				<li class="mui-table-view-cell">
+					<a class="qc-font-size14 qc-color-333 " href="javascript:;">
+						确认订单时间
+						<h5 class="qc-color-999 mui-pull-right">
+							{{$data.createTime}}
+						</h5>
+					</a>
+				</li>
+			</ul>
+		</script>
+		<script type="text/html" id="tmpl-tab-nav">
+			<nav class="mui-bar progress-clear mui-bar-tab qc-bg-color-fff-imp mui-text-right">
+
+				{{if $data.payStatus == 100 && $data.deliverStatus == 0 || $data.status > 50}}
+				<span class="progress-badge-333 progress-badge-big fn_marginright10 order-cancel" data-paystatus="{{$data.payStatus}}" data-oid="{{$data.orderNumber}}">取消订单</span> {{/if}} {{if $data.payStatus == 0 && $data.orderStatus == 100 && $data.status == 60}}
+				<span class="progress-badge progress-badge-big fn_marginright10 order-pay" data-amount="{{$data.paid}}" data-oid="{{$data.orderNumber}}">立即支付</span> {{/if}} {{if $data.deliverStatus == 100 && $data.payStatus == 100}}
+				<span type="button" class="progress-badge-333 progress-badge-big fn_marginright10" data-oid="{{$data.orderNumber}}">查看物流</span> {{/if}} {{if $data.receiveStatus == 0 && $data.deliverStatus == 100}}
+				<span type="button" class="progress-badge progress-badge-big fn_marginright10" data-oid="{{$data.orderNumber}}">确认收货</span> {{/if}} {{if $data.commentStatus == 0 && $data.payStatus == 100 && $data.receiveStatus == 100}}
+				<span type="button" class="progress-badge-333 progress-badge-big fn_marginright10" data-oid="{{$data.orderNumber}}">等待评价</span> {{/if}} {{if $data.orderStatus == 10 || $data.orderStatus == 40 || $data.orderStatus == 50 || $data.orderStatus == 0 }}
+				<span class="progress-badge-999 progress-badge-big fn_marginright10 order-delete" data-oid="{{$data.orderNumber}}">删除订单</span> {{/if}}
+			</nav>
+		</script>
+		<script src="/build/script/all.js"></script>
+		<script src="/plugin/javascript/web/phone/order/orderView.js"></script>
+		<script type="text/html" id="tmpl-model-loading">
+			<div class="spinner-child spinner-child-fixed">
+				<div class="rect1"></div>
+				<div class="rect2"></div>
+				<div class="rect3"></div>
+				<div class="rect4"></div>
+				<div class="rect5"></div>
+			</div>
+		</script>
+		<!--这就是HTML 模板 用于数据加载 -->
+		<script type="text/html" id="tmpl-model-null">
+			<div class="qc-car-null mui-text-center">
+				<div class="qc-car-null-img-empty"></div>
+				<p class="qc-color-888 mui-text-center qc-car-null-text">哎呀！页面还没数据哦~</p>
+			</div>
+		</script>
+		<script>
+			/** 
+			 * 对日期进行格式化， 
+			 * @param date 要格式化的日期 
+			 * @param format 进行格式化的模式字符串
+			 *     支持的模式字母有： 
+			 *     y:年, 
+			 *     M:年中的月份(1-12), 
+			 *     d:月份中的天(1-31), 
+			 *     h:小时(0-23), 
+			 *     m:分(0-59), 
+			 *     s:秒(0-59), 
+			 *     S:毫秒(0-999),
+			 *     q:季度(1-4)
+			 * @return String
+			 * @author yanis.wang
+			 * @see	http://yaniswang.com/frontend/2013/02/16/dateformat-performance/
+			 */
+			template.helper('dateFormat', function(date, format) {
+
+				date = new Date(date);
+				var map = {
+					"M": date.getMonth() + 1, //月份 
+					"d": date.getDate(), //日 
+					"h": date.getHours(), //小时 
+					"m": date.getMinutes(), //分 
+					"s": date.getSeconds(), //秒 
+					"q": Math.floor((date.getMonth() + 3) / 3), //季度 
+					"S": date.getMilliseconds() //毫秒 
+				};
+				format = format.replace(/([yMdhmsqS])+/g, function(all, t) {
+					var v = map[t];
+					if(v !== undefined) {
+						if(all.length > 1) {
+							v = '0' + v;
+							v = v.substr(v.length - 2);
+						}
+						return v;
+					} else if(t === 'y') {
+						return(date.getFullYear() + '').substr(4 - all.length);
+					}
+					return all;
+				});
+				return format;
+			});
+			
+			template.helper('checkActive', function(status) {
+				var OrderStatus={OrderInit:{index:0,name:'已生成',statusText:'订单创建'},WaitingSellerGrab:{index:1,name:'待接单',statusText:'等待商户接单'},WaitBuyerPay:{index:2,name:'待付款',statusText:'等待买家付款'},WaitSellerDeliver:{index:3,name:'待配送',statusText:'等待商家配送'},WaitBuyerReceive:{index:4,name:'配送中',statusText:'货品正在送达的路上'},EndWithoutReview:{index:5,name:'待评价',statusText:'等待买家评价'},EndNormal:{index:6,name:'已完成',statusText:'交易成功'},Cancel:{index:7,name:'已取消',statusText:'订单已取消'},WaitingPaidConfirm:{index:8,name:'待审核',statusText:'等待平台确认'},WaitingBuyerConfirm:{index:9,name:'待确认',statusText:'等待用户确认送达'}};
+				if(status == OrderStatus.EndNormal.index || status == OrderStatus.EndWithoutReview.index || status == OrderStatus.WaitingBuyerConfirm.index) {
+					return 'active';
+				}
+			});
+			
+			template.helper('updateOrderStatus', function(status) {
+				var OrderStatus={OrderInit:{index:0,name:'已生成',statusText:'订单创建'},WaitingSellerGrab:{index:1,name:'待接单',statusText:'等待商户接单'},WaitBuyerPay:{index:2,name:'待付款',statusText:'等待买家付款'},WaitSellerDeliver:{index:3,name:'待配送',statusText:'等待商家配送'},WaitBuyerReceive:{index:4,name:'配送中',statusText:'货品正在送达的路上'},EndWithoutReview:{index:5,name:'待评价',statusText:'等待买家评价'},EndNormal:{index:6,name:'已完成',statusText:'交易成功'},Cancel:{index:7,name:'已取消',statusText:'订单已取消'},WaitingPaidConfirm:{index:8,name:'待审核',statusText:'等待平台确认'},WaitingBuyerConfirm:{index:9,name:'待确认',statusText:'等待用户确认送达'}};
+				if(status != OrderStatus.Cancel.index  && status != OrderStatus.OrderInit.index) {
+					return 'mui-selected';
+				}
+			});
+			
+			
+
+			mui.ready(function() {
+				/*每个页面都要mui.init*/
+				var orderNumber = common.queryToJSON().orderNumber === undefined ? '' : common.queryToJSON().orderNumber;
+				window.orderView.init({ orderNumber: orderNumber });
+
+			});
+		</script>
+		<div style="display:none;">
+			<script src="https://s19.cnzz.com/z_stat.php?id=1262309795&web_id=1262309795 " language="JavaScript"></script>
+		</div>
+	</body>
+
+</html>

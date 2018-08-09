@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=0,minimal-ui">
+		<title>我的收藏</title>
+		<link rel="stylesheet" href="/build/css/all.css" />
+		
+		<style type="text/css">
+			.qc-bar {
+			    background-color: #fdfdfd;
+			}
+			.qc-bar-nav.qc-bar .qc-inner-bar .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
+			    color: #32b3af;
+			    font-size: 16px;
+			}
+			.qc-shown.mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
+			    border-bottom: 2px solid #32b3af!important;
+			}
+			.qc-bar-nav.qc-bar .qc-inner-bar .mui-segmented-control.mui-segmented-control-inverted .mui-control-item{
+				color: #666666;
+			}
+			.qc-bar-nav:not(.qc-bar-nav-shadow) {
+			    -webkit-box-shadow: 0 1px 6px #ccc !important;
+			    box-shadow: 0 1px 6px #ccc !important;
+			}
+			.list-container .mui-media-block{
+				height: 20px;
+			}
+			.list-container .mui-media-body p.mui-ellipsis-2:first-child{
+				min-height: 42px;
+			}
+			.list-container .mui-media-object.update80{
+				width: 80px;
+			    max-width: 80px;
+			    height: 80px;
+			}
+			
+			.list-container .mui-btn-grey.mui-badge-update{
+				font-size: 14px;
+			    padding: 4px 8px;
+			    border-radius: 2px;
+			    background: transparent;
+			}
+			.mui-card {
+		    box-shadow: 0 0px 0px rgba(0,0,0,.3);
+			}
+			.mui-card .mui-card-footer:before, .mui-card-header:after {
+			    background-color: #f8f8f8;
+			}
+		</style>
+	</head>
+	<body class="">
+		<script type="text/html" id="tmpl-menus">
+			<div class="mui-slider mui-fullscreen mui-postion-qc-bar">
+				<!--滚动的头部-->
+				<div class="qc-bar qc-bar-nav ">
+					<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left qc-color-333"></a>
+					<div class="qc-inner-bar">
+						<div class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted qc-three-steps qc-head-bar qc-shown" >
+							<div class="mui-scroll" >
+								{{each data as $value i}}
+									<a class="mui-control-item {{sliderSelected $value.id i}}" undefined data-itemid="{{$value.id}}">
+										{{$value.name}}
+									</a>
+								{{/each}}
+							</div>
+						</div>
+					</div>
+					<!--<a class="mui-icon mui-icon-right-nav mui-pull-right mui-icon-more-filled qc-color-666" href="#popover.html"></a>-->
+				</div>
+				<div class="mui-slider-group">
+					{{each data as $value i}}
+					<div class="mui-slider-item mui-control-content {{sliderSelected $value.id i}}" id="item{{i}}mobile">
+						<div class="mui-scroll-wrapper">
+							<div class="mui-scroll">
+								<div class="spinner-child">
+									<div class="rect1"></div>
+									<div class="rect2"></div>
+									<div class="rect3"></div>
+									<div class="rect4"></div>
+									<div class="rect5"></div>
+								</div>
+								{{if $value.type == 'div'}}
+									<div class="list-container " data-index="{{i}}" data-id="{{$value.id}}" data-pageindex='0'></div>
+								{{else}}
+									<ul class="mui-table-view clearUl list-container mui-hide" data-index="{{i}}" data-id="{{$value.id}}" data-pageindex='0' >
+					        		</ul> 
+								{{/if}}
+							</div>
+						</div>
+					</div>
+					{{/each}}
+				</div>
+			</div>
+		</script>
+		<!--<div class="mui-segmented-control mui-segmented-control-inverted">
+			<a  class="mui-control-item mui-active" href="#item1.html">
+				全部
+			</a>
+			<a class="mui-control-item" href="#item2.html">
+				分类
+			</a>
+			<a class="mui-control-item" href="#item3.html">
+				降价
+			</a>
+		</div>
+		<div class="height100v">
+			<div id="item1" class="mui-control-content mui-active height100v">
+				111
+			</div>
+			<div id="item2" class="mui-control-content">
+				222
+			</div>
+			<div id="item3" class="mui-control-content">
+				3333
+			</div>
+		</div>-->
+		<script type="text/html" id="tmpl-goods">
+			{{each $data.content as $value i }}
+				<li class="mui-table-view-cell mui-media">
+			        <a href="/goods/view.html?goodsId={{$value.id}}">
+			            <img class="mui-media-object mui-pull-left update80" src="http://usr.im/80x80?text=DD订酒" data-lazyload="{{$value.imgUrl}}">
+			            <div class="mui-media-body qc-font-size14">
+			                <p class="mui-ellipsis-2 qc-color-333">{{$value.name}}</p>
+			                <div class="mui-media-block"></div>
+			                <div class="mui-media-price">
+			                	<i class="mui-color-red">
+			                		&yen;<i class="qc-font-size16">{{$value.price}}</i>
+			                	</i>
+			                	<span class="mui-icon qc-font-size24-imp mui-pull-right qc-color-666 mui-icon-more-filled fn_marginleft10" data-gid="{{$value.id}}"></span>
+			                	<span class="mui-badge mui-btn-grey mui-badge-update mui-pull-right">找相似</span>
+			                </div>
+			            </div>
+			         </a>
+			    </li>
+			{{/each}}
+		</script>
+		<script type="text/html"  id="tmpl-store">
+			{{each $data.content as $value i}}
+				<div class="">
+					<ul class="mui-table-view">
+					    <li class="mui-table-view-cell mui-media">
+					        <a href="javascript:;.html">
+					            <img class="mui-media-object mui-pull-left update55" src="http://placehold.it/40x30" data-lazyload="{{$value.imgUrl}}">
+					            <div class="mui-media-body qc-font-size14 qc-color-333">
+					               	<p class="qc-color-333">
+					               	 	{{$value.name}}
+					               	</p>
+					                <p class="mui-ellipsis">门店地址:{{$value.address}}</p>
+					                <!--新入产品-->
+					                
+					            </div>
+					        </a>
+					    </li>
+					</ul>
+					<ul class="mui-table-view mui-grid-view" style="padding-left: 65px;">
+				        <li class="mui-table-view-cell mui-media mui-col-xs-4">
+				            <a href="javascript:;.html">
+				                <img class="mui-media-object" src="http://www.dddingjiu.com/images/1/20160810/1470819088049019466.jpg">
+				                <div class="mui-media-body">幸福就是可以一起睡觉</div>
+				            </a>
+				        </li>
+				        <li class="mui-table-view-cell mui-media mui-col-xs-4">
+				            <a href="javascript:;.html">
+				                <img class="mui-media-object" src="http://www.dddingjiu.com/images/1/20160810/1470819088049019466.jpg">
+				                <div class="mui-media-body">想要一间这样的木屋，静静的喝咖啡</div>
+				            </a>
+				        </li>
+				        <li class="mui-table-view-cell mui-media mui-col-xs-4">
+				            <a href="javascript:;.html"><img class="mui-media-object" src="http://www.dddingjiu.com/images/1/20160810/1470819088049019466.jpg">
+				                <div class="mui-media-body">Color of SIP CBD</div>
+				            </a>
+				        </li>
+				        <li class="mui-table-view-cell mui-media mui-col-xs-4">
+				            <a href="javascript:;.html">
+				                <img class="mui-media-object" src="http://www.dddingjiu.com/images/1/20160810/1470819088049019466.jpg">
+				                <div class="mui-media-body">静静看这世界</div>
+				            </a>
+				        </li>
+				    </ul>
+				</div>
+			{{/each}}
+		</script>
+		<script type="text/html"  id="tmpl-article">
+			{{each $data.content as $value i}}
+				<div class="mui-card  ">
+					<div class="mui-card-header mui-card-media" style="height:40vw;background-image:url('{{$value.imgUrl}}')"></div>
+					<div class="mui-card-content">
+						<div class="mui-card-content-inner ">
+							<p class="qc-color-333 mui-ellipsis">{{$value.title}} </p>
+							<p class="qc-color-999 fn_clearmarginbottom">{{$value.brief}}</p>
+							<p class="qc-color-999 fn_clearmarginbottom mui-text-right">{{$value.createTime}}</p>
+						</div>
+					</div>
+					<div class="mui-card-footer">
+						<a class="mui-card-link">Like</a>
+						<a class="mui-card-link" href="/article/view.html?aid={{$value.id}}">Read more</a>
+					</div>
+				</div>
+			{{/each}}
+		</script>
+		<script src="/build/script/all.js"></script>
+		<!--多页上拉加载-->
+		<script src="/framwork/mui/pullToRefresh/mui.pullToRefresh.js"></script>
+		<script src="/framwork/mui/pullToRefresh/mui.pullToRefresh.material.js"></script>
+		<script src="/plugin/javascript/web/phone/goods/collection.js"></script>
+		<script type="text/html" id="tmpl-model-null">
+			<div class="qc-car-null mui-text-center">
+				<div class="qc-car-null-img-empty"></div>
+				<p class="qc-color-888 mui-text-center qc-car-null-text">哎呀！页面还没数据哦~</p>
+			</div>
+		</script>
+		<script type="text/html" id="tmpl-model-loading">
+			<div class="spinner-child">
+				<div class="rect1"></div>
+				<div class="rect2"></div>
+				<div class="rect3"></div>
+				<div class="rect4"></div>
+				<div class="rect5"></div>
+			</div>
+		</script>
+		<!--产品-->
+		<script type="text/html" id="tmpl-goods">
+			{{each $data.content as $value i }}
+				<li class="mui-table-view-cell mui-media">
+			        <a href="/goods/view.html?goodsId={{$value.id}}">
+			            <img class="mui-media-object mui-pull-left update80" src="" data-lazyload="{{$value.imgUrl}}">
+			            <div class="mui-media-body qc-font-size14">
+			                <p class="mui-ellipsis-2 qc-color-333">{{$value.name}}</p>
+			                <div class="mui-media-block"></div>
+			                <div class="mui-media-price">
+			                	<i class="mui-color-red">
+			                		&yen;<i class="qc-font-size16">{{$value.price}}</i>
+			                	</i>
+			                	<span class="mui-badge mui-btn-grey mui-pull-right">找相似</span>
+			                	<!--<span class="iconfont icon-jiarugouwuche qc-font-size30-imp mui-pull-right default-abs-color mui-media-cart" data-gid="{{$value.id}}"></span>-->
+			                </div>
+			            </div>
+			         </a>
+			    </li>
+			{{/each}}
+		</script>
+		<!--店铺-->
+		<script>
+			template.helper('sliderSelected', function(id, i) {
+				var _thisGid = common.queryToJSON().tagId === undefined ? '' : common.queryToJSON().tagId;
+				if(_thisGid == '' && i == 0) {
+					return 'mui-active';
+				} else {
+					if(id == _thisGid) {
+						return 'mui-active';
+					}
+				}
+			});
+			mui.ready(function() {
+				
+				var menuResult = {
+					"status": 0,
+					"data": [
+						{ id: '1', name: '商品', type: 'ul' },
+						{ id: '2', name: '店铺', type: 'div' },
+						{ id: '3', name: '内容', type: 'div' }
+					],
+					"message": null,
+					"count": 3,
+					"retType": null
+				};
+				
+				window.Collection.init({
+					navResult:menuResult
+				});
+			});
+		</script>
+		<div style="display:none;">
+			<script src="https://s19.cnzz.com/z_stat.php?id=1262309795&web_id=1262309795 " language="JavaScript"></script>
+		</div>
+	</body>
+
+</html>

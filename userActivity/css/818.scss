@@ -1,0 +1,154 @@
+$vw_fontsize: 75; // iPhone 6尺寸的根元素大小基准值
+@function rem($px) {
+    @return (($px * 750 /640) / $vw_fontsize) * 1rem;
+}
+
+html {
+    font-size: calc(100vw /7.5);
+}
+
+
+/* 重置样式 */
+
+* {
+    -webkit-tap-highlight-color: transparent;
+    outline: 0;
+}
+
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+hr,
+p,
+blockquote,
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+pre,
+form,
+fieldset,
+legend,
+button,
+input,
+textarea,
+th,
+td {
+    margin: 0;
+    padding: 0;
+    vertical-align: baseline;
+}
+
+img {
+    border: 0 none;
+    vertical-align: top;
+}
+
+i,
+em {
+    font-style: normal;
+}
+
+ol,
+ul {
+    list-style: none;
+}
+
+input,
+select,
+button,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-size: 100%;
+    font-family: inherit;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+a,
+a:visited {
+    text-decoration: none !important;
+    color: #333;
+}
+
+.mTop {
+    margin-top: rem(16);
+}
+
+.header_tips {
+    position: relative;
+    &_btmImg {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 0 rem(20);
+    }
+    
+    &_rightImg {
+        position: absolute;
+        bottom: rem(180);
+        left: rem(176);
+        img {
+            width: rem(298);
+            height: rem(100);
+        }
+    }
+}
+
+.first_group {
+    &_list {
+        background-size: cover;
+        background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAlkAAAFICAMAAABURBvWAAADJmlUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS41LWMwMjEgNzkuMTU1NzcyLCAyMDE0LzAxLzEzLTE5OjQ0OjAwICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOnhtcE1NPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvbW0vIiB4bWxuczpzdFJlZj0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL3NUeXBlL1Jlc291cmNlUmVmIyIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ0MgMjAxNCAoV2luZG93cykiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6QzM1RkI2MzQ5NjJBMTFFODlBNTdEQUUxNDg0N0I4RTMiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6QzM1RkI2MzU5NjJBMTFFODlBNTdEQUUxNDg0N0I4RTMiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDpDMzVGQjYzMjk2MkExMUU4OUE1N0RBRTE0ODQ3QjhFMyIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDpDMzVGQjYzMzk2MkExMUU4OUE1N0RBRTE0ODQ3QjhFMyIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PgOUz74AAABOUExURUdwTBwAKloBc1EBancElH8EnW0DiygAOBsAKBUAIV8BehsAKnICjyIA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');
+        &_item {
+            padding: rem(14);
+            display: flex;
+            a {
+                padding: rem(5);
+                img {
+                    width: 100%;
+                }
+            }
+        }
+    }
+}
+
+.second_group{
+    padding: 0 rem(20);
+    .menu_coupon{
+        margin-top: rem(44);
+    }
+    .second_group_item:nth-child(3){
+        width: 50%;
+        display: inline-block;
+        a{
+            display: block;
+            padding-right: rem(10);
+        }
+    }
+    .second_group_item:nth-child(4){
+        width: 50%;
+        display: inline-block;
+        a{
+            display: block;
+            padding-left: rem(10);
+        }
+    }
+}
+
+.footer_group{
+    margin-top: rem(44);
+}

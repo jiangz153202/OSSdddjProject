@@ -1,0 +1,289 @@
+$vw_fontsize: 75; // iPhone 6尺寸的根元素大小基准值
+@function rem($px) {
+     @return ($px / $vw_fontsize ) * 1rem;
+}
+.mui-bg-cart {
+    background: #4abfbc;
+}
+
+.mui-bg-buy {
+    background: #32b3af;
+}
+
+.mui-media-cart {
+    padding: 8px 15px;
+}
+
+.marquee-ul {
+    padding-left: 0px;
+}
+
+.marquee-title {
+    text-align: left;
+}
+
+
+
+#segmentedControls .mui-control-item {
+    width: 100% !important;
+}
+
+#segmentedControls .mui-control-item {
+    border-bottom: 1px solid #f8f8f8 !important;
+    border-right: 1px solid #f8f8f8 !important;
+    background: #FFFFFF;
+    position: relative;
+}
+
+#segmentedControls .mui-control-item.mui-active:before {
+   content: "";
+   width: rem(3);
+   height: 100%;
+   background: #32B3AF;
+   position: absolute;
+   left: 0;
+   bottom: 0;
+}
+.mui-address-after{
+    font-size: rem(24);
+}
+.mui-address-after:after {
+    content: "";
+    line-height: 1;
+    position: absolute;
+    height: 20px;
+    width: 1px;
+    top: 50%;
+    background: #E4E4E4;
+    display: inline-block;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+    right: 65px;
+}
+
+.mui-icon-position {
+    line-height: 1;
+    position: absolute;
+    top: 50%;
+    display: inline-block;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+.mui-icon-position.mui-icon-position-left {
+    left: 13px;
+}
+
+.mui-icon-position.mui-icon-position-right {
+    right: 15px;
+}
+
+.qc-bar-nav .bar-cart .mui-icon {
+    position: relative;
+    line-height: 50px !important;
+    top: -20px;
+    background: #32b3af;
+    width: 50px;
+    border-radius: 100%;
+    color: #fff;
+    box-shadow: 0 1px 6px #ccc;
+    left: 5px;
+}
+
+a:hover{
+    text-decoration: none !important;
+}
+.mui-store-head{
+    width: 100%;
+    height: rem(280);
+    background-image: url(/framwork/global_icon/index/staticImg/storeBg.png);
+    background-repeat: no-repeat;
+    background-color: #F8F8F8;
+    background-size: 100%;
+    &-back{
+        display: block;
+        height: rem(64);
+        padding-left: 13px;
+        padding-top: rem(16);
+        a,a:hover {
+            color: #FFFFFF !important;
+        }
+    }
+    ul{
+        padding-top: rem(11);
+        li{
+            padding-top: 0 !important;
+            padding-bottom: 0 !important;
+            a{
+                margin-top: 0 !important;
+                margin-bottom: 0 !important;
+                .mui-media-object{
+                    border: 1px solid rgb(253,208,119);
+                    @media only screen and (-webkit-min-device-pixel-ratio: 2) {
+                        border-width: .5px;
+                    }
+                    width:rem(170);
+                    height: rem(170);
+                    max-width: rem(170);
+                    line-height: rem(170);
+                }
+                .mui-media-body{
+                    &-title{
+                        font-size: rem(30);
+                        color: #fff;
+                        padding: rem(14) 0 rem(16) 0;
+                    }
+                    &-icon{
+                        span{
+                            padding: rem(5) rem(10);
+                            border-radius: rem(4);
+                            background: #c1b152;
+                            .icon{
+                                width: rem(24);
+                                height: rem(24);
+                                display: inline-block;
+                                background: url(/framwork/global_icon/index/staticImg/金牌荣誉@2x.png) no-repeat ;
+                                background-size: contain;
+                            }
+                        }
+                    }
+                    &-section{
+                        padding-top: rem(16);
+                        span{
+                            font-size: rem(24);
+                        }
+                    }
+                }
+                
+            }
+        }
+    }
+}
+
+#segmentedControl{
+    background-color: rgb(224,247,247);
+    color: #000000;
+    font-size: rem(30);
+    text-align: center;
+    .mui-control-item{
+        position: relative;
+    }
+    .mui-control-item.mui-active:after{
+        content: "";
+        position: absolute;
+        left: 50%;
+        bottom: 0px;
+        margin-left: rem(-30);
+        height: rem(3);
+        width: rem(60);
+        background: #32b3af;
+    }
+    .mui-control-item.mui-active{
+        border-width: 0;
+    }
+}
+
+#segmentedControlContents{
+    .mui-control-content{
+        ul{
+            li{
+                .mui-media-object{
+                    width: rem(148);
+                    max-width: rem(148);
+                    height: rem(148);
+                }
+                .mui-media-body{
+                    .qc-title{
+                        font-size: rem(24);
+                        color: #000000;
+                        letter-spacing: 0;
+                        line-height: rem(36);
+                    }
+                }
+            }
+        }
+    }
+}
+//产品列表
+//
+.mui-cart-sku{
+    height: rem(50);
+    vertical-align: bottom;
+    .input-stock{
+        margin-top: rem(14);
+        font-size: rem(22);
+        color: rgb(136,136,136);
+    }
+    .input-group.animate-btn{
+        animation: all ease-in; 
+        input[type=text]{
+            width: 0;
+        }
+        button.input-group-btn:first-child{
+            width: 0;
+            border: 0;
+        }
+    }
+    .input-group{
+        display: inline-block;
+        float: right;
+        padding-right: rem(30);
+        
+        input[type=text]{
+             border: 0;
+             font-size: rem(22);
+             color: #000000;
+             height: rem(50);
+             width: rem(50);
+        }
+        button.input-group-btn{
+            border-radius: 100% !important;
+            width: rem(50);
+            height: rem(50);
+            padding: 0 !important;
+        }
+        button.input-group-btn:last-child{
+            background: #32B3AF;
+            border:1px solid #FFFFFF;
+            color: #FFFFFF;
+        }
+        button.input-group-btn:first-child{
+            border:1px solid #32B3AF;
+            color: #32B3AF;
+        }
+    }
+    
+}
+
+.mui-table-view-distance{
+    height: rem(100);
+    line-height: rem(100);
+   
+   
+    li{
+        padding: 0 15px;
+        p{
+            color: #000000;
+            font-size: rem(24);
+        }
+        &:after{
+            content: "";
+            height: 1px !important;
+            width: 100%;
+            @media only screen and (-webkit-min-device-pixel-ratio: 2) {
+                transform: scaleY(.5);
+            }
+            
+        }
+    }
+    .mui-icon{
+        color: #32B3AF;
+        font-size: rem(32);
+    }
+   
+}
+
+.mui-table-view-store li a {
+    color: #000000;
+    font-size: rem(24);
+}

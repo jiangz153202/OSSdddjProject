@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=0,minimal-ui">
+		<title>订单支付</title>
+		
+		<link rel="stylesheet" href="/build/css/all.css" /> 
+		<!--一些对于单页面的描述 可以在HTML临时写在本页面  当接入jsp的时候，在写入css文件-->
+		<style type="text/css">
+			.mui-table-view-radio .mui-table-view-cell.mui-selected .mui-navigate-right:after {
+			   /* content: '\e442';*/
+			    color: #dd3838;
+			}
+			.mui-btn-shadow{
+				box-shadow: 0 1px 1px rgba(0, 0, 0, 0.43);
+    			border-radius: 6px;
+			}
+			.mui-btn-wxPay{
+			    color: #fff;
+			    background-color: #09ba07;
+			    border: 1px solid #09ba07;
+			}
+			.mui-btn-offlinePay{
+				color: #09ba07;
+			    background-color: #fff;
+			    border: 1px solid #09ba07;
+			}
+			
+		</style>
+	</head>
+	<body class="">
+		<header class="mui-bar mui-bar-nav mui-bar-nav-hide default-abs-bg-color">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left mui-color-fff"></a>
+			<h1 class="mui-title mui-color-fff qc-font-size16">订单支付</h1>
+		</header>
+		<div class="mui-content pd-b20" id="list-container">
+			
+		</div>
+		<script type="text/html" id="tmpl-model">
+			<ul class="mui-table-view clearUl fn_margintop10">
+				<li class="mui-table-view-cell">
+					<a class="qc-font-size14 qc-color-333" href="javascript:;.html">
+						订单金额 <i class="default-abs-color mui-pull-right">&yen;{{$data.total}}</i>
+					</a>
+				</li>
+			</ul>
+			{{if $data.coupons != null}}
+				{{each $data.coupons as $value i}}
+					<ul class="mui-table-view clearUl">
+						<li class="mui-table-view-cell">
+							<a class="qc-font-size14 qc-color-333" href="javascript:;.html">
+								优惠减免<i class="qc-color-yellow mui-pull-right">- &yen;{{$value.amount}}</i>
+							</a>
+						</li>
+					</ul>
+				{{/each}}
+				{{if $data.coupons.length == 1}}
+					<ul class="mui-table-view clearUl">
+						<li class="mui-table-view-cell">
+							<a class="qc-font-size14 qc-color-333" href="javascript:;.html">
+								最终结算<i class="qc-color-yellow mui-pull-right">&yen;{{showLast $data.total $data.coupons[0].amount}}</i>
+							</a>
+						</li>
+					</ul>
+				{{/if}}
+			{{/if}}
+			<ul class="mui-table-view clearUl fn_margintop10">
+				<li class="mui-table-view-cell">
+					<a class="qc-font-size14 qc-color-333" href="javascript:;.html">
+						订单状态
+						<i class="qc-color-666 mui-pull-right">{{$data.statusText}}</i>
+					</a>
+				</li>
+			</ul>
+			<ul class="mui-table-view clearUl">
+	    		<li class="mui-table-view-cell mui-media">
+	    			<a href="javascript:;.html" class="qc-font-size14 qc-color-333">
+						<div class="mui-media-body mui-ellipsis">
+							<div class="mui-pull-left ">服务店家</div>
+							<div class="mui-pull-right  qc-color-666 ">
+								<span>{{$data.store.name}}</span>
+							</div>
+						</div>
+					</a>
+	    		</li>
+	    	</ul>
+	    	
+	    	<ul class="mui-table-view fn_margintop10 clearUl">
+		        <li class="mui-table-view-cell">
+	                <a class="qc-color-333-imp qc-font-size14" href="javascript:;.html">
+	                                               商品清单
+	                </a>
+		        </li>
+    			{{each $data.items as $value i}}
+	        	<li class="mui-table-view-cell mui-media">
+	    			<a href="javascript:;.html" class="">
+	    				<div class="mui-table qc-font-size12 ">
+						 	<div class="mui-table-cell mui-col-xs-8 mui-font-middle ">
+						 	 	<span class="timer default-abs-color mui-ellipsis-2">{{$value.name}}</span>
+						 	 	<p class="mui-color-6868"> 
+						 	 		{{if $value.activity.index != undefined && $value.activity.index != 0}}
+						 	 			<span class="mui-badge mui-badge-danger  fn_font-size12 fn_marginright5 " style="border-radius: 2px;">
+							 	 			{{$value.activity.name}}
+									 	</span>
+									{{/if}}
+								</p>
+						 	</div>
+						 	<div class="mui-table-cell mui-col-xs-4 mui-font-middle mui-text-center">
+						 	 	 <span class="mui-pull-right">数量: {{$value.quantity}}</span>
+						 	</div>
+						</div>
+					</a>
+	    		</li>
+	    		
+	    		{{/each}}
+	        </ul>
+	        {{if $data.status == 2}}
+			<ul class="mui-table-view mui-table-view-radio clearUl fn_margintop10" id="pay-container">
+				<li class="mui-table-view-cell mui-media qc-font-size14 mui-selected"  data-pm="JSAPI">
+					<a class="mui-navigate-right">
+						<div class="mui-media-object mui-pull-left">
+							<span class="iconfont icon-weixinzhifu qc-font-size30-imp qc-color-wxpay"></span>
+						</div>
+						<div class="mui-media-body qc-color-333">
+							微信支付
+							<p class="mui-ellipsis qc-color-999 qc-font-size12">默认扣款方式为微信付款选项设置</p>
+						</div>
+					</a>
+				</li>
+				
+			</ul>
+			<ul class="mui-table-view">
+			    <li class="mui-table-view-cell qc-font-size12 qc-color-red ">
+					<a class="mui-ellipsis-2" href="javascript:;.html">
+						未满18周岁未成年人不得以任何形式在本平台购买酒水
+					</a>
+				</li>
+			</ul>
+			<div class="fn_margin15 fn_paddingleft20 fn_paddingright20">
+				<button id="pay-submit" type="button" class="mui-btn mui-btn-wxPay fn_padding10 w100 qc-font-size16 mui-btn-shadow">微信支付</button>
+			</div>
+				{{if $data.type == 2}}
+					<div class="fn_margin15 fn_paddingleft20 fn_paddingright20">
+						<button id="offline-submit" type="button" class="mui-btn mui-btn-offlinePay fn_padding10 w100 qc-font-size16 mui-btn-shadow">线下支付</button>
+					</div>
+				{{/if}}
+			{{/if}}
+		</script>
+		<script type="text/html" id="tmpl-model-loading">
+			<div class="spinner-child">
+				<div class="rect1"></div>
+				<div class="rect2"></div>
+				<div class="rect3"></div>
+				<div class="rect4"></div>
+				<div class="rect5"></div>
+			</div>
+		</script>
+		<!--这就是HTML 模板 用于数据加载 -->
+		<script type="text/html" id="tmpl-model-null">
+			<div class="qc-car-null mui-text-center">
+				<div class="qc-car-null-img-empty"></div>
+				<p class="qc-color-888 mui-text-center qc-car-null-text">哎呀！页面还没数据哦~</p>
+			</div>
+		</script>
+		<script src="/framwork/mui/dist/js/mui.js"></script>
+		<!--这是写的一个辅助js库-->
+		<script src="/framwork/plugins/common.min.js"></script>
+		<!--tmpl模板本件 用户加载模板文件-->
+		<script src="/framwork/plugins/artTemplate/3.0.3/dist/template.js"></script>
+		<!--加密库 请求需要-->
+		<script src="/plugin/javascript/web/ajax.js"></script>
+		<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+		<script src="/plugin/javascript/web/wxShare.js"></script>
+		<script src="/plugin/javascript/web/wechat_pay.js"></script>
+		<script src="/plugin/javascript/web/phone/pay/index.js"></script>
+		<script>
+			template.helper('showLast',function(total,amount){
+				return parseFloat(total - amount).toFixed(2);
+			});
+			mui.ready(function() {
+                _wxShareApi.wechatConfig({})
+				/*每个页面都要mui.init*/
+				window.payIndex.init();
+			});
+		</script>
+		<div style="display:none;">
+			<script src="https://s19.cnzz.com/z_stat.php?id=1262309795&web_id=1262309795 " language="JavaScript"></script>
+		</div>
+	</body>
+
+</html>

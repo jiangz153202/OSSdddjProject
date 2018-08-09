@@ -1,0 +1,151 @@
+/* ==============================================================
+ *  @version 1.0.0 (create 2015-04-09 )
+ * 一个按钮组,进行基本的加减
+ * User JiangKun
+ *-----------------------------------------------------------------------------------------------------------
+ * @version 1.0.1 (update 2015-04-20 )
+ * plusMinusBtn加减按钮组，在下单购买的时候经赏需要加减商品数量，
+ * 依赖于common.js 1.0.0里面的proxy函数，使用时注意引用此文件,
+ * 如果在使用时，每次都需要重新绑定，在option里加isEveryBind参数即可
+ * @author miaoxin，qq409001887
+ * -----------------------------------------------------------------------------------------------------------
+ * @version 1.0.2 (update 2015-05-20 )更新了以下内容：
+ * 1.删除defaultValue属性，直接使用min属性即可
+ * 2.在加减按钮后面增加显示剩余件数
+ * 3.txtInputClass改为buyNumberCssText，避免受css优先级影响，直接把样式放在元素中"
+ * 4.删除txtWidth，txtHeight参数
+ * 5.增加显示剩余件数
+ * @author miaoxin，qq409001887
+ *==============================================================*/
+; +(function ($, doc, window) {
+    "use strict";
+
+    var f = function ($, doc, window) {
+        var PlusMinusBtn = function (ele, options) {
+            var defaults = {
+                max: 9999,                                   //最大库存数
+                min: 1,                                         //允许购买的最小数量
+                buyQty: 0,                                   //购物车内选择的商品数量
+                isShowStock: true,                       //是否需要显示剩余件数，默认是显示
+                btnClass: "plugins-btn",
+                btnCssText: '',                               //有时候需要根据页面情况，适当调整按钮大小样式，
+                stockClass: 'plugins-stock',           //剩余件数样式
+                buyNumberCssText: '',                 //采用cssText是考虑优先级问题
+                buyNumberClass: '',                 //采用cssText是考虑优先级问题
+                //事件
+                onPlus: null,                                 //加事件回调
+                onMinus: null,                              //减事件回调
+                onChange: null
+            };
+
+            this.options = $.extend({}, defaults, options);
+            this.btnGroup = ele;
+            this.btnGroup.innerHTML = "<button>-</button><input type='text'/><button>+</button>";
+            if (this.options.isShowStock) {
+                this.btnGroup.innerHTML += '<p class="' + this.options.stockClass + '"></p>';
+                this.stock = this.btnGroup.querySelector('p');
+            }
+            var btns = this.btnGroup.querySelectorAll('button');
+            this.btnMinus = btns[0];
+            this.buyNumber = this.btnGroup.querySelector('input');
+            this.btnPlus = btns[1];
+            this.init();
+        };
+
+        PlusMinusBtn.prototype = {
+            init: function () {
+                //引用这个js的css样式
+                //找到头部
+                if (this.options.btnClass === 'plugins-btn' && this.options.buyNumberCssText === '' && this.options.stockClass === '') {
+                    var head = document.getElementsByTagName("head");
+                    var cssLink = document.createElement("link");
+                    cssLink.href = common.config.cdnUrl + "/framework/Plugins/plusminusbtn/1.0.2/css/plusminusbtn.min.css";
+                    cssLink.type = "text/css";
+                    cssLink.rel = "stylesheet";
+                    //绑定引入
+                    head[0].appendChild(cssLink);
+                    this.buyNumber.className = 'plugins-input-txt';
+                } else {
+                    this.btnMinus.className = this.options.btnClass;
+                    this.btnPlus.className = this.options.btnClass;
+                    this.buyNumber.className= this.options.buyNumberClass;
+                    this.btnMinus.style.cssText = this.btnPlus.style.cssText = this.options.btnCssText
+                    this.buyNumber.style.cssText = this.options.buyNumberCssText;
+                    if (this.options.isShowStock) {
+                        this.stock.innerText = '剩余 ' + this.options.max + ' 件';
+                    }
+                }
+                this.buyNumber.value = this.options.buyQty === 0 ? this.options.min : this.options.buyQty;
+
+                var eventName = common.isMobile() ? 'tap' : 'click';
+                this.btnMinus.addEventListener(eventName, common.proxy(this.minus, this));
+                this.btnPlus.addEventListener(eventName, common.proxy(this.plus, this));
+                this.buyNumber.onkeyup = this.buyNumber.onafterpaste = common.proxy(this.valid, this);
+            },
+            minus: function () {
+                if (this.getBuyNum() > this.options.min) {
+                    this.buyNumber.value = parseInt(this.buyNumber.value) - 1;
+                }
+                else {
+                    common.alert({
+                        msg: '购买数量最少为1件！'
+                    });
+                }
+                typeof this.options.onMinus === 'function' && this.options.onMinus(this);
+            },
+            plus: function () {
+                if (this.getBuyNum() < this.options.max) {
+                    this.buyNumber.value = parseInt(this.buyNumber.value) + 1;
+                }
+                else {
+                    common.alert({
+                        msg: '购买数量不能大于库存数量！'
+                    });
+                }
+
+                typeof this.options.onPlus === 'function' && this.options.onPlus(this);
+            },
+            valid: function (e) {
+                var v = e.target.value;
+                if (v.length === 1) {
+                    v = v.replace(/[^1-9]/g, '');
+                } else {
+                    v = v.replace(/\D/g, '');
+                }
+                if (v === '') {
+                    v = this.options.min;
+                } else {
+                    var num = parseInt(v);
+                    v = num > this.options.max ?
+                        this.options.max : num < this.options.min ?
+                        this.options.min : v;
+                }
+                e.target.value = v;
+                typeof this.options.onChange === 'function' && this.options.onChange(this);
+            },
+            getBuyNum: function () {
+                return parseInt(this.buyNumber.value);
+            }
+        }
+
+        $.fn.plusMinusBtn = function (option, isEveryBind) {
+            return this.each(function () {
+                var data = this.dataset.plusminusbtn;
+                var options = typeof option === 'object' && option;
+
+                //如果需要每次都绑定，给此属性传入true
+                if (isEveryBind) {
+                    var p = new PlusMinusBtn(this, options);
+                } else if (!data) {
+                    this.dataset.plusminusbtn = new PlusMinusBtn(this, options);
+                }
+            });
+        };
+        return PlusMinusBtn;
+    }
+
+    typeof define !== 'undefined' ? define(['jquery'], function () {
+        f($, document, window)
+    }) : f($, document, window);
+
+})((typeof $ !== 'undefined' && typeof jQuery !== 'undefined') ? $ : mui, document, window)

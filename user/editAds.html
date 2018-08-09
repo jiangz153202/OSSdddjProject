@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=0,minimal-ui">
+		<title>我的收货地址-滴滴订酒</title>
+		<link rel="stylesheet" href="/build/css/all.css" /> 
+		<!--一些对于单页面的描述 可以在HTML临时写在本页面  当接入jsp的时候，在写入css文件-->
+		<link rel="stylesheet" type="text/css" href="/plugin/style/web/phone/user/address.css"/>
+		<!--选择器-->
+		<link rel="stylesheet" type="text/css" href="/framwork/mui/picker/css/mui.picker.css"/>
+		<link rel="stylesheet" type="text/css" href="/framwork/mui/picker/css/mui.poppicker.css"/>
+	</head>
+	<body class="">
+		<script type="text/html" id="tmpl-model">
+				<header class="mui-bar mui-bar-nav mui-bar-nav-hide default-abs-bg-color">
+					<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left mui-color-fff"></a>
+					<h1 class="mui-title mui-color-fff qc-font-size16">
+						{{if $data.addressId != null}}
+							修改地址
+						{{else}}
+							新增地址
+						{{/if}}
+					</h1>
+					{{if $data.addressId != null}}
+					<a class="mui-icon mui-pull-right qc-color-fff" href="javascript:;.html" ><span class="qc-font-size14 mui-bar-title">删除</span></a>
+					{{/if}}
+				</header>
+				<div class="mui-content">
+				    <div id="list-container">
+						<!--这里放置真实显示的DOM内容-->
+						<div class="mui-card mui-clear-card-boxShadow qc-color-333 qc-font-size14">
+						    <div class="mui-input-row">
+						        <label class="qc-color-666">收货人</label>
+						        <input type="text" class="qc-font-size14" id="from-name" value="{{$data.userName}}" placeholder="收货人姓名" />
+						    </div>
+						   	<div class="mui-input-row mui-radio mui-left ft-s13 pd-l10 mui-input-row-sex">
+								<div class="mui-row">
+									<div class="mui-col-xs-4">
+									</div>
+								    <div class="mui-col-xs-4">
+								     	<input class="" name="radio-select" type="radio" data-sex="1" {{checkSex $data.sex "先生"}}>
+										<label class="pd-l20 cl-s9" >先生</label>
+								    </div>
+								    <div class="mui-col-xs-4">
+								     	<input class="" name="radio-select" type="radio" data-sex="2" {{checkSex $data.sex "女士"}}>
+										<label class="pd-l20 cl-s9" >女士</label>
+								    </div>
+								</div>
+							</div>
+							<div class="mui-input-row">
+						        <label class="qc-color-666">手机号</label>
+						        <input type="tel" maxlength="11" class="qc-font-size14" id="from-mobile" value="{{$data.userPhone}}" placeholder="收货时联系方式" />
+						    </div>
+						</div>
+						<div class="mui-card mui-clear-card-boxShadow qc-color-333">
+							<div class="mui-input-row">
+						        <label class="qc-color-666">所在地区</label>
+						        <input type="text" class="qc-font-size14" id="from-fullPath" value="{{$data.area_full_path}}" readonly="readonly" placeholder="点击选择省,市,区" />
+						        <span class="mui-icon mui-icon-arrowright mui-row-icon mui-pull-right qc-color-ccc"></span>
+						    </div>
+						    <div class="mui-input-row">
+						        <label class="qc-color-666"></label>
+						        <textarea id="from-textarea" class="qc-font-size14  fn_marginbottom10 clearBg" rows="2" value="{{$data.address}}" id="from-address" placeholder="详细地址 (如街道、门牌号，不少于5个字)">{{$data.address}}</textarea>
+						    </div>
+						</div>
+						<div class="mui-card mui-clear-card-boxShadow qc-color-333">
+							<div class="mui-input-row ">
+							    <label class="qc-font-size14">设为默认</label>
+							    <div id="mySwitch" class="mui-switch mui-switch-mini fn_marginbottom5 {{if $data.isDefault == 1}}mui-active{{/if}}" id="from-switch">
+							        <div class="mui-switch-handle "></div>
+							    </div>
+							</div>
+						</div>
+						<div class="mui-button-row fn_padding10 fn_clearpaddingtop">
+							<button type="button" id="from-submit" class="mui-btn mui-btn-default mui-btn-shadow w100 fn_padding10 fn_paddingtop15 fn_paddingbottom15" data-aid="{{$data.addressId}}">保存</button>
+						</div>
+				    </div>
+				</div>
+		</script>
+		<script src="/build/script/all.js"></script>
+		
+		<script src="/framwork/mui/picker/js/mui.picker.js"></script>
+		<script src="/framwork/mui/picker/js/mui.poppicker.js"></script>
+		<script src="/framwork/mui/picker/js/car-data-3.js"></script>
+		
+		<script src="/plugin/javascript/web/phone/user/userAddress.js"></script>
+		<script type="text/html" id="tmpl-model-loading">
+			<div class="spinner-child spinner-child-fixed">
+				<div class="rect1"></div>
+				<div class="rect2"></div>
+				<div class="rect3"></div>
+				<div class="rect4"></div>
+				<div class="rect5"></div>
+			</div>
+		</script>
+		<!--这就是HTML 模板 用于数据加载 -->
+		<script type="text/html" id="tmpl-model-null">
+			<div class="qc-car-null mui-text-center">
+				<div class="qc-car-null-img-empty"></div>
+				<p class="qc-color-888 mui-text-center qc-car-null-text">哎呀！页面还没数据哦~</p>
+			</div>
+		</script>
+		<script>
+			template.helper('checkSex',function(sex,sexStr){
+				
+				if(sexStr == sex || sex == undefined && sexStr == "先生"){
+					return 'checked="checked"';
+				}
+			});
+			mui.ready(function() {
+				/*每个页面都要mui.init*/
+				window.userAddress.edit.init();
+			});
+		</script>
+		<div style="display:none;">
+			<script src="https://s19.cnzz.com/z_stat.php?id=1262309795&web_id=1262309795 " language="JavaScript"></script>
+		</div>
+	</body>
+
+</html>

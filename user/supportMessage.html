@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=0,minimal-ui">
+		<title></title>
+		<link rel="stylesheet" href="/framwork/mui/dist/css/mui.min.css" />
+		
+		<link rel="stylesheet" type="text/css" href="/plugin/style/basic/loading.css" />
+		<link rel="stylesheet" type="text/css" href="/plugin/style/basic/main.css" />
+		<link rel="stylesheet" type="text/css" href="/plugin/style/basic/aboutprogess.css" />
+		<!--对mui css 的优化-->
+		<link rel="stylesheet" type="text/css" href="/plugin/style/global/module.css" />
+		<!--一些颜色  字体字号 -->
+		<link rel="stylesheet" type="text/css" href="/plugin/style/global/orther.css" />
+		<!--对商品列表排版 的优化 如 demo1 demo2【在其他地方】 demo3 -->
+		<link rel="stylesheet" type="text/css" href="/plugin/style/global/goodslist.css" />
+		<!--本地字体文件库-->
+		<link rel="stylesheet" href="/framwork/iconfonts/basic/iconfont.css" />
+		<!--一些对于单页面的描述 可以在HTML临时写在本页面  当接入jsp的时候，在写入css文件-->
+		<!--当前页面css-->
+		<link rel="stylesheet" href="/plugin/style/item/message.css" />
+	</head>
+	<body class="">
+		<header class="mui-bar mui-bar-nav mui-bar-nav-hide default-abs-bg-color">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left mui-color-fff"></a>
+			<h1 class="mui-title mui-color-fff">客服消息</h1>
+		</header>
+		<div class="mui-content mui-scroll-wrapper ms-bg-cl" id="pullrefresh">
+			
+		    <div class="mui-scroll">
+		        <!--这里放置真实显示的DOM内容-->
+		  
+			
+			
+			<ul id="list-container" class="mui-table-view clearUl ms-items">
+				<li class="mui-table-view-cell mui-media mui-transitioning">
+					<div class="mui-slider-right mui-disabled">
+						<a class="mui-btn mui-btn-red" data-id="123" style="transform: translate(0px, 0px);">
+							<img src="/framwork/global_icon/mipmap-xhdpi/ic_del_white.png" width="20"/>
+						</a>
+					</div>
+					<div class="mui-slider-handle ps-rt" style="transform: translate(0px, 0px);">
+						 <span class="ms-sign-num t0 l30">1</span>
+					 	 <a href="javascript:;.html" class="">
+							<img class="mui-media-object mui-pull-left border-radius-all" src="/framwork/global_icon/mipmap-xhdpi/mess_kefu.png">
+							<div class="mui-media-body ft-s16">
+								客服小二<span class="mui-pull-right mg-r15 ft-s12 cl-s9">12:00</span>
+								<p class="mui-ellipsis">优惠促销优惠促销优惠促销优惠促销优惠促销优惠促销优惠促销</p>
+							</div>
+						</a>
+					</div>
+				</li>
+				<li class="mui-table-view-cell mui-media mui-transitioning">
+					<div class="mui-slider-right mui-disabled">
+						<a class="mui-btn mui-btn-red" data-id="123" style="transform: translate(0px, 0px);">
+							<img src="/framwork/global_icon/mipmap-xhdpi/ic_del_white.png" width="20"/>
+						</a>
+					</div>
+					<div class="mui-slider-handle ps-rt" style="transform: translate(0px, 0px);">
+						 <span class="ms-sign-num t0 l30">1</span>
+					 	 <a href="javascript:;.html" class="">
+							<img class="mui-media-object mui-pull-left border-radius-all" src="/framwork/global_icon/mipmap-xhdpi/xiaoxi_01.png">
+							<div class="mui-media-body ft-s16">
+								香百年<span class="mui-pull-right mg-r15 ft-s12 cl-s9">12:00</span>
+								<p class="mui-ellipsis">优惠促销优惠促销优惠促销优惠促销优惠促销优惠促销优惠促销</p>
+							</div>
+						</a>
+					</div>
+				</li>
+			</ul>
+			</div>
+		</div>
+		
+		<script src="/framwork/mui/dist/js/mui.min.js"></script>
+		
+		<!--这是写的一个辅助js库-->
+		<script src="/framwork/plugins/common.js"></script>
+		<!--tmpl模板本件 用户加载模板文件-->
+		<script src="/framwork/plugins/artTemplate/3.0.3/dist/template.js"></script>
+		<!--这就是HTML 模板 用于数据加载 -->
+		<script type="text/html" id="tmpl-model-null">
+			<p class="qc-color-888 mui-text-center" style="letter-spacing: 0px;margin-top: 50px;">暂无任何数据</p>
+		</script>
+		<script>
+			mui.ready(function() {
+				/*每个页面都要mui.init*/
+				mui.init();
+			});
+		</script>
+		<div style="display:none;">
+			<script src="https://s19.cnzz.com/z_stat.php?id=1262309795&web_id=1262309795 " language="JavaScript"></script>
+		</div>
+	</body>
+
+</html>

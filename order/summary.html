@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=0,minimal-ui">
+		<title></title>
+		<link rel="stylesheet" href="/build/css/all.css" />
+		
+		<script src="/build/script/all.js"></script>
+		<!--一些对于单页面的描述 可以在HTML临时写在本页面  当接入jsp的时候，在写入css文件-->
+		<link rel="stylesheet" href="/plugin/style/web/nav_tab.min.css" />
+		<!--当前页面css-->
+		<style>
+			.shop-bar-order{
+				list-style: none;
+			}
+			.shop-bar-order ul li .mui-icon .mui-badge {
+			    left: 75%;
+			}
+			.shop-bar-order ul{
+				padding: 10px 0px;
+				margin: 0px;
+			}
+			.shop-bar-order ul:after{
+				content: "";
+				clear: both;
+				display: block;
+			}
+			.shop-bar-order li {
+			    position: relative !important;
+			    margin: 7px 0px;
+			}
+			.shop-bar-order li {
+			    float: left;
+			    list-style: none;
+			    -webkit-box-sizing: border-box;
+			    -moz-box-sizing: border-box;
+			    box-sizing: border-box;
+			}
+			.shop-bar-order span {
+			    display: block;
+			    font-size: 14px;
+			    text-align: center;
+			}
+			.qc-car-null {
+			    margin-top: 10px !important;
+			}
+			.mui-hide {
+			    display: none !important;
+			}
+			
+			.mui-badge-abs {
+			    font-size: 10px !important;
+			    line-height: 1.4;
+			    position: absolute;
+			    top: 8px;
+			    left: 100%;
+			    margin-left: -26px;
+			    padding: 1px 5px;
+			    color: #fff;
+			    background: red;
+			}
+			
+			.mui-collapse.mui-active .mui-collapse-content, .mui-collapse.mui-active {
+			    display: block;
+			}
+			
+			.mui-collapse .mui-collapse-content {
+			    position: relative;
+			    display: none;
+			    overflow: hidden;
+			    -webkit-transition: height .35s ease;
+			    -o-transition: height .35s ease;
+			    transition: height .35s ease;
+			    background: #fff;
+			}
+		</style>
+	</head>
+
+	<body >
+		<script type="text/html" id="tmpl-model-null">
+			<div class="qc-car-null mui-text-center">
+				<p class="qc-color-888 mui-text-center qc-car-null-text">哎呀！暂无数据哦~</p>
+			</div>
+		</script>
+		<!--头部  和 底部 放在mui-content 上面 -->
+		<nav class="mui-bar mui-bar-tab">
+			<a class="mui-tab-item " href="/index.html">
+				<span class="mui-icon mui-icon-tab1"></span>
+				<span class="mui-tab-label">首页</span>
+			</a>
+			<a class="mui-tab-item" href="/goods/dailygroups.html">
+				<span class="mui-icon mui-icon-tab2"></span>
+				<span class="mui-tab-label">分类</span>
+			</a>
+			<a class="mui-tab-item mui-active"  href="javascript:;">
+				<span class="mui-icon mui-icon-tab3"></span>
+				<span class="mui-tab-label">订单</span>
+			</a>
+			<a class="mui-tab-item " href="/user/index.html">
+				<span class="mui-icon mui-icon-tab4"></span>
+				<span class="mui-tab-label">我的</span>
+			</a>
+		</nav>
+		<script type="text/html" id="tmpl-model-loading">
+			<div class="spinner-child spinner-child-fixed">
+				<div class="rect1"></div>
+				<div class="rect2"></div>
+				<div class="rect3"></div>
+				<div class="rect4"></div>
+				<div class="rect5"></div>
+			</div>
+		</script>
+		<!--这就是HTML 模板 用于数据加载 -->
+		<script type="text/html" id="tmpl-model-null">
+			<div class="qc-car-null mui-text-center">
+				<div class="qc-car-null-img-empty"></div>
+				<p class="qc-color-888 mui-text-center qc-car-null-text">哎呀！页面还没数据哦~</p>
+			</div>
+		</script>
+		<div class="mui-content" id="pull-body">
+			<div class="" id="menu-container"></div>
+			<h5 class="title fn_margin10 qc-color-333" style="font-weight: bold;">最近订单</h5>
+			<div class="" id="list-container">
+			</div>
+			<!--<h5 class="title fn_margin10 qc-color-666">我的收藏</h5>
+			<div class="" id="list2-container">
+				<div class="qc-car-null mui-text-center">
+					<p class="qc-color-888 mui-text-center qc-car-null-text">哎呀！暂无数据哦~</p>
+				</div>
+			</div>
+			<h5 class="title fn_margin10 qc-color-666">最近浏览</h5>
+			<div class="" id="list3-container">
+				<div class="qc-car-null mui-text-center">
+					<p class="qc-color-888 mui-text-center qc-car-null-text">哎呀！暂无数据哦~</p>
+				</div>
+			</div>-->
+		</div>
+		<!--当页逻辑页面-->
+	    <script src="/plugin/javascript/web/phone/order/summary.js"></script>
+		<script type="text/html" id="tmpl-menus">
+			<!--我的订单-->
+			{{if $data.orderItem != null}}
+			<ul class="mui-table-view clearUl qc-font-size14">
+				<li class="mui-table-view-cell">
+					<a class="mui-navigate-right" href="{{$data.orderItem.tagUrl}}">
+						<i class="" style="font-weight: bold;">我的订单</i>
+						<h5 class="mui-pull-right fn_marginright15 qc-color-666">{{$data.orderItem.tagName}}</h5>
+					</a>
+				</li>
+			</ul>
+			<div class="shop-bar-order qc-bg-color-fff order-bar">
+				<ul class="">
+					<!--/p/user/collection?tagId=3-->
+					{{each $data.orderItem.childItem as $value i}}
+					<li class="js-all-goods w20 fn_clearmargin">
+						<a href="{{orderItem.tagUrl}}?tagId={{$value.tagId}}">
+							<img src="{{$value.iconUrl}}" class="w100 fn_padding10 fn_clearpaddingbottom" style="padding-left: 15px;padding-right: 15px;" />
+							<span class='mui-badge mui-badge-abs {{if $value.tagCount <= 0}}mui-hide{{/if}}' data-status='{{$value.tagId}}'>{{$value.tagCount}}</span>
+								
+							<span class="text qc-color-666-imp qc-font-size12-imp ">{{$value.tagName}}</span>
+						</a>
+					</li>
+					{{/each}}
+				</ul>
+			</div>
+			{{/if}}
+		</script>
+		<script type="text/html" id="tmpl-model">
+			{{each content as $values i}}
+			{{if i < 3}}
+				<ul class="mui-table-view clearUl fn_margintop10 qc-font-size14 order-ul-{{$values.orderNumber}}">
+					<li class="mui-table-view-cell">
+						<a href="/order/view.html?orderNumber={{$values.orderNumber}}" class="qc-color-333-imp">
+							订单编号:{{$values.orderNumber}}
+							<span class="mui-pull-right mui-font-size14">实付:&yen;{{$values.paid}}</span>
+						</a>
+					</li>
+					{{each $values.items as value i}}
+						
+						<li class="mui-table-view-cell mui-media good-body">
+							<a href="/order/view.html?orderNumber={{$values.orderNumber}}">
+								<img class="mui-media-object mui-pull-left goods-img" src="{{value.imgUrl}}">
+								<div class="mui-media-body">
+									<p class='mui-ellipsis-2 goods-text mui-color-000'>{{value.name}}
+										<span class="mui-pull-right default-abs-color">{{$values.statusText}}</span>
+									</p>
+									<p class="mui-ellipsis fn_marginbottom20">{{value.props}}</p>
+									{{if value.activity.index != undefined && value.activity.index != 0}}
+										<span class="mui-badge fn_border-radius mui-btn-red">{{value.activity.name}}</span>
+									{{/if}}
+									<h5 class="qc-color-333">&yen;{{value.price}} <span class="mui-pull-right">X{{value.quantity}}</span></h5>
+								</div>
+							</a>
+						</li>
+						
+					{{/each}}
+					
+				</ul>
+			{{/if}}
+			{{/each}}
+			{{if content.length > 3}}
+            	{{include 'tmpl-stores-more'}}
+            {{/if}}
+		</script>
+		<script type="text/html" id="tmpl-stores-more">
+	    	<div class="mui-collapse ">
+				<p class="fn_padding15 fn_clearmarginbottom default-abs-color mui-navigate-right mui-text-center" id="store-hide" style="position: relative;">查看更多</p>
+				<div class="mui-collapse-content">
+				{{each content as $values i}}
+		    		{{if i > 2}}
+					<ul class="mui-table-view clearUl fn_margintop10 qc-font-size14 order-ul-{{$values.orderNumber}}">
+						<li class="mui-table-view-cell">
+							<a href="/order/view.html?orderNumber={{$values.orderNumber}}" class="qc-color-333-imp">
+								订单编号:{{$values.orderNumber}}
+								<span class="mui-pull-right mui-font-size14">实付:&yen;{{$values.paid}}</span>
+							</a>
+						</li>
+						{{each $values.items as value i}}
+							
+							<li class="mui-table-view-cell mui-media good-body">
+								<a href="/order/view.html?orderNumber={{$values.orderNumber}}">
+									<img class="mui-media-object mui-pull-left goods-img" src="{{value.imgUrl}}">
+									<div class="mui-media-body">
+										<p class='mui-ellipsis-2 goods-text mui-color-000'>{{value.name}}
+											<span class="mui-pull-right default-abs-color">{{$values.statusText}}</span>
+										</p>
+										<p class="mui-ellipsis fn_marginbottom20">{{value.props}}</p>
+										{{if value.activity.index != undefined && value.activity.index != 0}}
+											<span class="mui-badge fn_border-radius mui-btn-red">{{value.activity.name}}</span>
+										{{/if}}
+										<h5 class="qc-color-333">&yen;{{value.price}} <span class="mui-pull-right">X{{value.quantity}}</span></h5>
+									</div>
+								</a>
+							</li>
+							
+						{{/each}}
+						
+					</ul>
+					{{/if}}
+           		{{/each}}
+           		</div>
+			</div>
+	    </script>
+		<script>
+			mui.ready(function() {
+				window.summary.init();
+				AjaxCommon.pageInit('.mui-bar');
+			});
+			
+			
+			console.log('这是更新过的');
+		</script>
+		<div style="display:none;">
+			<script src="https://s19.cnzz.com/z_stat.php?id=1262309795&web_id=1262309795 " language="JavaScript"></script>
+		</div>
+	</body>
+
+</html>

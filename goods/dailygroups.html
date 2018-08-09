@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=0,minimal-ui">
+		<title>产品分组-DD订酒</title>
+		<link rel="stylesheet" href="/build/css/all.css" />
+		<script src="/build/script/all.js"></script>
+		<link rel="stylesheet" href="/plugin/style/web/nav_tab.min.css" />
+		<!--一些对于单页面的描述 可以在HTML临时写在本页面  当接入jsp的时候，在写入css文件-->
+		<!--当前页面css-->
+		<style>
+			.mui-slider.mui-fullscreen .mui-segmented-control.mui-segmented-control-inverted .mui-control-item {
+				color: #333;
+			}
+			
+			.mui-control span.progress-badge-333,
+			.mui-control span.progress-badge {
+				margin-left: 10px;
+			}
+			.qc-car-null {
+				margin-top: 33px;
+			}
+			.mui-badge.mui-badge-blue {
+			    color: rgb(255, 255, 255);
+			    background-color: #007aff;
+			}
+			
+			.progress-badge {
+			    background-color: #32b3af;
+			    border-color: transparent;
+			    color: #ffffff;
+			}
+			.progress-badge-333 {
+				background-color: #ffffff;
+				
+				border-color: #32b3af;
+				color: #32b3af;
+			}
+			.mui-slider.mui-fullscreen .mui-segmented-control.mui-segmented-control-inverted .mui-control-item{
+				padding: 0px 10px;
+			}
+			
+			.mui-slider.mui-fullscreen .mui-segmented-control.mui-segmented-control-inverted .mui-control-item > span{
+				background: #f4f4f4;
+			    padding: 5px 10px;
+			    border-radius: 12px;
+			    font-size: 14px;
+			}
+			
+			.mui-fullscreen .mui-segmented-control~.mui-slider-group{
+				top: 80px;
+			}
+			.icon-search:before {
+			    content: "搜索";
+			    font-size: 14px;
+			    
+			}
+			.mui-media-object.update65 {
+			    width: 80px;
+			    max-width: 80px;
+			    height: 80px;
+			}
+		</style>
+	</head>
+
+	<body class="mui-focusin">
+		<!--头部  和 底部 放在mui-content 上面 -->
+		<nav class="mui-bar mui-bar-tab">
+			<a class="mui-tab-item " href="/index.html">
+				<span class="mui-icon mui-icon-tab1"></span>
+				<span class="mui-tab-label">首页</span>
+			</a>
+			<a class="mui-tab-item mui-active"  href="javascript:;">
+				<span class="mui-icon mui-icon-tab2"></span>
+				<span class="mui-tab-label">分类</span>
+			</a>
+			<a class="mui-tab-item" href="/order/summary.html">
+				<span class="mui-icon mui-icon-tab3"></span>
+				<span class="mui-tab-label">订单</span>
+			</a>
+			<a class="mui-tab-item " href="/user/index.html">
+				<span class="mui-icon mui-icon-tab4"></span>
+				<span class="mui-tab-label">我的</span>
+			</a>
+		</nav>
+		<header class="mui-bar mui-bar-nav mui-bar-nav-hide didisearch mui-bg-fff">
+		
+				<a class="mui-action-back mui-icon mui-icon-left-nav d-head-back fn_font-size20 default-abs-color"  href="javascript:;.html"></a>
+				<a class="mui-pull-right  mui-icon mui-icon-right-nav  qc-color-666 mui-ellipsis iconfont icon-search"  href="javascript:;.html">
+					
+				</a>
+				<h1 class="mui-title">
+					<input type="search" class="mui-input-clear qc-font-size14" style="border-radius: 50px;" placeholder="输入关键字搜索商品" id="search-input"/>
+				</h1>
+			
+				
+				<!--<div class="mui-input-row mui-search">
+				   
+				</div>-->
+				<!--<span class="fn_font-size16 d-head-clear iconfont2 mui-hide">&#xe627;</span>
+				<span class="iconfont2 qc-font-size14 d-head-close ">搜索</span>-->
+			
+		</header>
+
+<script type="text/html" id="tmpl-model-loading">
+	<div class="spinner-child spinner-child-fixed">
+		<div class="rect1"></div>
+		<div class="rect2"></div>
+		<div class="rect3"></div>
+		<div class="rect4"></div>
+		<div class="rect5"></div>
+	</div>
+</script>
+<!--这就是HTML 模板 用于数据加载 -->
+<script type="text/html" id="tmpl-model-null">
+	<div class="qc-car-null mui-text-center">
+		<div class="qc-car-null-img-empty"></div>
+		<p class="qc-color-888 mui-text-center qc-car-null-text">哎呀！页面还没数据哦~</p>
+	</div>
+</script>
+		<div class="dddj-menu">
+			<span class="iconfont icon-up fn_font-size30 fn_shop-color menu-backtop"></span>
+		</div>
+		<div class="mui-content" id="pull-body">
+		</div>
+		<!--这是加减按钮-->
+		<script src="/framwork/plugins/plusminusbtn/1.0.2/js/plusminusbtn.min.js"></script>
+		<!--多页上拉加载-->
+		<script src="/framwork/mui/pullToRefresh/mui.pullToRefresh.js"></script>
+		<script src="/framwork/mui/pullToRefresh/mui.pullToRefresh.material.js"></script>
+		<!--当页逻辑页面-->
+		<script src="/plugin/javascript/web/phone/goods/index.js"></script>
+		<script type="text/html" id="tmpl-model-null">
+			<div class="qc-car-null mui-text-center">
+				<div class="qc-car-null-img-empty"></div>
+				<p class="qc-color-888 mui-text-center qc-car-null-text">哎呀！页面还没数据哦~</p>
+			</div>
+		</script>
+		<script type="text/html" id="tmpl-menus">
+			<div class="mui-slider mui-fullscreen">
+				<div id="segmentedControls" class="mui-bg-fff mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+					<div class="mui-scroll" id="menu-container">
+						{{each data as $value i}}
+						<a class="mui-control-item {{sliderSelected $value.id i}}" href="#item{{i}}"  data-itemid="{{i}}">
+							<span>{{$value.name}}</span>
+						</a>
+						{{/each}}
+					</div>
+				</div>
+				<ul class="list-layout-demo demo1 goods-type mui-bg-fff menuType">
+					<li class="demo-model w50 mui-text-center" data-name="sold">
+						<a href="javascript:;.html" class="type-font mui-text-center">
+							<span class="type-text mui-ellipsis">
+				 				销量
+				 			</span>
+						</a>
+					</li>
+					<li class="demo-model w50 mui-text-center" data-name="price">
+						<a href="javascript:;.html" class="type-font mui-text-center">
+							<span class="type-text mui-ellipsis">
+				 				价格
+				 			</span>
+						</a>
+					</li>
+				</ul>
+				<div id="segmentedControlContents" class="mui-slider-group">
+					{{each data as $value i}}
+					<div class="mui-slider-item  mui-control-content {{sliderSelected $value.id i}}" id="item{{i}}">
+						<div class="mui-scroll-wrapper">
+							<div class="mui-scroll">
+								<!--这里放置真实显示的DOM内容-->
+								<div class="spinner-child">
+									<div class="rect1"></div>
+									<div class="rect2"></div>
+									<div class="rect3"></div>
+									<div class="rect4"></div>
+									<div class="rect5"></div>
+								</div>
+								<div class="list-container fn_margintop10" data-index="{{i}}" data-id="{{$value.id}}" data-pageindex='0'></div>
+							</div>
+						</div>
+					</div>
+					{{/each}}
+				</div>
+			</div>
+		</script>
+		<script type="text/html" id="tmpl-goods">
+			{{each $data.content as $value i }}
+			<ul class="mui-table-view clearUl fn_marginbottom10">
+				<li class="mui-table-view-cell mui-media">
+			        <a href="/goods/view.html?goodsId={{$value.id}}">
+			            <img class="mui-media-object mui-pull-left update65" src="{{$value.imgUrl}}" data-lazyload="">
+			            <div class="mui-media-body ">
+			                <p class="mui-ellipsis-2 qc-color-333 qc-font-size12">{{$value.name}}</p>
+			                <div class="mui-media-block fn_margintop10"></div>
+			                <div class="mui-media-price">
+			                	<i class="mui-color-red">
+			                		&yen;<i class="qc-font-size16">{{$value.price}}</i>
+			                	</i>
+			                	{{if $value.sold > 0}}
+			                		<i class="fn_marginleft10 qc-color-666 qc-font-size12">销量:{{$value.sold}}</i>
+			                	{{else}}
+			                		<i class="fn_marginleft10 qc-color-666 qc-font-size12">销量:暂无数据</i>
+			                	{{/if}}
+			                	<span class="mui-pull-right default-abs-bg-color qc-color-fff mui-badge" style="padding: 10px 12px;border-radius: 5px;" data-gid="{{$value.id}}">立即购买</span>
+			                </div>
+			            </div>
+			         </a>
+			    </li>
+			</ul>
+			{{/each}}
+		</script>
+		<script>
+			template.helper('sliderSelected', function(id, i) {
+				var _thisGid = common.queryToJSON().tagId === undefined ? '' : common.queryToJSON().tagId;
+				if(_thisGid == '' && i == 0) {
+					return 'mui-active';
+				} else {
+					if(id == _thisGid) {
+						return 'mui-active';
+					}
+				}
+			});
+			template.helper('setUpRows', function(rows) {
+				var maxRows = 12;
+				var rowStr = "mui-col-xs-" + (maxRows / rows);
+				//console.log(rowStr);
+				return rowStr;
+			});
+			template.helper('isWrapper', function(rows) {
+
+				if(rows > 5) {
+					/*setTimeout(function(){
+						mui('.mui-slider-indicator').scroll()
+					},1000);*/
+					return "mui-scroll-wrapper";
+				}
+
+			});
+			
+			mui.ready(function() {
+
+				window.goodsIndex.init();
+				AjaxCommon.pageInit('.mui-bar');
+			});
+		</script>
+		<div style="display:none;">
+			<script src="https://s19.cnzz.com/z_stat.php?id=1262309795&web_id=1262309795 " language="JavaScript"></script>
+		</div>
+	</body>
+
+</html>

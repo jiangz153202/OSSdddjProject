@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+	</head>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=0,minimal-ui">
+		<title>DD门店</title>
+		
+		<!--本地字体文件库-->
+		<link rel="stylesheet" type="text/css" href="/build/css/all.css" />
+		<!--一些对于单页面的描述 可以在HTML临时写在本页面  当接入jsp的时候，在写入css文件-->
+		<link rel="stylesheet" type="text/css" href="/plugin/style/web/phone/store/view.css" />
+		<link rel="stylesheet" type="text/css" href="/plugin/style/web/phone/store/view_scss.css" />
+		<script type="text/javascript" src="http://g.tbcdn.cn/mtb/lib-flexible/0.3.4/flexible.js"></script>
+		
+	</head>
+
+	<body class="">
+		<div class="mui-content" id="pullrefresh" >
+			<!--这里放置真实显示的DOM内容-->
+			<div id="body-container">
+			</div>
+		</div>
+		<!--购物车选项-->
+		<div id="sku-popover" class="mui-popover mui-popover-action mui-popover-bottom mui-avtive-bottom">
+			<ul class="mui-table-view clearUl fn_clearmargin" style="border-radius:0px;">
+				<li class="mui-table-view-cell">
+					<a class="qc-font-size14 qc-color-333-imp qc-bg-color-f8f8 mui-text-left">
+						购物车<i class="mui-pull-right" id="mui-clear-cart"><span class="iconfont mui-color-333"></span>清除全部</i>
+					</a>
+				</li>
+			</ul>
+			<!--商品列表-->
+			<div class="mui-scroll-wrapper mui-not-scroll" style="top:43px;">
+				<div class="mui-scroll">
+					<div class="qc-bg-color-fff" id="sku-container">
+
+					</div>
+				</div>
+			</div>
+		</div>
+		<script src="/build/script/all.js"></script>
+		<script type="text/javascript" src="/framwork/plugins/plusminusbtn/1.0.2/js/plusminusbtn.min.js"></script>
+		<!--这是轮播图-->
+		<!--这是图片懒加载-->
+		<script src="/framwork/plugins/muilazyload/1.7.0/js/mui.lazyload.js"></script>
+		<script src="/framwork/plugins/muilazyload/1.7.0/js/mui.lazyload.img.js"></script>
+		<script src="/framwork/plugins/popup/js/mui-popup-add.js"></script>
+		<script src="/plugin/javascript/web/phone/store/view.js"></script>
+		<script type="text/html" id="tmpl-model-loading">
+			<div class="spinner-child ">
+				<div class="rect1"></div>
+				<div class="rect2"></div>
+				<div class="rect3"></div>
+				<div class="rect4"></div>
+				<div class="rect5"></div>
+			</div>
+		</script>
+		<!--这就是HTML 模板 用于数据加载 -->
+		<script type="text/html" id="tmpl-model-null">
+			<div class="qc-car-null mui-text-center">
+				<div class="qc-car-null-img-empty"></div>
+				<p class="qc-color-888 mui-text-center qc-car-null-text">哎呀！页面还没数据哦~</p>
+			</div>
+		</script>
+		<script type="text/html" id="tmpl-cart">
+			{{each data}}
+			<div class="mui-table qc-font-size12 fn_padding5">
+				<div class="mui-table-cell mui-col-xs-5 mui-font-middle ">
+					{{$value.name}}
+				</div>
+				<div class="mui-table-cell mui-col-xs-2 mui-font-middle mui-text-center qc-color-red">
+					<i class="qc-font-size12">&yen;</i><i class="qc-price qc-font-size20">{{$value.price}}</i>
+				</div>
+				<div class="mui-table-cell mui-col-xs-5 mui-font-middle mui-text-center mui-cart-sku">
+					<div class="input-group fn_clearpadding cart-plusBtn{{$value.gid}}" data-type="cart" data-stock="{{$value.stock}}" data-qty="{{$value.qty}}" data-gid="{{$value.gid}}" data-price="{{$value.price}}"></div>
+				</div>
+			</div>
+			{{/each}}
+		</script>
+		<script type="text/html" id="tmpl-body">
+			<div class="mui-store-head ">
+				<div class="mui-store-head-back">
+					<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+				</div>
+				<ul class="mui-table-view clearUl clearBg">
+					<li class="mui-table-view-cell mui-media" >
+						<a href="javascript:;" >
+							<img class="mui-media-object mui-pull-left" src="{{$data.imgUrl}}">
+							<div class="mui-media-body qc-color-fff">
+								<p class="mui-ellipsis mui-media-body-title">{{$data.name}}</p>
+								<div class="mui-media-body-icon">
+									<span><i class="icon"></i>金牌商家</span>
+								</div>
+								<div class="qc-font-size10 mui-media-body-section">
+									<span>商家配送</span> |
+									<span>最快19分钟送达</span> |
+									<span>免配送费</span>
+								</div>
+							</div>
+						</a>
+					</li>
+				</ul>
+			</div>
+			<!--这里放置真实显示的DOM内容-->
+			<div id="segmentedControl" class="mui-segmented-control mui-segmented-control-inverted">
+				<a class="mui-control-item mui-active" href="#item1mobile">
+					商品
+				</a>
+				<a class="mui-control-item" href="#item2mobile">
+					商家详情
+				</a>
+			</div>
+			<div id="item1mobile" class="mui-control-content mui-active">
+				 <p class="mui-text-center" style="margin-top: 60px;">加载中...</p>
+			</div>
+			<div id="item2mobile" class="mui-control-content">
+				<!--门店地址 和 配送时间-->
+				<ul class="mui-table-view clearUl mui-table-view-distance">
+					<li class="mui-table-view-cell">
+						<p>
+							<span class="mui-icon iconfont icon-shangjiadongtai" style="display: inline-block;padding-right: 13px;"></span>
+							特别公告:本店配送范围为{{$data.distance / 1000}}公里
+						</p>
+					
+					</li>
+					
+				</ul>
+				<ul class="mui-table-view qc-font-size14 clearUl">
+					<li class="mui-table-view-cell">
+						<span class="mui-icon iconfont icon-dingwei2 qc-color-666 qc-font-size20 mui-icon-position mui-icon-position-left"></span>
+						<span class="mui-ellipsis-2 mui-address-after" id="storeMap" href="javascript:;" style="padding-right: 65px;padding-left: 30px;">
+							{{$data.address}}
+						</span>
+					</li>
+					<a class="mui-icon iconfont icon-dianhua1 mui-icon-position  mui-icon-position-right qc-font-size30-imp default-abs-color"  undefined data-tel="{{$data.tel}}"></a>
+				</ul>
+				<ul class="mui-table-view fn_margintop10 clearUl mui-table-view-store">
+					<li class="mui-table-view-cell">
+						<a href="javascript:;" class="qc-font-size14">
+							<span class="iconfont fn_marginright15 icon-dingdan qc-color-666"></span>配送服务: <span class="mui-badge mui-badge-green">DD订酒联盟商</span> 提供高品质配送酒品服务
+						</a>
+					</li>
+					<li class="mui-table-view-cell">
+						<a href="javascript:;" class="qc-font-size14">
+							<span class="iconfont fn_marginright15 icon-dengdai qc-color-666"></span>配送时间:10:30 - 20:00
+						</a>
+					</li>
+				</ul>
+			</div>
+		</script>
+		<script type="text/html" id="tmpl-left">
+			<div class="mui-row">
+				<div class="mui-col-xs-3">
+					<div id="segmentedControls" class="mui-segmented-control mui-segmented-control-inverted mui-segmented-control-vertical">
+						{{each data as $value i}} 
+							{{if $value.size > 0}}
+							<a class="mui-control-item"  data-index="{{i}}" href="#content{{i}}">{{$value.group.name}}</a>
+							{{/if}} 
+						{{/each}}
+					</div>
+				</div>
+				<div id="segmentedControlContents" class="mui-col-xs-9">
+					{{each data as $value i}}
+						{{if $value.size > 0}}
+					<div id="content{{i}}" class="mui-control-content">
+						<div class="mui-scroll-wrapper">
+							<div class="mui-scroll">
+								<ul class="mui-table-view">
+									{{each $value.list as $goods i}}
+									<li class="mui-table-view-cell mui-media" style="padding: 11px 0px;">
+										<a href="/store/goods.html?id={{$goods.id}}&storeId={{storeId}}" style=" margin: -11px 0px;">
+											<img class="mui-media-object mui-pull-left update65" src="/framwork/global_icon/lazyload/LOGO100100.jpg" data-lazyload="{{$goods.imgUrl}}">
+											<div class="mui-media-body">
+												<p class="mui-ellipsis-2 qc-title">{{$goods.name}}</p>
+												<div class="clear mui-screen-clear">
+													<div class="fn_margintop10">
+														<span class="qc-font-size16  qc-price-body mui-color-red">
+							   		            		 	<i class="qc-font-size12">&yen;</i><i class="qc-price">{{$goods.price}}</i>
+							   		            		</span>
+													</div>
+													<div class=" mui-cart-sku">
+														<i class="input-stock">库存:{{$goods.stock}}/瓶</i>
+														<div class="input-group animate-btn js-plusBtn{{$goods.id}}" data-type="group" data-stock="{{$goods.stock}}" data-qty="{{$goods.buyQty == null ? 0 : $goods.buyQty}}" data-gid="{{$goods.id}}" data-price="{{$goods.price}}">
+														</div>
+													</div>
+												</div>
+											</div>
+										</a>
+									</li>
+									{{/each}}
+								</ul>
+							</div>
+						</div>
+					</div>
+						{{/if}}
+					{{/each}}
+				</div>
+			</div>
+
+		</script>
+
+		<script type="text/html" id="tmpl-tab-nav">
+			<!--底部菜单-->
+			<div class="qc-bar-nav mui-hide">
+				<div class="bar-cart mui-pull-left mui-text-center ">
+					<span class="mui-icon iconfont icon-gouwuche qc-font-size26-imp">
+			 			<span class="mui-badge">0</span>
+					</span>
+				</div>
+				<div class="bar-item">
+					<div class="mui-pull-left item qc-color-333-imp fn_clearmarginbottombyp fn_paddingleft10">
+						<p class="mui-ellipsis fn_margintop10 mui-color-red">
+							<i class="qc-font-size12">&yen;</i>
+							<span class="qc-font-size18 mui-font-bold " id="bar-nav-price">0</span>
+						</p>
+						<p class="qc-color-333 qc-font-size12 mui-ellipsis">当前商品支持当日送达</p>
+					</div>
+				</div>
+				<div class="bar-button mui-text-center qc-color-fff default-abs-bg-color qc-font-size16">
+					马上结算
+				</div>
+			</div>
+		</script>
+
+		<script>
+			template.helper('storeId', function() {
+				return common.queryToJSON().storeId === undefined ? "" : common.queryToJSON().storeId;
+			});
+			mui.ready(function() {
+				//				window.storeView.init();
+				window.storeView.init();
+			});
+		</script>
+		<div style="display:none;">
+			<script src="https://s19.cnzz.com/z_stat.php?id=1262309795&web_id=1262309795 " language="JavaScript"></script>
+		</div>
+	</body>
+
+</html>

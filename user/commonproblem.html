@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=0,minimal-ui">
+		<title>常见问题-DD订酒</title>
+		<link rel="stylesheet" href="/build/css/all.css" />
+		<link rel="stylesheet" href="/plugin/style/web/phone/user/user.css" />
+		<style type="text/css">
+			*{
+				padding: 0;
+				margin: 0;
+			}
+			.mui-scroll-wrapper {
+				bottom: 0px;
+			}
+			#About_shopping {
+				display: none;
+				width: 100%;
+				height: 100%;
+			}
+			#About_payment {
+				display: none;
+				width: 100%;
+				height: 100%;
+			}
+			#About_distribution {
+				display: none;
+				width: 100%;
+				height: 100%;
+			}
+			#About_sale {
+				display: none;
+				width: 100%;
+				height: 100%;
+			}	
+			#about_imgcontainer {
+				background: #f2f8f8;
+				display: none;
+				width: 100%;
+				height: 100%;
+			}
+			.about_closebtn {
+				display: block;
+				position: fixed;
+				top: 0;
+				right: 0;
+				color: red;
+				font-size: 26px;
+				background-color: #f2f8f8;
+				
+			}
+		</style>
+	</head>
+
+	<body class="">
+		<header class="mui-bar mui-bar-nav mui-bar-nav-hide default-abs-bg-color">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left mui-color-fff"></a>
+			<h1 class="mui-title mui-color-fff qc-font-size16">常见问题</h1>
+		</header>
+		<div class="mui-content mui-scroll-wrapper">
+			<div class="mui-scroll">
+
+				<div class="commonProblem">
+
+					<div id="about_container" >
+						<ul class="mui-table-view fn_margintop10">
+							<li class="mui-table-view-cell ft-s14">
+								<a class="about_list mui-navigate-right">关于购物</a>
+							</li>
+						</ul>
+						<ul class="mui-table-view fn_margintop10">
+							<li class="mui-table-view-cell ft-s14">
+								<a class="about_list mui-navigate-right">关于支付</a>
+							</li>
+						</ul>
+						<ul class="mui-table-view fn_margintop10">
+							<li class="mui-table-view-cell ft-s14">
+								<a class="about_list mui-navigate-right">关于配送</a>
+							</li>
+						</ul>
+						<ul class="mui-table-view fn_margintop10">
+							<li class="mui-table-view-cell ft-s14">
+								<a class="about_list mui-navigate-right">售后服务</a>
+							</li>
+						</ul>
+					</div>
+
+					<div id="about_imgcontainer">
+						<span class="about_closebtn iconfont">&#xe627;</span>
+						<img src="/framwork/activities/new_ui_luz/About_shopping.png" alt="" id="About_shopping" />
+						<img src="/framwork/activities/new_ui_luz/About_payment.png" alt="" id="About_payment" />
+						<img src="/framwork/activities/new_ui_luz/About_distribution.jpg" alt="" id="About_distribution" />
+						<img src="/framwork/activities/new_ui_luz/About_sale.png" alt="" id="About_sale" />
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+
+		<script type="text/javascript" src="/build/script/all.js"></script>
+		<script>
+			mui.ready(function() {
+				mui.init();
+				mui('.mui-scroll-wrapper').scroll({
+					deceleration: 0.0005 //flick 减速系数，系数越大，滚动速度越慢，滚动距离越小，默认值0.0006
+				});
+				(function() {
+					var about_list = document.querySelectorAll('.about_list');
+					var about_img = document.getElementsByTagName('img');
+					var about_container = document.getElementById('about_container');
+					var about_imgcontainer = document.getElementById('about_imgcontainer');
+					var about_closebtn = document.querySelector('.about_closebtn');
+					var mui_content =document.querySelector('.mui-content');
+
+					for(var i = 0; i < about_list.length; i++) {
+						about_list[i].index = i;
+						about_list[i].addEventListener("click", function() {
+						for(var n = 0; n < about_img.length; n++) { //这步是相对于未被点击部分的样式
+							about_img[n].style.display = "none";
+						}							
+							about_container.style.display = "none";
+							mui_content.style.background = "#f2f8f8";
+							about_imgcontainer.style.display = "block";
+							about_img[this.index].style.display = "block";
+						})
+					}
+					about_closebtn.addEventListener('click', function() {
+						for(var n = 0; n < about_img.length; n++) { //这步是相对于未被点击部分的样式
+							about_img[n].style.display = "none";
+						}
+						mui_content.style.background = "#f8f8f8";
+						about_container.style.display = "block";
+						about_imgcontainer.style.display = "none";
+					})
+				})();
+
+			})
+		</script>
+
+		<div style="display:none;">
+			<script src="https://s19.cnzz.com/z_stat.php?id=1262309795&web_id=1262309795 " language="JavaScript"></script>
+		</div>
+	</body>
+
+</html>

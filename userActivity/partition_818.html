@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html class="preferential-page">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=0,minimal-ui">
+		<title>DD订酒-818年中大促</title>
+		<script src="http://g.tbcdn.cn/mtb/lib-flexible/0.3.4/flexible.js"></script>
+		<link rel="stylesheet" href="/userActivity/css/818.css" />
+		<style type="text/css">
+			.w100{
+				width: 100%;
+				display: block;
+			}
+			body{
+				background: #020025;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="" id="app">
+			<div class="header_tips">
+				<img :src="imgList[0]" class="w100" />
+				<div class="header_tips_btmImg">
+					<img :src="imgList[1]" class="w100"/>
+				</div>
+				<div class="header_tips_rightImg" @click="disp_confirm">
+					<img :src="this.isContains == null ? imgList[2] : imgList[3]" class="w100"/>
+				</div>
+			</div>
+			<div class="first_group">
+				 <div class="first_group_list mTop" v-for="(data,key) in groupList" :key="key">
+				 	  <div class="first_group_list_item" >
+				 	  	 <a :href="goods.link" v-for="(goods,index) in data.item" :key="index">
+				 	  	 	<img :src="goods.imgUrl"/>
+				 	  	 </a>
+				 	  </div>
+				 </div>
+			</div>
+			<div class="second_group">
+				<div class="menu_coupon">
+					<img :src="secondList.coupon.imgUrl" class="w100" @click="disp_confirm" />
+				</div>
+				<div class="mTop second_group_item" v-for="(item,key) in secondList.list" :key="key">
+					<a :href="item.link">
+						<img :src="item.imgUrl" class="w100" />
+					</a>
+				</div>
+			</div>
+			<div class="footer_group">
+				<img :src="footer" class="w100" />
+			</div>
+		</div>
+		<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+		<script src="/build/script/all.js"></script>
+		<script>
+		    let vm = new Vue({
+		      el: '#app',
+		      data(){
+		      	return{
+		      		isContains:window.localStorage.getItem('isContains'),
+		      		imgList:[
+		      			"/userActivity/img/818/页头@2x.png",
+		      			"/userActivity/img/818/秒杀楼层@2x.png",
+		      			"/userActivity/img/818/未领取状态@2x.png",
+		      			"/userActivity/img/818/已领取状态@2x.png",
+		      		],
+		      		groupList:[
+		      			{
+		      				item:[
+			      				{
+			      					imgUrl:"/userActivity/img/818/秒杀@2x.png",
+			      					link:"/goods/view.html?goodsId=310"
+			      				},
+			      				{
+			      					imgUrl:"/userActivity/img/818/秒杀2@2x.png",
+			      					link:"/goods/view.html?goodsId=201"
+			      				}
+			      			]
+		      			},
+		      			{
+		      				item:[
+			      				{
+			      					imgUrl:"/userActivity/img/818/秒杀3@2x.png",
+			      					link:"/goods/view.html?goodsId=307"
+			      				},
+			      				{
+			      					imgUrl:"/userActivity/img/818/秒杀4@2x.png",
+			      					link:"/goods/view.html?goodsId=5"
+			      				}
+			      			]
+		      			},
+		      			{
+		      				item:[
+			      				{
+			      					imgUrl:"/userActivity/img/818/秒杀5@2x.png",
+			      					link:"/goods/view.html?goodsId=6"
+			      				},
+			      				{
+			      					imgUrl:"/userActivity/img/818/秒杀6@2x.png",
+			      					link:"/goods/view.html?goodsId=262"
+			      				}
+			      			]
+		      			}
+		      		]
+		      		,
+		      		secondList:{
+		      			coupon:{
+		      				imgUrl:"/userActivity/img/818/导航4@2x.png",
+		      			},
+		      			list:[
+		      				{
+		      					imgUrl:"/userActivity/img/818/爆款1.0@2x.png",
+		      					link:"/goods/view.html?goodsId=335"
+		      				},
+		      				{
+		      					imgUrl:"/userActivity/img/818/爆款2.0@2x.png",
+		      					link:"/goods/view.html?goodsId=201"
+		      				},
+		      				{
+		      					imgUrl:"/userActivity/img/818/爆款3.0@2x.png",
+		      					link:"/goods/view.html?goodsId=263"
+		      				}
+		      			]
+		      		},
+		      		footer:"/userActivity/img/818/尾部@2x.png"
+		      	};
+		      },
+		      created() {
+		        console.log('created')
+		        
+//		        this.$nextTick(function () {
+//			        // DOM is now updated
+//			        // `this` is bound to the current instance
+//			        console.log('现在是什么状态',this.isContains)
+//			    })
+//				
+//				var $this = this;
+//				setTimeout(function(){
+//					$this.isContains = true;
+//				},3000);
+		      },
+		      methods:{
+		      	disp_confirm(){
+		      		if(this.isContains != null){
+		      			console.log(common.alert({msg:'您已经领取'}));
+		      		}
+		      		var $this = this;
+		      		alertOptions.msg = '正在请求中...';
+		            alertOptions.callback = function (alertContext) {
+		            	var optObjs = {
+							urlPath: common.config.appPath+"/api/coupon/obtain",
+							data: {
+								couponsId:24,
+							},
+							onSuccess: function(result) {
+								if(result.status == 0 && result.data == true) {
+									//删除当前元素，1.拿到当前页面的
+									alertContext.setMsg('领取成功!');
+		           				    alertContext.hide();
+		           				    
+		           				    window.localStorage.setItem('isContains',true);
+		           				    $this.isContains = true;
+								} else {
+									alertContext.setMsg(result.msg);
+		           				    alertContext.hide();
+								}
+							},
+							onError: function() {
+								console.log('失败回调');
+								alertContext.setMsg('领取失败,请重试!');
+		           				alertContext.hide();
+							},
+							onComplete:function(){
+							
+							}
+						};
+						AjaxCommon.getAjaxRequestJson(optObjs);
+					
+		            };
+		            common.alert(alertOptions);
+		      	}
+		      }
+		    })
+		</script>
+	</body>
+</html>

@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=0,minimal-ui">
+		<title>我的收货地址-滴滴订酒</title>
+		<link rel="stylesheet" href="/build/css/all.css" />
+		<!--一些对于单页面的描述 可以在HTML临时写在本页面  当接入jsp的时候，在写入css文件-->
+		<link rel="stylesheet" type="text/css" href="/plugin/style/web/phone/user/address.css" />
+		<link rel="stylesheet" type="text/css" href="/plugin/style/web/phone/user/didieditaddress.css" />
+		<!--	<link rel="stylesheet" href="../../plugin/style/web/phone/tmpl/didi-head-search.css" />-->
+		<!--选择器-->
+		<link rel="stylesheet" type="text/css" href="/framwork/mui/picker/css/mui.picker.css" />
+		<link rel="stylesheet" type="text/css" href="/framwork/mui/picker/css/mui.poppicker.css" />
+		<style>
+			.mui-input-row .mui-switch {
+				border-color: #a2a2a2;
+				background-color: #a2a2a2;
+			}
+			
+			.mui-switch.mui-active {
+				border-color: #ff933a;
+				background-color: #ff933a;
+			}
+			
+			.mui-card {
+				margin: 10px 12px;
+			}
+			
+			.mui-btn-shadow {
+				padding: 12px 10px;
+				font-size: 15px;
+			}
+			
+			.mui-switch-mini {
+				width: 44px;
+				height: 22px;
+			}
+			
+			.mui-input-row .mui-switch {
+				float: right;
+				margin-top: 5px;
+				margin-right: 7px;
+			}
+			
+			.mui-switch .mui-switch-handle {
+				width: 20px;
+				height: 20px;
+			}
+		</style>
+	</head>
+
+	<body class="max-content">
+		<div class="mui-off-canvas-wrap mui-draggable mui-slide-in">
+			<!-- 菜单容器 -->
+			<aside class="mui-off-canvas-right" id="offCanvasSide">
+				<!-- 菜单具体展示内容 -->
+				<!--下拉刷新容器-->
+				<div class="didisearch">
+					<div class="w100" id="mapParent">
+						<div class="d-head">
+						 	<a class="mui-icon mui-icon-left-nav mui-pull-left d-head-back default-abs-color"></a>
+						 	<div class="mui-input-row mui-search d-head-search">
+						 		<input type="text" class="qc-font-size12 mui-text-left" placeholder="请输入附近的小区/写字楼/学校" id="store-search" />
+						 	</div>
+						 	<span class="qc-font-size16 d-head-clear iconfont2 default-abs-color mui-hide">&#xe627;</span>
+						 	<span class="qc-font-size14 d-head-close default-abs-color">搜索</span>
+						</div>
+						<div id="baiduMap" style="width: 100%;height: 100%;">
+						</div>
+					</div>
+					<div class="" id="refreshContainer">
+				   		
+					</div>	    
+				</div>
+				<script type="text/html" id="tmpl-address-model-null">
+					<div class="mui-text-center cart-null">
+						<span class="iconfont2 fn_shop-color fn_margintop15" style="font-size: 20px;">
+							&#xe626;
+						</span>
+						<h5 class="fn_margin10 fn_font-size16 fn_paddingtop15 mui-color-000">暂无相关地址信息</h5>
+						<p>小提示：[暂只限于当前坐标点附近地区]</p>
+					</div>
+				</script>
+				<script type="text/html" id="tmpl-address-loading-model">
+					<div class="mui-text-center cart-null">
+						<span class="mui-spinner fn_shop-color fn_margintop15" style="font-size: 20px;"></span>
+						<h5 class="fn_margin10 fn_font-size16 fn_paddingtop15 mui-color-000">正在加载中...</h5>
+						<p class="mui-color-6868">小提示：请耐心等待</p>
+					</div>
+				</script>
+				
+				<script type="text/html" id="tmpl-address-menus">
+					<div class="mui-slider">
+					<!--数据列表-->
+					<div class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted mui-bg-fff">
+						{{each data as $value i}}
+							<a class="mui-control-item {{if i==0}}mui-active{{/if}}" data-id="{{$value.id}}" href="{{$value.type}}">
+							   <span class="fn_marginright5">{{$value.name}}</span>
+						 	</a>
+						{{/each}}
+					</div>
+					<div id="sliderProgressBar" class="mui-slider-progress-bar mui-col-xs-3" ></div>
+					<div class="mui-slider-group">
+				 		{{each data as $value i}}
+						<div id="{{$value.type}}" class="mui-slider-item mui-control-content {{if i==0}}mui-active{{/if}}">
+							<div  class=" mui-scroll-wrapper">
+					  			<div class="mui-scroll">
+					  				<div class="list-container">
+					  					 <div class="mui-text-center cart-null">
+												<span class="mui-spinner fn_shop-color fn_margintop15" style="font-size: 20px;"></span>
+												<h5 class="fn_margin10 fn_font-size16 fn_paddingtop15 mui-color-000">正在加载中...</h5>
+												<p class="mui-color-6868">小提示：请耐心等待</p>
+										 </div>	
+					  				</div>
+						    	</div>
+							</div>
+						</div>
+						{{/each}}
+					</div>
+					</div>
+				</script>
+				<script type="text/html" id="tmpl-address-model">
+					<ul class="mui-table-view clearUl">
+						{{each data as $value i}}
+							<li class="mui-table-view-cell mui-media">
+							    <a href="javascript:;" data-lat="{{$value.point == null ? $value.location.lat : $value.point.lat}}" data-lng="{{$value.point == null ? $value.location.lng : $value.point.lng}}">
+							        <span class="iconfont mui-pull-left fn_font-size16 icon-dingwei2"></span>
+									<div class="mui-media-body fn_font-size14">
+							           	<p class="mui-ellipsis mui-color-000  address-street {{if i==0}}active{{/if}}"> {{$value.title}}{{$value.name}}</p>
+							            <p class="mui-ellipsis mui-color-6868 address-adrs ">{{$value.address}}</p>
+							        </div>
+							    </a>
+							</li>
+						{{/each}}
+					</ul>
+				</script>
+				<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=1300d75f931f2d8d9b062fa0d048c03f"></script>
+				<script type="text/javascript">
+					window.onload=function(){
+						var orderMenusList=
+						{
+							"status": 0,
+							"data": [           
+							    {id:'0',name:'全部',type:'item0'},
+							    {id:'1',name:'大厦',type:'item1'},
+							    {id:'2',name:'小区',type:'item2'}, 
+							    {id:'3',name:'学校',type:'item3'}
+							],
+							"message": null,
+							"count": 4,
+							"retType": null
+						};
+						var head = document.getElementsByTagName("head");
+						var oScript = document.createElement("script");
+				        oScript.src = "/plugin/javascript/web/phone/user/aboutAddress.js?v="+new Date().getTime();
+				        oScript.type = "text/javascript";
+						head[0].appendChild(oScript);
+						oScript.onload=oScript.onreadystatechange=function(){  
+						   if(!this.readyState||this.readyState=='loaded'||this.readyState=='complete'){  
+						   		//console.log('加载完成,应该设置一个通知过去');
+						   		//轮查 来获取本地页面获取的情况
+						   		var _lnglatTimer=setInterval(function(){
+						   			
+						   			if(document.body.dataset.status != undefined ){
+						   				//console.log('数据已经加载好了,结束掉轮查');
+						   				if(document.body.dataset.status == 0){
+						   					clearInterval(_lnglatTimer);
+						   					window.aboutAddress.init({myGroupMenusList:orderMenusList,containerName:'refreshContainer',mapName:'baiduMap'});
+						   				}else if(document.body.dataset.status == 1){
+						   					clearInterval(_lnglatTimer);
+						   				}
+						   				
+						   			}
+						   			
+						   		},100);
+						   		
+								setTimeout(function(){
+									//console.log('超时,请刷新！');
+						   			clearInterval(_lnglatTimer);
+								},5000);
+							}  
+							oScript.onload=oScript.onreadystatechange=null;
+						} 
+							
+						
+					}
+				</script>
+			</aside>
+			<!-- 主页面容器 -->
+			<div class="mui-inner-wrap">
+
+			</div>
+		</div>
+		<script type="text/html" id="tmpl-model">
+			<header class="mui-bar mui-bar-nav mui-bar-nav-hide default-abs-bg-color">
+				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left mui-color-fff"></a>
+				<h1 class="mui-title mui-color-fff qc-font-size16">
+							{{if $data.id != null}}
+								修改地址
+							{{else}}
+								新增地址
+							{{/if}}
+						</h1> {{if $data.id != null}}
+				<a class="mui-icon mui-pull-right qc-color-fff" id="form-btn-del" href="javascript:;"><span class="qc-font-size14 mui-bar-title">删除</span></a>
+				{{/if}}
+			</header>
+			<div class="mui-content">
+				<div id="list-container">
+					<!--这里放置真实显示的DOM内容-->
+					<div class="mui-card mui-clear-card-boxShadow qc-color-333 qc-font-size12">
+						<div class="mui-input-row">
+							<label class="qc-color-666">收货人</label>
+							<input type="text" class="qc-font-size12" id="form-name" value="{{$data.name}}" placeholder="收货人姓名" />
+						</div>
+						<div class="mui-input-row mui-radio mui-left ft-s13 pd-l10 mui-input-row-sex">
+							<div class="mui-row">
+								<div class="mui-col-xs-4">
+								</div>
+								<div class="mui-col-xs-4">
+									<input class="" name="radio-select" type="radio" data-sex="1" {{checkSex $data.sex "先生"}}>
+									<label class="pd-l20 cl-s9">先生</label>
+								</div>
+								<div class="mui-col-xs-4">
+									<input class="" name="radio-select" type="radio" data-sex="2" {{checkSex $data.sex "女士"}}>
+									<label class="pd-l20 cl-s9">女士</label>
+								</div>
+							</div>
+						</div>
+						<div class="mui-input-row">
+							<label class="qc-color-666">手机号</label>
+							<input type="tel" maxlength="11" class="qc-font-size12" id="form-mobile" value="{{$data.mobile}}" placeholder="收货时联系方式" />
+						</div>
+					</div>
+					<div class="mui-card mui-clear-card-boxShadow qc-color-333 qc-font-size12">
+						<div class="mui-input-row">
+							<label class="qc-color-666">所在地区</label>
+							<input type="text" class="qc-font-size12" id="form-street" value="{{$data.street}}" readonly="readonly" placeholder="点击选择小区/写字楼/学校" />
+							<span class="mui-icon mui-icon-arrowright mui-row-icon mui-pull-right qc-color-ccc"></span>
+						</div>
+						<div class="mui-input-row">
+							<label class="qc-color-666">地区地址</label>
+							<input type="text" class="qc-font-size12" id="form-town" value="{{$data.town}}" readonly="readonly" placeholder="小区/写字楼/学校 具体地址" />
+							<!-- <span class="mui-icon mui-icon-arrowright mui-row-icon mui-pull-right qc-color-ccc"></span>-->
+						</div>
+						<div class="mui-input-row">
+							<label class="qc-color-666"></label>
+							<textarea id="form-textarea" class="qc-font-size12  fn_marginbottom10 clearBg" rows="2" value="{{$data.address}}" id="form-address" placeholder="详细地址 (如街道、门牌号，不少于5个字)">{{$data.address}}</textarea>
+						</div>
+					</div>
+
+					<div class="mui-card mui-clear-card-boxShadow qc-color-333">
+						<div class="mui-input-row ">
+							<label class="qc-font-size12">设为默认地址</label>
+							<div id="mySwitch" class="mui-switch mui-switch-mini fn_marginbottom5 {{if $data.selected == true}}mui-active{{/if}}" id="form-switch">
+								<div class="mui-switch-handle "></div>
+							</div>
+						</div>
+					</div>
+					<div class="mui-button-row fn_padding10 fn_clearpaddingtop">
+						<button type="button" id="form-submit" class="mui-btn mui-btn-default mui-btn-shadow w100 fn_padding10" data-aid="{{$data.id}}">保存</button>
+					</div>
+				</div>
+			</div>
+			<input type="hidden" name="form-province" id="form-province" value="{{$data.province }}" />
+			<input type="hidden" name="form-city" id="form-city" value="{{$data.city }}" />
+			<!--mui-content end-->
+
+		</script>
+
+		<script src="/build/script/all.js"></script>
+		<script src="/framwork/mui/picker/js/mui.picker.js"></script>
+		<script src="/framwork/mui/picker/js/mui.poppicker.js"></script>
+		<script src="/framwork/mui/picker/js/car-data-3.js"></script>
+
+		<script src="/plugin/javascript/web/phone/user/didiEditAddress.js"></script>
+		<script type="text/html" id="tmpl-model-loading">
+			<div class="spinner-child spinner-child-fixed">
+				<div class="rect1"></div>
+				<div class="rect2"></div>
+				<div class="rect3"></div>
+				<div class="rect4"></div>
+				<div class="rect5"></div>
+			</div>
+		</script>
+		<!--这就是HTML 模板 用于数据加载 -->
+		<script type="text/html" id="tmpl-model-null">
+			<div class="qc-car-null mui-text-center">
+				<div class="qc-car-null-img-empty"></div>
+				<p class="qc-color-888 mui-text-center qc-car-null-text">哎呀！页面还没数据哦~</p>
+			</div>
+		</script>
+		<script>
+			template.helper('checkSex', function(sex, sexStr) {
+				if((sexStr == sex || sex == undefined || sex == 1) && sexStr == "先生") {
+					return 'checked="checked"';
+				} else if (sex == 2 && sexStr == "女士") {
+					return 'checked="checked"';
+				}
+			});
+			mui.ready(function() {
+				/*每个页面都要mui.init*/
+				window.didiEditAddress.editaddress.init();
+			});
+		</script>
+		<div style="display:none;">
+			<script src="https://s19.cnzz.com/z_stat.php?id=1262309795&web_id=1262309795 " language="JavaScript"></script>
+		</div>
+	</body>
+
+</html>

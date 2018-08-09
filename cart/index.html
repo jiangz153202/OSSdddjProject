@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=0,minimal-ui">
+		<title>购物车-DD订酒</title>
+		<link rel="stylesheet" href="/build/css/all.css" /> 
+		<!--一些对于单页面的描述 可以在HTML临时写在本页面  当接入jsp的时候，在写入css文件-->
+		<link rel="stylesheet" href="/plugin/style/web/phone/cart/didi-main-index.css" />
+		<link rel="stylesheet" href="/plugin/style/web/phone/cart/cart.css" />
+		<style type="text/css">
+			.input-group button:first-child{
+				border-radius: 3px 0px 0px 3px;
+				border: 1px solid #EFEFEF;
+				background-color: mui-color('red',700);
+			}
+			
+			.input-group button:last-child{
+				border-radius: 0px 3px 3px 0px;
+				border: 1px solid #EFEFEF;
+			}
+			
+			.integral-li{
+				background-color: #fdf7d5;
+			}
+			.integral-li.mui-table-view-cell:after{
+				height:0px;
+			}
+			input[type=checkbox]:checked, input[type=radio]:checked {
+			    background: rgba(255, 255, 255, 0);
+			}
+		</style>
+	</head>
+
+	<body class="mui-cart-body">
+		<!--头部  和 底部 放在mui-content 上面 -->
+		<header class="mui-bar mui-bar-nav qc-bg-color-fff">
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left qc-color-333"></a>
+		    <h1 class="mui-title ">我的购物车</h1>
+		    <!--<a href="javascript:;.html" class="mui-icon mui-icon-right-nav mui-pull-right">
+		    	<span class="mui-default-color mui-font-size14">注册</span>
+		    </a>-->
+		</header>
+		<div class="mui-content shop-cart mui-scroll-wrapper" id="body-container" style="padding-bottom:45px;">
+			<div class="mui-scroll" > 
+				<div class="tmpl-carts" id="list-container"></div>
+				<!--<button id="clear-login">清除</button>-->
+			</div>
+		</div>
+		<!--去结算-->
+		<div class="plugin-cart clear mui-hide" >
+			<div class="clear container">
+				<div class="mui-table">
+		            <div class="mui-table-cell mui-col-xs-3 mui-text-left" >
+		                <div id="chkAll" class="mui-input-row mui-checkbox mui-left" style="margin-left: -10px;">
+		                    <label style="width: 120px;" class="shop-color mui-color-6868">
+		                        <input name="checkbox" type="checkbox" checked>全选
+		                    </label>
+		                </div>
+		            </div>
+		            <div id="total" class="mui-table-cell mui-col-xs-5 shop-price mui-color-red" style="vertical-align: middle;">
+		                             合计：0.00元
+		            </div>
+		            <div class="mui-table-cell mui-col-xs-4 shop-add-cart mui-bg-red mui-text-center ">
+						<a href="javascript:;.html" id="btn-order" data-totalqty="${cart.getQuantity()}"   class="mui-color-fff mui-ellipsis"  >
+							去结算(0)
+						</a>
+					</div>
+		        </div>
+			</div>
+		</div> 
+		
+		<script type="text/html" id="tmpl-model-null">
+			<div class="mui-text-center mui-cart-menu "> 	
+			 	<div class="qc-car-null qc-font-size14" style="">
+			 		<div class="qc-car-null-img-empty"></div>
+			 		<span class="qc-color-b4b4">购物车还是空的哦</span>
+				 	<div class="fn_margin15 fn_paddingleft20 fn_paddingright20">
+						<button id="cart-null" type="button" class="mui-btn mui-btn-default fn_padding10 w100 qc-font-size14" >随便逛逛</button>
+					</div>
+			 	</div>
+			</div>
+		</script>
+		<script type="text/html" id="tmpl-model">
+			<ul class="mui-table-view mui-table-view-striped mui-table-view-condensed clearUl" >
+			 	{{each $data as goods i}}
+			 		<li class="mui-table-view-cell js-goods">
+	                    <div class="mui-table">
+	                        <div class="mui-table-cell mui-col-xs-1 mui-text-center">
+	                            <div class="mui-checkbox">
+	                                <input name="checkbox" type="checkbox" checked="checked" style="right: 5px; top:15px;">
+	                            </div>
+	                        </div>
+	                        <div class="mui-table-cell mui-col-xs-11">
+	                            <a href="/goods/view.html?goodsId={{goods.id}}" class="mui-media">
+	                                <img class="mui-media-object mui-pull-left" src="{{goods.imgUrl}}">
+	                            </a>
+	                            <div class="mui-media-body">
+	                                <h5 class="qc-color-333">{{goods.name }}</h5>
+	                                <div class="shop-add-cart js-get-price-qty" style="vertical-align:middle;">
+			                        	<p class="shop-price mui-color-red fn_marginbottom5 mui-pull-right fn_margintop10">&yen;{{goods.price * goods.quantity}}</p>
+			                        	<span class="qc-font-size12 qc-color-666">{{goods.props}}</span><br />
+			                        	{{if goods.activity.name != ""}}
+			                        	<span class="mui-badge fn_border-radius mui-btn-red mui-toStore ">{{goods.activity.name}}</span>
+			                        	{{/if}}
+			                            <div class="input-group fn_margintop15"  data-qty="{{goods.quantity }}" data-cart-id="{{goods.id}}" data-itemId="{{goods.gid }}" data-skuid="{{goods.skuId == null ? '' : goods.skuId }}" data-stock="{{goods.stock}}" data-price="{{goods.price }}"></div>
+			                    	</div>
+	                            </div>
+	                        </div>
+	                    </div>
+	                    <span class="mui-icon mui-icon-close-filled shop-del-icon" data-cart-id="{{goods.id}}"></span><!-- &#xe66f; -->
+	                </li>
+			 	{{/each}}
+			</ul>	
+			<!--END商品列表-->
+		</script>
+		<!--  <c:if test="{{goods.activity != '' && OrderType.StoreBuy.index != 2}}">
+	                                 	<span class="mui-badge mui-badge-danger fn_font-size12 fn_marginright5" style="border-radius: 2px;">{{goods.activity == GoodsActivityType.Buy1Add1.index ? '买一送一' : '' }}</span>
+	                                  </c:if>
+	                                  <c:if test='${sku != null}'>
+	                                  	<span class="mui-h5 mui-ellipsis-2">规格:{{props }}</span>
+	                                  </c:if>-->
+		<script src="/build/script/all.js"></script>
+		<!--多页上拉加载-->
+		<script src="/framwork/mui/pullToRefresh/mui.pullToRefresh.js"></script>
+		<script src="/framwork/mui/pullToRefresh/mui.pullToRefresh.material.js"></script>
+		<!--这是加减按钮-->
+		<script src="/framwork/plugins/plusminusbtn/1.0.2/js/plusminusbtn.js"></script>
+		
+		<script src="/plugin/javascript/web/phone/cart/cart.js"></script>
+		<script type="text/html" id="tmpl-model-loading">
+			<div class="spinner-child">
+				<div class="rect1"></div>
+				<div class="rect2"></div>
+				<div class="rect3"></div>
+				<div class="rect4"></div>
+				<div class="rect5"></div>
+			</div>
+		</script>
+		<script type="text/javascript">
+			mui.ready(function() {
+				window.cart.init();
+				
+				/*var opts={
+					urlPath:common.config.appPath+'/api/user/logout',
+					onSucess:function(result){
+						console.log(result.status);
+					}
+				}
+				
+				document.getElementById('clear-login').addEventListener('tap',function(){
+					AjaxCommon.getAjaxRequestJson(opts);
+				})*/
+			});
+		</script>
+		
+		<script type="text/html" id="tmpl-model-loading">
+			<div class="spinner-child spinner-child-fixed">
+				<div class="rect1"></div>
+				<div class="rect2"></div>
+				<div class="rect3"></div>
+				<div class="rect4"></div>
+				<div class="rect5"></div>
+			</div>
+		</script>
+		<!--这就是HTML 模板 用于数据加载 -->
+		<script type="text/html" id="tmpl-model-null">
+			<div class="qc-car-null mui-text-center">
+				<div class="qc-car-null-img-empty"></div>
+				<p class="qc-color-888 mui-text-center qc-car-null-text">哎呀！页面还没数据哦~</p>
+			</div>
+		</script>
+				<div style="display:none;">
+					<script src="https://s19.cnzz.com/z_stat.php?id=1262309795&web_id=1262309795 " language="JavaScript"></script>
+				</div>
+			</body>
+		
+		</html>

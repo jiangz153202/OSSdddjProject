@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=0,minimal-ui">
+		<title>新用户优惠大礼包-DD订酒</title>
+		<link rel="stylesheet" href="/build/css/all.css" />
+		<!--一些对于单页面的描述 可以在HTML临时写在本页面  当接入jsp的时候，在写入css文件-->
+		
+		<!--当前页面css-->
+		<style type="text/css">
+			.mui-content, body {
+			    background-color: #ff4048;
+			    overflow: hidden;
+			    
+			}
+			.abs-popub-container{
+				padding: 10px 20px;
+			    position: fixed;
+			    width: 100%;
+			    text-align: center;
+			  
+			}
+			.abs-popub-container button{
+				width: 80%;
+				margin: auto;
+				line-height: 1;
+			}
+			
+			.mui-bar-nav~.mui-content{
+				padding-top: 20px;
+			}
+			
+			/*弹出框*/
+			.new-popup-container{
+			    position: fixed;
+			    background-color: rgba(0,0,0,0.5);
+			    top: 0px;
+			    left: 0px;
+			    z-index: 11;
+			    bottom: 0px;
+			    right: 0px;
+			    opacity: 0;
+			    -webkit-transition: all .5s ease-in;
+		        -moz-transition: all .5s ease-in;
+		        transition: all .5s ease-in;
+			}
+			.new-popup-container.hide{
+				display: none;
+			}
+			
+			.new-popup-container.active{
+				opacity: 1;
+			}
+			.popup-container{
+				padding: 80px 36px 84px 36px;
+			    height: 100%;
+			}
+			.popup-container .popup-cmt{
+				position: relative;
+			}
+			.popup-container .popup-cmt .popup-cmtButton{
+				position: absolute;
+			    text-align: center;
+			    bottom: 50px;
+			    width: 40%;
+			    left: 50%;
+			    margin-left: -20%;
+			}
+			
+			.popup-container-closeCmt{
+				text-align: center;
+				margin-top: 24px;
+			}
+		</style>
+		
+	</head>
+	<body class="">
+		<header class="mui-bar mui-bar-nav mui-bar-nav-hide mui-bg-fff">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left mui-color-000"></a>
+			<h1 class="mui-title mui-color-000 qc-font-size16">新用户优惠大礼包</h1>
+		</header>
+		<div class="mui-content" id="pull-body" >
+			 <div class="" style="overflow: hidden;" >
+			 	<img src="/framwork/activities/new_user_coupon/title.png"  class="w100 mui-block fn_padding15" />
+			 	<img src="/framwork/activities/new_user_coupon/coupon.png"  class="w100 mui-block" style="padding:0 30px;" />
+			 	<div class="" style="padding:30px 35px;">
+			 		<button class="mui-btn mui-btn-default mui-btn-block w100" id="coupon-btn">立即领取</button>
+			 	</div>
+			 	<div style="margin-top: 30px;text-align:center;">
+			 		<p style="font-size: 14px;color: rgb(235,179,110);">首次关注DD订酒商城的用户</p>
+			 		<p style="font-size: 14px;color: rgb(235,179,110);">或者从未下过单的用户可以领取</p>
+			 		<p style="font-size: 12px;color: rgb(235,179,110);">活动最终解释权归广东聚盟汇·DD订酒所有</p>
+			 	</div>
+			 </div>
+		</div>
+		<div class="new-popup-container hide">
+			<!--图片容器-->
+			<div class="popup-container">
+			 	<div class="popup-cmt">
+			 		<img style="width: 100%;" src="../framwork/activities/new_user_coupon/组58.png"/> 
+			 		<img class="popup-cmtButton" src="../framwork/activities/new_user_coupon/useBtn.png"/> 
+			 	</div>
+			 	<div class="popup-container-closeCmt">
+			 		<img width="45px" id="popup-close" src="../framwork/activities/new_user_coupon/close.png"/>
+			 	</div>
+			</div>
+		</div>
+		<script src="/build/script/all.js"></script>
+		<script src="/plugin/javascript/web/wxShare.js"></script>
+		<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+		<!--当页逻辑页面-->
+		<!--<script src="/plugin/javascript/web/phone/user/coupon.js"></script>-->
+		<!--这就是HTML 模板 用于数据加载 -->
+		<script type="text/html" id="tmpl-model-null">
+			<div class="qc-car-null mui-text-center">
+				<div class="qc-car-null-img-empty"></div>
+				<p class="qc-color-888 mui-text-center qc-car-null-text">哎呀！页面还没数据哦~</p>
+			</div>
+		</script>
+		<script>
+			mui.ready(function() {
+				/*每个页面都要mui.init*/
+				mui.init();
+				
+				
+				var couponBtn = document.getElementById('coupon-btn');
+				var container = document.querySelector('.new-popup-container');
+				var cmtBtn    = document.querySelector('.popup-cmtButton');
+				
+				var closeBtn = document.getElementById('popup-close');
+				closeBtn.addEventListener('click',function(){
+					container.classList.toggle('active');
+					container.classList.toggle('hide');
+					
+				});
+				
+				isRealNewCoupon=function(callback){
+					var state = false;
+					var optObjs={
+						urlPath:common.config.appPath+"/api/coupon/listCoupon",
+						data:{
+							pageIndex : 1,
+							pageSize : 100,
+							sid:AjaxCommon.cookieItem.getCookie('dddjsid')
+						},
+						onBeforeSend: function() {
+							//如果是上拉加载的，就要把相对定位的样式去掉
+						},
+						onSuccess:function(result){
+							if(result.status == 0){
+								for (var i = 0; i < result.data.content.length; i++) {
+									var item = result.data.content[i];
+									//新用户优惠券id  临时
+									if(item.couponsId ===  21){
+									 	state = true;
+									}
+								}
+								callback(state);
+							}
+						},
+						onError:function(){
+							console.log('失败回调');
+						}
+					};
+					
+					
+					AjaxCommon.getAjaxRequestJson(optObjs);
+					
+					
+					
+				}
+				//领取优惠券
+				getCouponObtain=function($coupon){
+					
+					alertOptions.msg = '正在请求中...';
+		            alertOptions.callback = function (alertContext) {
+		            	var optObjs = {
+							urlPath: common.config.appPath+"/api/coupon/obtain",
+							data: {
+								couponsId:21,
+							},
+							onSuccess: function(result) {
+								if(result.status == 0) {
+									//删除当前元素，1.拿到当前页面的
+									alertContext.setMsg('领取成功!');
+		           				    alertContext.hide();
+		           				    
+		           				    //领取成功之后
+		           				    $coupon.classList.add('mui-disabled');
+		           				    $coupon.classList.add('mui-btn-grey');
+		           				    $coupon.classList.remove('mui-btn-default');
+		           				    $coupon.innerHTML = "已经领取";
+		           				    
+		           				    container.classList.toggle('active');
+									container.classList.toggle('hide');
+		           				   
+									//领取成功
+									cmtBtn.addEventListener('click',function(){
+										 window.location.href="/user/coupon.html";
+									});
+		           				    
+								} else {
+									alertContext.setMsg('领取失败,请重试!'+result.msg);
+		           				    alertContext.hide();
+		           				    
+								}
+							},
+							onError: function() {
+								console.log('失败回调');
+								alertContext.setMsg('领取失败,请重试!');
+		           				alertContext.hide();
+							},
+							onComplete:function(){
+							
+							}
+						};
+						AjaxCommon.getAjaxRequestJson(optObjs);
+					
+		            };
+		            common.alert(alertOptions);
+				}
+				
+				
+				/*新用户领取红包*/
+				AjaxCommon.isLogined(
+					function(){
+						console.log('已登录');
+					   	//获取用户信息
+					   	var userItem=AjaxCommon.getLoginUser();
+					   
+					   	
+					   	//设置新用户 调试
+					   	//userItem.isNewOrderUser = true;
+					   
+					  
+					   	var closeBtn = document.getElementById('popup-close');
+						closeBtn.addEventListener('click',function(){
+							container.classList.remove('active');
+							container.classList.add('hide');
+							document.body.style.cssText ="";
+						});
+					   
+					   		
+					   		//新用户
+					   		isRealNewCoupon(function(state){
+					   			//如果为true 就是领取过了，直接显示
+					   			if(state){
+					   				//新用户  领取过了 设置Button 按钮状态
+					   				couponBtn.classList.add('mui-btn-grey');
+					   				couponBtn.classList.remove('mui-btn-default');
+					   				couponBtn.innerText = "已领取";
+					   			}else{
+					   				if(userItem.isNewOrderUser == true){
+						   				//未领取
+										couponBtn.classList.add('mui-btn-default');
+						   				couponBtn.innerText = "立即领取";
+						   				
+						   				couponBtn.addEventListener('click',function(){
+						   					//点击领取
+						   					//container.classList.toggle('active');
+											//container.classList.toggle('hide')
+						   					getCouponObtain(this);
+						   				});
+					   				
+								   	}else{
+								   		//老用户
+								   		console.log('老用户');
+								   		
+								   		
+								   	}
+					   				
+					   			}
+					   			
+					   		});
+					   		
+					   		
+					   	
+					},
+					function(){
+						console.log('没有登录');
+						AjaxCommon.switchTarget.unLogined();
+					}
+				);
+				
+			   		
+				
+				
+			});
+		</script>
+		<div style="display:none;">
+			<script src="https://s19.cnzz.com/z_stat.php?id=1262309795&web_id=1262309795 " language="JavaScript"></script>
+		</div>
+	</body>
+
+</html>

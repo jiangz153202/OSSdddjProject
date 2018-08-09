@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=0,minimal-ui">
+		<title></title>
+		<link rel="stylesheet" href="/build/css/all.css" />
+		<link rel="stylesheet" href="/plugin/style/item/message.css" />
+	</head>
+	<body>
+		<header class="mui-bar mui-bar-nav mui-bar-nav-hide clearBg ">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left mui-color-fff"></a>
+			
+		</header>
+		
+		<div id="pullrefresh" class="mui-content mui-scroll-wrapper fn_clearpaddingtop">
+		    <div class="mui-scroll">
+		    	<!--数据列表-->
+			    <div class="">
+			    	<img class="w100 mui-block" id="file-img" src=""/>
+			    </div>
+			    <ul class="mui-table-view clearUl" id="list-container">
+			    </ul>
+		    </div>
+		</div>
+		<script type="text/html" id="tmpl-model">
+			{{each content as $value i}}
+			<li class="mui-table-view-cell mui-media">
+		        <a href="/goods/view.html?goodsId={{$value.id}}">
+		            <img class="mui-media-object mui-pull-left update65" src="{{$value.imgUrl}}" data-lazyload="">
+		            <div class="mui-media-body ">
+		                <p class="mui-ellipsis-2 qc-color-333 qc-font-size12">{{$value.name}}</p>
+		                <span class="qc-font-size10 mui-ellipsis-2">{{$value.brief}}</span>
+		                <div class="mui-media-block fn_margintop10"></div>
+		                <div class="mui-media-price">
+		                	<i class="mui-color-red">
+		                		&yen;<i class="qc-font-size16">{{$value.price}}</i>
+		                	</i>
+		                	{{if $value.sold > 0}}
+		                		<i class="fn_marginleft10 qc-color-666 qc-font-size12">销量:{{$value.sold}}</i>
+		                	{{else}}
+		                		<i class="fn_marginleft10 qc-color-666 qc-font-size12">销量:暂无数据</i>
+		                	{{/if}}
+		                </div>
+		            </div>
+		         </a>
+		    </li>
+		    {{/each}}
+		</script>
+		<script src="/build/script/all.js"></script>
+		<script src="/plugin/javascript/web/phone/goods/brands.js"></script>
+		<script src="/framwork/plugins/muibacktop/js/muiBackTop.js"></script>
+		<!--这就是HTML 模板 用于数据加载 -->
+		<script type="text/html" id="tmpl-model-null">
+			<p class="qc-color-888 mui-text-center" style="letter-spacing: 0px;margin-top: 50px;">暂无任何数据</p>
+		</script>
+		<script>
+			mui.ready(function() {
+				window.brands.init();
+			});
+		</script>
+		<div style="display:none;">
+			<script src="https://s19.cnzz.com/z_stat.php?id=1262309795&web_id=1262309795 " language="JavaScript"></script>
+		</div>
+	</body>
+
+</html>

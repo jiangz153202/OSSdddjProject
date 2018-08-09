@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=0,minimal-ui">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="/build/css/all.css"/>
+		<!--一些对于单页面的描述 可以在HTML临时写在本页面  当接入jsp的时候，在写入css文件-->
+		<!--当前页面css-->
+		<style type="text/css">
+			.feedback .image-list {
+				width: 100%;
+				height: 90px;
+				background-size: cover;
+				overflow: hidden;
+			}
+			.feedback .image-item {
+				width: 80px;
+				height: 80px;
+				background-image: url('/framwork/global_icon/mipmap-xhdpi/add_img.png');
+				background-size: 100% 100%;
+				display: inline-block;
+				position: relative;
+				border-radius: 5px;
+				margin-top: 5px;
+				border: solid 1px #e8e8e8;
+				margin-right: 10px;
+			}
+			.feedback .image-item input[type="file"] {
+				position: absolute;
+				left: 0px;
+				top: 0px;
+				width: 100%;
+				height: 100%;
+				opacity: 0;
+				cursor: pointer;
+				z-index: 0;
+			}
+			.feedback .image-item.space {
+				border: none;
+			}
+			.feedback .image-item .image-close {
+				position: absolute;
+				display: inline-block;
+				right: -6px;
+				top: -6px;
+				width: 20px;
+				height: 20px;
+				text-align: center;
+				line-height: 20px;
+				border-radius: 12px;
+				background-color: #FF5053;
+				color: #f3f3f3;
+				border: solid 1px #FF5053;
+				font-size: 9px;
+				font-weight: 200;
+				z-index: 1;
+			}
+			.feedback .image-item.space .image-close {
+				display: none;
+			}
+			.form-commentstar>div{
+				background: #FFFFFF;
+				line-height: 40px;
+				height: 40px;
+			}
+			.comment-ico{
+				float: inherit;
+				display: inline-block;
+			}
+			.update80{
+				width: 80px;
+				min-height: 80px;
+				min-width: 80px;
+			}
+			.mui-table-view-cell>a:not(.mui-btn).mui-active{
+				background-color: transparent;
+			}
+			
+			
+		</style>
+	</head>
+	<body class="">
+		<header class="mui-bar mui-bar-nav mui-bar-nav-hide mui-bg-fff">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left qc-color-333"></a>
+			<h1 class="mui-title qc-color-333 qc-font-size16">评价晒单</h1>
+			<!--<a class="mui-action-back mui-icon mui-icon-right-nav mui-pull-right mui-color-fff"><sapn class="qc-font-size14">提交</sapn></a>-->
+		</header>
+		<div class="mui-content mui-scroll-wrapper" id="pullrefresh">
+			<div class="mui-scroll">
+				<div class="" id="list-container"></div>
+			</div>
+		</div>
+		<script src="/build/script/all.js"></script>
+		<script src="/plugin/javascript/web/wxShare.js"></script>
+		<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+		<script src="/plugin/javascript/web/phone/order/orderReview.js?v=20170406"></script>
+		<!--这就是HTML 模板 用于数据加载 -->
+		<script type="text/html" id="tmpl-model-loading">
+			<div class="spinner-child">
+				<div class="rect1"></div>
+				<div class="rect2"></div>
+				<div class="rect3"></div>
+				<div class="rect4"></div>
+				<div class="rect5"></div>
+			</div>
+		</script>
+		<!--这就是HTML 模板 用于数据加载 -->
+		<script type="text/html" id="tmpl-model-null">
+			<div class="qc-car-null mui-text-center">
+				<div class="qc-car-null-img-empty"></div>
+				<p class="qc-color-888 mui-text-center qc-car-null-text">哎呀！页面还没数据哦~</p>
+			</div>
+		</script>
+		<script type="text/html" id="tmpl-images">
+			{{each data as $value i}}
+				<div class="image-item" style="background-image:url('{{$value}}')"><div class="image-close">X</div></div>
+			{{/each}}
+		</script>
+		<script type="text/html" id="tmpl-model">
+		 	<ul class="mui-table-view">
+		 		{{each $data.items as $value i}}
+		 	    <li class="mui-table-view-cell mui-media">
+		 	        <a href="javascript:;.html">
+		 	            <img class="mui-media-object mui-pull-left update80" src="{{$value.imgUrl}}">
+		 	            <div class="mui-media-body qc-font-size14 qc-color-333 fn_margintop10">
+		 	                             评分:
+		 	                <p class="mui-ellipsis star-list" data-id="input-goods">
+		 	                	<span class="default-transition comment-ico comment-ico-active mg-r5"></span>
+		 	                	<span class="default-transition comment-ico comment-ico-active mg-r5"></span>
+		 	                	<span class="default-transition comment-ico comment-ico-active mg-r5"></span>
+		 	                	<span class="default-transition comment-ico comment-ico-active mg-r5"></span>
+		 	                	<span class="default-transition comment-ico comment-ico-active mg-r5"></span>
+		 	                </p>
+		 	            </div>
+		 	        </a>
+		 	    </li>
+		 	    {{/each}}
+		 	</ul>
+		 	<div class="">
+		 		<textarea name="" rows="4" class="qc-font-size14 qc-color-333 clearborder fn_marginbottom10" id="textarea-content" name="comment" placeholder="请写下购买体会和使用感受来帮助其他小伙伴~"></textarea>
+		 	</div>
+		 	<!--上传图片-->
+		 	<div class="fn_padding10 fn_paddingleft15 qc-bg-color-fff feedback">
+			 	<div class="row image-list" id="image-list"></div>
+			 	<button id="upload-btn" class="mui-btn mui-btn-outlined mui-btn-undefault w100 mui-hide">上传</button>
+		 	</div>
+		 	<!--商家服务评价-->
+		 	<div class="form-commentstar mg-t15 mui-hide">
+		 		<ul class="mui-table-view qc-font-size14">
+					<li class="mui-table-view-cell">
+						<a class="javascript;">
+							商家服务评价
+							<span class="mui-pull-right qc-color-999">满意请给5星哦</span>
+						</a>
+					</li>
+				</ul>
+				<div class="mui-table fn_paddinglr15">
+			        <div class="mui-table-cell mui-col-xs-5 qc-font-size14 qc-color-333">
+			                     商品包装
+			        </div>
+			        <div class="mui-table-cell mui-col-xs-7 mui-text-right star-list" data-id="input-package">
+			            <span class="default-transition comment-ico  mg-r5"></span>
+ 	                	<span class="default-transition comment-ico  mg-r5"></span>
+ 	                	<span class="default-transition comment-ico  mg-r5"></span>
+ 	                	<span class="default-transition comment-ico  mg-r5"></span>
+ 	                	<span class="default-transition comment-ico  mg-r5"></span>
+			        </div>
+			    </div>
+			    <div class="mui-table fn_paddinglr15">
+			        <div class="mui-table-cell mui-col-xs-5 qc-font-size14 qc-color-333">
+			                     送货速度
+			        </div>
+			        <div class="mui-table-cell mui-col-xs-7 mui-text-right star-list" data-id="input-rate" >
+			            <span class="default-transition comment-ico  mg-r5"></span>
+ 	                	<span class="default-transition comment-ico  mg-r5"></span>
+ 	                	<span class="default-transition comment-ico  mg-r5"></span>
+ 	                	<span class="default-transition comment-ico  mg-r5"></span>
+ 	                	<span class="default-transition comment-ico  mg-r5"></span>
+			        </div>
+			    </div>
+			    <div class="mui-table fn_paddinglr15">
+			        <div class="mui-table-cell mui-col-xs-5 qc-font-size14 qc-color-333 ">
+			                      配送员服务态度
+			        </div>
+			        <div class="mui-table-cell mui-col-xs-7  mui-text-right star-list" data-id="input-shopper">
+			            <span class="default-transition comment-ico  mg-r5"></span>
+ 	                	<span class="default-transition comment-ico  mg-r5"></span>
+ 	                	<span class="default-transition comment-ico  mg-r5"></span>
+ 	                	<span class="default-transition comment-ico  mg-r5"></span>
+ 	                	<span class="default-transition comment-ico  mg-r5"></span>
+			        </div>
+			    </div>
+		 	</div>
+		 	<input type="hidden" name="input-package" id="input-package" />
+		 	<input type="hidden" name="input-rate" id="input-rate"  />
+		 	<input type="hidden" name="input-shopper" id="input-shopper" />
+		 	<input type="hidden" name="input-goods" id="input-goods" value="5"/>
+		 	<!--提交按钮-->
+		 	<div class="fn_margin15">
+	 			<button id="review-submit" type="button" class="mui-btn mui-btn-default fn_padding10 w100 qc-font-size16 mui-btn-shadow">提交</button>
+			</div>
+		</script>
+		<script>
+			mui.ready(function() {
+				/*每个页面都要mui.init*/
+				window.orderReview.init();
+			});
+		</script>
+		<div style="display:none;">
+			<script src="https://s19.cnzz.com/z_stat.php?id=1262309795&web_id=1262309795 " language="JavaScript"></script>
+		</div>
+	</body>
+
+</html>

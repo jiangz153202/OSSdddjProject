@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=0,minimal-ui">
+		<title></title>
+		<!--本地字体文件库-->
+		<link rel="stylesheet" href="/framwork/iconfonts/basic/iconfont.css" />
+		
+		<style type="text/css">
+			body {
+				padding: 0px;
+				margin: 0px;
+			}
+			
+			img {
+				display: block;
+				width: 100%;
+			}
+			.mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
+			    color: #d89a9d !important;
+			    border-bottom: 2px solid #b71d25 !important;
+			    background: 0 0;
+			}
+			
+			/*产品列表*/
+			.z-content {}
+			
+			.z-content .list-layout-demo.demo1 {
+				margin: 10px!important;
+			}
+			
+			.z-content .list-layout-demo.demo1 a {
+				display: block;
+			}
+			
+			.z-content img {
+				display: block;
+			}
+			
+			.z-content .z-headImg {
+				overflow: hidden;
+				/*  max-height: 135px; */
+			}
+			
+			.z-content .list-layout-demo.demo1 .detail-content-default {
+				margin-top: 10px;
+				padding: 0px 5px 5px 5px;
+			}
+			
+			.z-content .list-layout-demo.demo1 .detail-content-default .text {
+				min-height: 28px;
+				line-height: 14px;
+				color: #686868;
+				margin-bottom: 10px;
+			}
+			
+			.z-content .list-layout-demo.demo1 .detail-content-default h5 {
+				border-top: 1px dotted #bdbdbd;
+			}
+			
+			.z-content .list-layout-demo.demo1 .detail-content-default .mui-text-decoration {
+				text-decoration: line-through;
+			}
+			
+			.z-content .list-layout-demo.demo1 .demo-model:nth-child(2n) .active.detail-body {
+				margin-right: 0px;
+				margin-left: 5px;
+			}
+
+		</style>
+	</head>
+	<body class="">
+		<div id="list-container"></div>
+	</body>
+	<script type="text/html" id="tmpl-model">
+
+	{{each data as $value i}} 
+		{{if $value.mask == true }}
+		<!--判断遮罩层-->	
+		<span class="lu_mask">
+		<span class="mui-icon iconfont close-mask-btn">&#xe625;</span>
+		{{/if}}
+			
+		    {{if $value.tablecell != undefined }}
+		    <!--判断格子-->
+		    <i style="display: table-cell;float: left;width: {{$value.tablecell}};font-style: normal; margin-left:{{$value.mleft}};margin-right:{{$value.mright}};">
+		    	{{if $value.tctd != undefined }}
+		    		{{each $value.tctd as $td i}} 
+		    		<em style="display: table-cell;float: left;width: {{$td.tdWidth}};font-style: normal;">
+		    			{{if $td.tdHref != ""}}
+		    			<a href="{{$td.tdHref}}">
+		    			{{/if}}
+							{{if $td.tdImg !=""}}
+								<img src="/framwork/activities/act170614/loading.gif" data-lazyload="{{$td.tdImg}}"/>
+							{{/if}}			    				
+		    			{{if $td.tdHref != ""}}
+		    			</a>
+		    			{{/if}}
+		    		</em>	
+		    		{{/each}}	  		
+		    	{{/if}}
+	        {{/if}}
+	        
+		        {{if $value.Totop == true}}
+		        <!--判断回顶浮标-->
+		        <span class="gototop">   
+		        {{/if}}
+		        
+					{{if $value.href != ""}}
+					<!--判断链接-->
+						<a href="{{$value.href}}" {{if $value.change}}class="change"{{/if}}>
+					{{/if}} 
+					
+						{{if $value.imgUrl !=""}}
+						<!--判断图片-->
+							<img src="/framwork/activities/act170614/loading.gif" data-lazyload="{{$value.imgUrl}}" {{if $value.mask}}class="tipimg" {{/if}} />
+						<!--判断图片end-->	
+						{{/if}}	
+						
+					{{if $value.href != ""}}
+					<!--判断链接end-->
+						</a>
+				    {{/if}}	
+				    
+		        {{if $value.Totop == true}}
+		        <!--判断回顶浮标end-->
+			    </span> 
+			    {{/if}} 
+		    
+		    {{if $value.tablecell != undefined }}
+		    <!--判断格子end-->
+		    </i>
+		    {{/if}} 
+		    
+		{{if $value.mask == true }}
+		<!--判断遮罩层end-->
+		</span>
+		{{/if}} 
+	{{/each}}
+	</script>
+
+	<script type="text/html" id="tmpl-body">
+		<div class="mui-segmented-control mui-segmented-control-inverted qc-bg-color-fff fn_margintop10" id="segmentedControl">
+		     <a class="mui-control-item mui-active " href="#item1.html">买酒送豪礼</a>
+		     <a class="mui-control-item" href="#item2.html">劲爆福利</a>
+		</div>
+		<div class="mui-clear-control-item">
+			<div id="item1" class="mui-control-content  mui-active">
+				 <div class="">
+				 		<a href="/goods/view.html?goodsId=329">
+				 	    	<img src="/framwork/activities/act170614/loading.gif" data-lazyload="/framwork/activities/1111/item1/产品1.png" class="fn_padding10" />
+				 	    </a>
+				 	    <a href="/goods/view.html?goodsId=165">
+				 	   		 <img src="/framwork/activities/act170614/loading.gif" data-lazyload="/framwork/activities/1111/item1/产品2.png" class="fn_paddinglr10"/>
+				 	    </a>
+				 	    <div class="z-content">
+							<div class="list-layout-demo demo1">
+								<div class="demo-model w50 fn_marginbottom10">
+									<div class="detail-body active mui-bg-fff">
+										<a href="/goods/view.html?goodsId=56">
+											<img src="/framwork/activities/act170614/loading.gif" data-lazyload="/framwork/activities/1111/item1/产品5.png"  class="goodsImg">
+										</a>
+									</div>
+								</div>
+								<div class="demo-model w50 fn_marginbottom10">
+									<div class="detail-body active mui-bg-fff">
+										<a href="/goods/view.html?goodsId=125">
+											<img src="/framwork/activities/act170614/loading.gif" data-lazyload="/framwork/activities/1111/item1/产品6.png"  class="goodsImg">
+										</a>
+									</div>
+								</div>
+								<div class="demo-model w50 fn_marginbottom10">
+									<div class="detail-body active mui-bg-fff">
+										<a href="/goods/view.html?goodsId=12">
+											<img src="/framwork/activities/act170614/loading.gif" data-lazyload="/framwork/activities/1111/item1/产品7.jpg"  class="goodsImg">
+										</a>
+									</div>
+								</div>
+								<div class="demo-model w50 fn_marginbottom10">
+									<div class="detail-body active mui-bg-fff">
+										<a href="/goods/view.html?goodsId=302">
+											<img src="/framwork/activities/act170614/loading.gif" data-lazyload="/framwork/activities/1111/item1/产品8.png"  class="goodsImg">
+										</a>
+									</div>
+								</div>
+							</div>
+						</div>
+				 	    <img src="/framwork/activities/act170614/loading.gif" data-lazyload="/framwork/activities/1111/item1/9.png" class="fn_paddinglr10"/>
+				 	    <a href="javascript:mui.scrollTo(0,300);.html">
+				 	    	<img src="/framwork/activities/1111/item1/10.png" class="fn_padding10" style="width: 50%;margin: 0px auto;" />
+				 	    </a>
+				 </div>
+			</div>
+			<div id="item2" class="mui-slider-item mui-control-content ">
+				
+		 	    <a href="/goods/view.html?goodsId=204">
+		 	    	<img src="/framwork/activities/act170614/loading.gif" data-lazyload="/framwork/activities/1111/item2/产品2.png" class="fn_paddinglr10"/>
+		 	    </a>
+		 	    <img src="/framwork/activities/act170614/loading.gif" data-lazyload="/framwork/activities/1111/item2/标题1.png" class="fn_padding10 fn_clearpaddingbottom"/>
+		 	    <div class="z-content ">
+					<div class="list-layout-demo demo1" style="margin: 10px 10px 0px 10px !important;">
+						<div class="demo-model w50 fn_marginbottom10">
+							<div class="detail-body active mui-bg-fff">
+								<a href="/goods/view.html?goodsId=335">
+									<img src="/framwork/activities/act170614/loading.gif" data-lazyload="/framwork/activities/1111/item2/产品3.png"  class="goodsImg">
+								</a>
+							</div>
+						</div>
+						<div class="demo-model w50 fn_marginbottom10">
+							<div class="detail-body active mui-bg-fff">
+								<a href="/goods/view.html?goodsId=324">
+									<img src="/framwork/activities/act170614/loading.gif" data-lazyload="/framwork/activities/1111/item2/产品4.png"  class="goodsImg">
+								</a>
+							</div>
+						</div>
+						<div class="demo-model w50 fn_marginbottom10">
+							<div class="detail-body active mui-bg-fff">
+								<a href="/goods/view.html?goodsId=336">
+									<img src="/framwork/activities/act170614/loading.gif" data-lazyload="/framwork/activities/1111/item2/产品5.png"  class="goodsImg">
+								</a>
+							</div>
+						</div>
+						<div class="demo-model w50 fn_marginbottom10">
+							<div class="detail-body active mui-bg-fff">
+								<a href="/goods/view.html?goodsId=337">
+									<img src="/framwork/activities/act170614/loading.gif" data-lazyload="/framwork/activities/1111/item2/产品6.png"  class="goodsImg">
+								</a>
+							</div>
+						</div>
+						
+					</div>
+				</div>
+				<img src="/framwork/activities/act170614/loading.gif" data-lazyload="/framwork/activities/1111/item2/标题2.png" class="fn_paddinglr10"/>
+				<div class="z-content">
+					<div class="list-layout-demo demo1">
+						<div class="demo-model w50 fn_marginbottom10">
+							<div class="detail-body active mui-bg-fff">
+								<a href="/goods/view.html?goodsId=314">
+									<img src="/framwork/activities/act170614/loading.gif" data-lazyload="/framwork/activities/1111/item2/产品7.png"  class="goodsImg">
+								</a>
+							</div>
+						</div>
+						<div class="demo-model w50 fn_marginbottom10">
+							<div class="detail-body active mui-bg-fff">
+								<a href="/goods/view.html?goodsId=312">
+									<img src="/framwork/activities/act170614/loading.gif" data-lazyload="/framwork/activities/1111/item2/产品8.png"  class="goodsImg">
+								</a>
+							</div>
+						</div>
+						<div class="demo-model w50 fn_marginbottom10">
+							<div class="detail-body active mui-bg-fff">
+								<a href="/goods/view.html?goodsId=313">
+									<img src="/framwork/activities/act170614/loading.gif" data-lazyload="/framwork/activities/1111/item2/产品9.png"  class="goodsImg">
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+		 	    <a href="javascript: mui.scrollTo(0,300);.html">
+		 	    	<img src="/framwork/activities/1111/item1/10.png" class="fn_padding10" style="width: 50%;margin: 0px auto;" />
+		 	    </a>
+			</div>
+		</div>
+	</script>
+	<script type="text/html" id="tmpl-slider">
+		<div class="mui-slider">
+			<!--这里放置真实显示的DOM内容-->
+			{{if $data.length > 0}}
+			<div class="mui-slider-group mui-slider-loop">
+				<!-- 额外增加的一个节点(循环轮播：第一个节点是最后一张轮播) -->
+				<div class="mui-slider-item mui-slider-item-duplicate">
+					<a href="{{$data[$data.length - 1].link}}">
+						<img src="{{$data[$data.length - 1].imgUrl}}" />
+					</a>
+				</div>
+				{{each $data as $value i}}
+				<!-- 第i张 -->
+				<div class="mui-slider-item">
+					<a href="{{$value.link}}">
+						<img src="{{$value.imgUrl}}" />
+					</a>
+				</div>
+				{{/each}}
+				<!-- 额外增加的一个节点(循环轮播：最后一个节点是第一张轮播) -->
+				<div class="mui-slider-item mui-slider-item-duplicate">
+					<a href="{{$data[0].link}}">
+						<img src="{{$data[0].imgUrl}}" />
+					</a>
+				</div>
+			</div>
+			<div class="mui-slider-indicator mui-text-right" style="bottom: 0px;">
+				{{each $data as $value i}}
+				<div class="mui-indicator {{if i == 0}}mui-active{{/if}}"></div>
+				{{/each}}
+			</div>
+			{{/if}}
+		</div>
+	</script>
+
+
+	<script type="text/html" id="tmpl-body2">
+		<style>
+			.couponflex{
+				flex:auto;width:46%;display:inline-block;margin:1% 1% 1% 3%;
+			}
+		</style>
+		<div style='background:#392266;'>
+		  	<img src="/framwork/activities/1111Carnival/1.png" data-lazyload="/framwork/activities/1111Carnival/1.png" alt="" />
+		  	<img class='fn_margintop20' src="/framwork/activities/1111Carnival/2.png" data-lazyload="/framwork/activities/1111Carnival/2.png" alt="" />
+		  	<img class='fn_margintop10' src="/framwork/activities/1111Carnival/3.png" data-lazyload="/framwork/activities/1111Carnival/3.png" alt="" />
+		  	<!--倒计时-->
+		  	<div class='fn_margintop10'>
+		  		<a href="http://m.dddingjiu.com/p/act/view?actId=15" style='position:relative;display: block;width:100%;height:100%;'>
+		  			<div style="position: absolute;top:.5rem;left:50%;width:12rem;margin-left:-6rem;text-align: center;font-size: 14px;color:#fff;">
+		  			<p style="margin-bottom: 0px;font-size:12px;color:#FDFD21;">活动倒计时</p>
+		  			<span style='border-radius:5px;padding:2px;background:#000;' id='day'>00</span> 天
+		  			<span style='border-radius:5px;padding:2px;background:#000;' id='hour'>00</span> 时
+		  			<span style='border-radius:5px;padding:2px;background:#000;' id='mini'>00</span> 分
+		  			<span style='border-radius:5px;padding:2px;background:#000;' id='sec'>00</span> 秒
+		  			<!--<span style='border-radius:5px;padding:2px;background:#000;color:red;' id='ms'>00</span>-->
+		  			<p style="margin-bottom: 0px;font-size:12px;color:#fff;">(开抢时间：2017/11/11 9am~6pm)</p>
+		  			</div>
+		  			<img src="/framwork/activities/1111Carnival/4.png" data-lazyload="/framwork/activities/1111Carnival/4.png" alt="" />
+		  		</a>	
+		  	</div>
+		
+		  	<img style='margin-top: 32px;' src="/framwork/activities/1111Carnival/5.png" data-lazyload="/framwork/activities/1111Carnival/5.png" alt="" />
+		  	<!--优惠券-->
+		  	<div style='padding:13px;'>
+		  		<div style='display: -webkit-flex;display:flex;-webkit-flex-wrap: wrap;flex-wrap: wrap;background:#5123a9;border-radius:10px;'>
+		  			<div class='the_coupon couponflex' data-couponid = "15"><img src="/framwork/activities/1111Carnival/6.1.png" alt="" /></div>
+		  			<div class='the_coupon couponflex' data-couponid = "16"><img src="/framwork/activities/1111Carnival/6.2.png" alt="" /></div>
+		  			<div class='the_coupon couponflex' data-couponid = "14"><img src="/framwork/activities/1111Carnival/6.3.png" alt="" /></div>
+		  			<div class='the_coupon couponflex' data-couponid = "17"><img src="/framwork/activities/1111Carnival/6.4.png" alt="" /></div>
+		  			<div class='the_coupon couponflex' data-couponid = "18"><img src="/framwork/activities/1111Carnival/6.5.png" alt="" /></div>
+		  			<div class='the_coupon couponflex' data-couponid = "19"><img src="/framwork/activities/1111Carnival/6.6.png" alt="" /></div>
+		  		</div>
+		  	</div>
+		  	
+		  	<img style='margin-top:21px;' src="/framwork/activities/act170614/loading.gif" data-lazyload="/framwork/activities/1111Carnival/7.png" alt="" />
+		  	<a href="http://m.dddingjiu.com/p/goods/view/11">
+		  		<img src="/framwork/activities/act170614/loading.gif" data-lazyload="/framwork/activities/1111Carnival/8.png" alt="" />
+		  	</a>
+		  	<a href="http://m.dddingjiu.com/p/goods/view/202">
+		  		<img style='margin-top:12px;' src="/framwork/activities/act170614/loading.gif" data-lazyload="/framwork/activities/1111Carnival/9.png" alt="" />
+		  	</a>
+		  	<!--格子-->
+		  	<div style='margin-top:13px;display: -webkit-flex;display:flex;-webkit-flex-wrap: wrap;flex-wrap: wrap;'>
+		  		<a href="http://m.dddingjiu.com/p/goods/view/307" style="flex:auto;width:43%;display:inline-block;margin:0 2% 5% 5%;">
+		  			<img src="/framwork/activities/act170614/loading.gif" data-lazyload="/framwork/activities/1111Carnival/10.png" alt="" />
+		  		</a>
+		  		<a href="http://m.dddingjiu.com/p/goods/view/263" style="flex:auto;width:43%;display:inline-block;margin:0 5% 5% 2%;">
+		  			<img src="/framwork/activities/act170614/loading.gif" data-lazyload="/framwork/activities/1111Carnival/11.png" alt="" />
+		  		</a>
+		  		<a href="http://m.dddingjiu.com/p/goods/view/133" style="flex:auto;width:43%;display:inline-block;margin:0 2% 5% 5%;">
+		  			<img src="/framwork/activities/act170614/loading.gif" data-lazyload="/framwork/activities/1111Carnival/12.png" alt="" />
+		  		</a>
+		  		<a href="http://m.dddingjiu.com/p/goods/view/100" style="flex:auto;width:43%;display:inline-block;margin:0 5% 5% 2%;">
+		  			<img src="/framwork/activities/act170614/loading.gif" data-lazyload="/framwork/activities/1111Carnival/13.png" alt="" />
+		  		</a>	  			
+		  	</div>
+		  	<img style='margin-top:32px;padding-bottom:32px;' src="/framwork/activities/act170614/loading.gif" data-lazyload="/framwork/activities/1111Carnival/14.png" alt="" />
+		</div>			
+	</script>
+
+
+	<script src="/build/script/all.js"></script>
+	<script src="/plugin/javascript/web/wxShare.js"></script>
+	<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<!--	<script src="/framwork/plugins/timeCountDown.js"></script>-->
+	<script type="text/javascript">
+		var result = [];
+
+		var data13 = {
+			id: 13,
+			shareData: {
+				title: '滴滴订酒-特惠专区',
+				link: window.location.href.split("#")[0],
+				imgUrl: "http://m.dddingjiu.com/framwork/activities/1111/banner/1.jpg",
+				desc: "滴滴订酒"
+			},
+			data: [
+				{
+					imgUrl:'/framwork/activities/1111/banner/1.jpg',
+					link:'javascript:;'
+				},
+				{
+					imgUrl:'/framwork/activities/1111/banner/2.jpg',
+					link:'javascript:;'
+				},
+				{
+					imgUrl:'/framwork/activities/1111/banner/3.jpg',
+					link:'javascript:;'
+				}
+			],
+			title: '滴滴订酒-特惠专区'
+		}	
+		
+		var data14 = {
+			id: 14,
+			shareData: {
+				title: '滴滴订酒-热销排行榜6',
+				link: window.location.href.split("#")[0],
+				imgUrl: "http://m.dddingjiu.com/framwork/activities/hotRanking/hotRanking6_01.jpg",
+				desc: "滴滴订酒"
+			},
+			
+			data: [{
+					href: "",
+					imgUrl: "/framwork/activities/hotRanking/hotRanking6_01.jpg"
+				},
+				{
+					href: "",
+					imgUrl: "/framwork/activities/hotRanking/hotRanking6_02.jpg"
+				},
+				{
+					href: "http://m.dddingjiu.com/p/goods/view/307",
+					imgUrl: "/framwork/activities/hotRanking/hotRanking6_03.jpg"
+				},
+				{
+					href: "",
+					imgUrl: "/framwork/activities/hotRanking/hotRanking6_04.jpg"
+				},
+				{
+					href: "http://m.dddingjiu.com/p/goods/view/335",
+					imgUrl: "/framwork/activities/hotRanking/hotRanking6_05.jpg"
+				},
+				{
+					href: "",
+					imgUrl: "/framwork/activities/hotRanking/hotRanking6_06.jpg"
+				},
+				{
+					href: "http://m.dddingjiu.com/p/goods/view/11",
+					imgUrl: "/framwork/activities/hotRanking/hotRanking6_07.jpg"
+				},
+				{
+					href: "javascript:mui.scrollTo(0,1000);",
+					imgUrl: "/framwork/activities/hotRanking/hotRanking6_08.jpg"
+				}				
+			],
+			title: '滴滴订酒-热销排行榜'
+		}
+		var data15 = {
+			id: 15,
+			shareData: {
+				title: '双十一鲸湾',
+				link: window.location.href.split("#")[0],
+				imgUrl: "http://m.dddingjiu.com/framwork/activities/jingwan/sj1_01.jpg",
+				desc: "滴滴订酒"
+			},
+			
+			data: [{
+					href: "",
+					imgUrl: "/framwork/activities/jingwan/sj1_01.jpg"
+				},
+				{
+					href: "",
+					imgUrl: "/framwork/activities/jingwan/sj1_02.jpg"
+				},
+				{
+					href: "",
+					imgUrl: "/framwork/activities/jingwan/sj1_03.jpg"
+				},
+				{	
+					tablecell:"50%",
+					tctd:[
+							{
+								tdWidth:'36%',
+								tdHref:'',
+								tdImg:'/framwork/activities/jingwan/sj1_04.jpg'
+							},
+							{
+								tdWidth:'64%',
+								tdHref:'http://m.dddingjiu.com/p/goods/view/335',
+								tdImg:'/framwork/activities/jingwan/sj1_05.jpg'
+							},
+							{
+								tdWidth:'64%',
+								tdHref:'',
+								tdImg:'/framwork/activities/jingwan/sj1_07.jpg'
+							},							
+					],
+					href: "",
+					imgUrl: ""
+				},
+				{
+					tablecell:"50%",
+					href: "",
+					imgUrl: "/framwork/activities/jingwan/sj1_06.jpg"
+				},
+				{
+					href: "",
+					imgUrl: "/framwork/activities/jingwan/sj1_08.jpg"
+				},
+				{
+					href: "",
+					imgUrl: "/framwork/activities/jingwan/sj1_09.jpg"
+				},
+				{
+					href: "",
+					imgUrl: "/framwork/activities/jingwan/sj1_10.jpg"
+				},
+				{
+					href: "",
+					imgUrl: "/framwork/activities/jingwan/sj1_11.jpg"
+				},
+				{
+					href: "javascript:mui.scrollTo(0,1000);",
+					imgUrl: "/framwork/activities/jingwan/sj1_12.jpg"
+				}				
+			],
+			title: '双十一鲸湾'
+		}	
+		
+		var data16 = {
+			id: 16,
+			shareData: {
+				title: '狂欢双11酒水嘉年华',
+				link: window.location.href.split("#")[0],
+				imgUrl: "http://m.dddingjiu.com/framwork/activities/1111Carnival/1.png",
+				desc: "滴滴订酒双十一呈现"
+			},
+			title: '双11酒水嘉年华'
+		}		
+		
+		
+		
+		result.push(data13);
+		result.push(data14);
+		result.push(data15);
+		result.push(data16);
+
+		
+		var this_time = new Date().getTime();
+
+		function doTmplHtml(item) {
+			var html = template('tmpl-model', item);
+			var listContainer = document.getElementById('list-container');
+			listContainer.innerHTML = html;
+			//图片懒加载
+			document.title = item.title;
+			listContainer.removeAttribute('data-imagelazyload');
+			mui(listContainer).imageLazyload();
+
+			mui(listContainer).on('tap', 'div', function() {
+				var cid = this.dataset.cid;
+
+				getCouponById(cid);
+
+			});
+			mui(listContainer).on('tap', 'a', function() {
+				var $this = this;
+				if($this.href.indexOf('javascript') > 0) {
+					window.scrollTo(0, 0);
+					return;
+				}
+				setTimeout(function() {
+					window.location.href = $this.href;
+				}, 400);
+			});
+
+			if(mui.os.wechat != undefined) {
+				var _options = {
+					shareData: item.shareData
+				}
+				//微信环境分享
+				_wxShareApi.wechatConfig(_options, function() {
+					//回调
+					//_wxShareApi.shareWx(_options,share);
+				});
+			}
+		}
+		
+		function doActHtml(item){
+			
+//			<link rel="stylesheet" href="http://dddj-cdn-oss-01.oss-cn-shenzhen.aliyuncs.com/css/all_1.css" />
+//			
+			var links = document.createElement('link');
+			links.rel ="stylesheet";
+			links.href="http://dddj-cdn-oss-01.oss-cn-shenzhen.aliyuncs.com/css/all_1.css";
+			document.head.appendChild(links);
+			
+			var html = template('tmpl-slider', item.data);
+			var listContainer = document.getElementById('list-container');
+		
+			common.insertHTML(listContainer,'afterbegin',html);
+			listContainer.innerHTML += document.getElementById('tmpl-body').innerHTML;
+			
+			
+			setTimeout(function(){
+				mui('.mui-slider').slider({
+					interval:2000
+				});
+				listContainer.removeAttribute('data-imagelazyload');
+				mui(listContainer).imageLazyload();
+			},2000)
+			
+			
+			//图片懒加载
+			document.title = item.title;
+			
+
+			
+//			mui(listContainer).on('tap', 'a', function() {
+//				var $this = this;
+//				if($this.href.indexOf('javascript') > 0) {
+//					window.scrollTo(0, 0);
+//					return;
+//				}
+//				setTimeout(function() {
+//					window.location.href = $this.href;
+//				}, 400);
+//			});
+
+			if(mui.os.wechat != undefined) {
+				var _options = {
+					shareData: item.shareData
+				}
+				//微信环境分享
+				_wxShareApi.wechatConfig(_options, function() {
+					//回调
+					//_wxShareApi.shareWx(_options,share);
+				});
+			}
+		}
+			
+		function doNewHtml(item){
+					
+			var links = document.createElement('link');
+			links.rel ="stylesheet";
+			links.href="http://dddj-cdn-oss-01.oss-cn-shenzhen.aliyuncs.com/css/all_1.css";
+			document.head.appendChild(links);
+	
+			var html = template('tmpl-model', item);
+			var listContainer = document.getElementById('list-container');
+		
+			common.insertHTML(listContainer,'afterbegin',html);
+			listContainer.innerHTML += document.getElementById('tmpl-body2').innerHTML;
+			
+			
+			setTimeout(function(){
+				mui('.mui-slider').slider({
+					interval:2000
+				});
+				listContainer.removeAttribute('data-imagelazyload');
+				mui(listContainer).imageLazyload();
+			},2000)
+			
+			
+			//图片懒加载
+			document.title = item.title;
+			//倒计时
+		function TimeTo(dd) {
+		    var t = new Date(dd), //取得指定时间的总毫秒数  
+		        n = new Date().getTime(), //取得当前毫秒数  
+		        c = t - n; //得到时间差
+		    //w = (t - n)*1000;//得到时间差
+		    if (c <= 0) { //如果差小于等于0  也就是过期或者正好过期，则推出程序  
+			document.getElementById("day").innerHTML = "00";
+			document.getElementById("hour").innerHTML = "00";
+			document.getElementById("mini").innerHTML = "00";
+			document.getElementById("sec").innerHTML = "00";
+//			document.getElementById("ms").innerHTML = "00";
+		        clearInterval(daojishi); //清除计时器  
+		        return; //结束执行  
+		    }
+	   		d = parseInt(c / 1000 / 60 / 60 / 24), //总毫秒除以一天的毫秒 得到相差的天数  
+	        h = parseInt(c / 1000 / 60 / 60 - (24 * d)), //然后取完天数之后的余下的毫秒数再除以每小时的毫秒数得到小时 
+	        m = parseInt(c / 1000 / 60 - (24 * 60 * d) - (60 * h)), //减去天数和小时数的毫秒数剩下的毫秒，再除以每分钟的毫秒数，得到分钟数 
+	        s = parseInt(c / 1000 - (24 * 60 * 60 * d) - (60 * 60 * h) - (60 * m)); //得到最后剩下的毫秒数除以1000 就是秒数，再剩下的毫秒自动忽略即可
+		    hm = Math.floor((c - (24 * 60 * 60 * 1000 * d) - (60 * 60 * 1000 * h) - (60 * 1000 * m) - (s * 1000)) / 10);
+		    if (hm < 10) {
+		        hm = "0" + hm;
+		    }
+		    if (s < 10) {
+		        s = "0" + s;
+		    }
+		    if (m < 10) {
+		        m = "0" + m;
+		    }
+		    if (h < 10) {
+		        h = "0" + h;
+		    }
+		    if (d < 10) {
+		        d = "0" + d;
+		    }		    
+		
+			document.getElementById("day").innerHTML = d;
+			document.getElementById("hour").innerHTML = h;
+			document.getElementById("mini").innerHTML = m;
+			document.getElementById("sec").innerHTML = s;
+//			document.getElementById("ms").innerHTML = hm;		    
+		}
+		(function() {
+		    daojishi = setInterval(function() {
+		        TimeTo('2017/11/11 09:00:00'); //定义倒计时的结束时间，注意格式  
+		    }, 1000); //定义计时器，每隔1000毫秒 也就是1秒 计算并更新 div的显示  
+		})();		
+		
+		
+		
+		//Ajax优惠券
+		var the_coupons = document.querySelectorAll('.the_coupon');
+		for(var i=0; i<the_coupons.length; i++){
+			   (function(i){       
+			        the_coupons[i].onclick = function() {        
+			         var couponsId = this.getAttribute('data-couponid');
+			         getCoupon(couponsId);
+			        }  
+			   })(i);
+		}
+			
+		function getCoupon(couponsId){
+			var optObjs = {
+					urlPath:"http://capi.dddingjiu.com/api/coupon/obtain",
+					data: {
+					couponsId:couponsId,
+					},
+				onSuccess: function(result) {
+					if(result.status == 0 && result.data) {
+					    //领取成功之后
+						common.alert({msg: "成功领取5张优惠券！"});
+					} else {
+						common.alert({msg:result.msg});
+					}
+				},
+				onError: function() {
+					console.log('失败回调');
+						 common.alert({msg: "领取失败！"});
+				},
+				onComplete:function(){
+				}
+			};
+			AjaxCommon.getAjaxRequestJson(optObjs);			
+		}
+	
+			
+//			mui(listContainer).on('tap', 'a', function() {
+//				var $this = this;
+//				if($this.href.indexOf('javascript') > 0) {
+//					window.scrollTo(0, 0);
+//					return;
+//				}
+//				setTimeout(function() {
+//					window.location.href = $this.href;
+//				}, 400);
+//			});
+
+			if(mui.os.wechat != undefined) {
+				var _options = {
+					shareData: item.shareData
+				}
+				//微信环境分享
+				_wxShareApi.wechatConfig(_options, function() {
+					//回调
+					//_wxShareApi.shareWx(_options,share);
+				});
+			}
+		}		
+		
+		mui.ready(function() {
+			mui.init();
+
+			var actId = common.queryToJSON().actId == undefined ? '' : common.queryToJSON().actId;
+			var listContainer = document.getElementById('list-container');
+			if(actId == "") {
+				listContainer.innerHTML = "<p style='text-align: center;font-size: 15px;'>暂无数据</p>"
+				return false;
+			}
+
+			mui.each(result, function(index, item) {
+				if(item.id == actId ) {
+					if(actId == 13){
+						doActHtml(item);
+					}else if(actId == 16){
+						doNewHtml(item);
+					}
+					else{
+						doTmplHtml(item);
+					}
+				}
+			});
+			
+
+		});
+	</script>
+	<div style="display:none;">
+		<script src="https://s19.cnzz.com/z_stat.php?id=1262309795&web_id=1262309795 " language="JavaScript"></script>
+	</div>
+
+</html>

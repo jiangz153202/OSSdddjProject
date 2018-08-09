@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=0,minimal-ui">
+		<title>
+			商品详情
+		</title>
+		<link rel="stylesheet" href="/build/css/all.css" />
+		<!--一些对于单页面的描述 可以在HTML临时写在本页面  当接入jsp的时候，在写入css文件-->
+		<link rel="stylesheet" type="text/css" href="/plugin/style/web/phone/goods/view.css" />
+		<style type="text/css">
+			.sec-bgColor {
+				background-color: #ff0000;
+				/* background: gradient(linear,left bottom,right top, from(rgb(176, 79, 194)), to(#dd0d4b));
+			    background: -webkit-gradient(linear,left bottom,right top, from(rgb(176, 79, 194)), to(#dd0d4b));*/
+				color: #FFFFFF;
+				padding: 10px 10px 0px 10px;
+				position: relative;
+			}
+			
+			.sec-bgColor .mui-badge {
+				position: absolute;
+				top: -20px;
+			}
+			
+			.sec-last {
+				background-color: cornsilk;
+				height: 54px;
+			}
+			
+			.sec-last .timer {}
+			
+			.sec-last .timer .time {
+				background-color: red;
+				color: #FFFFFF;
+				padding: 3px 2px;
+				border-radius: 2px;
+			}
+			
+			.specify {}
+			
+			.specify p {
+				color: #3a3a3a;
+			}
+			
+			.specify p span {
+				line-height: 1.64;
+				display: table;
+				position: relative;
+				word-break: break-all;
+			}
+			
+			.specify p span b {
+				color: #888;
+				width: 10em;
+				padding-right: 2.182em;
+				font-weight: normal;
+				display: table-cell;
+			}
+			.stock-detail {
+			    position: relative;
+			    line-height: 12px;
+			    font-size: 0;
+			    color: #999;
+			    background-color: #fff;
+			    padding: 0 10px;
+			}
+			.stock-detail dl {
+			    width: 33.333333%;
+			    margin-top: 10px;
+			    margin-bottom: 10px;
+			    display: inline-block;
+			    font-size: 12px;
+			    zoom: 1;
+			}
+			.stock-detail dt {
+			    display: inline-block;
+			}
+			.stock-detail dd {
+			    display: inline-block;
+			    word-wrap: break-word;
+			}
+			.stock-detail dl:nth-child(1) {
+			    text-align: left;
+			}
+			.stock-detail dl:nth-child(2) {
+			    text-align: center;
+			}
+			.stock-detail dl:nth-child(3) {
+			    text-align: right;
+			}
+			
+			.mui-cart-sku .mui-sku-attrs .mui-sku-attr {
+			    padding: 15px;
+			    border-bottom: 1px solid #e5e5e5;
+			}
+			
+			.mui-cart-sku .mui-sku-attrs .mui-sku-attr button.mui-active {
+			    color: #FFF;
+			    background-color: #32b3af;
+			    border: 1px solid #32b3af;
+			}
+			.mui-cart-sku .mui-sku-attrs .mui-sku-attr button {
+			    margin-top: 10px;
+			    color: #333;
+			    background-color: transparent;
+			    border: 1px solid #999;
+			    margin-right: 10px;
+			    min-width: 32px;
+			    padding: 5px 15px;
+			    max-width: 180px;
+			    line-height: 16px;
+			    border-radius: 3px;
+			}
+			
+			
+			.mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
+			    color: #32b3af;
+			    border-bottom: 1px solid #32b3af;
+			    background: 0 0;
+			}
+			
+			#details-container img{
+				width:100%;
+				display: block;
+			}
+			#details-container p{
+				margin-bottom: 0px;
+			}
+			.qc-car-null {
+			    margin-top: 20px;
+			}
+		</style>
+	</head>
+
+	<body class="">
+		<header class="mui-bar mui-bar-nav mui-bar-nav-hide clearBg ">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left default-abs-color"></a>
+			<a class="mui-icon mui-icon-right-nav mui-pull-right default-abs-color iconfont icon-fenxiang mui-hide" href="#popover.html"></a>
+			
+		</header>
+		<div class="mui-content fn_clearpaddingtop" id="body-container" style="margin-bottom: 50px;">
+			<div class="spinner-child spinner-child-fixed">
+				<div class="rect1"></div>
+				<div class="rect2"></div>
+				<div class="rect3"></div>
+				<div class="rect4"></div>
+				<div class="rect5"></div>
+			</div>
+		</div>
+		<div id="popover" class="mui-popover mui-popover-fadein">
+			<div class="mui-scroll-wrapper">
+				<div class="mui-scroll">
+					<ul class="mui-table-view clearUl clearBg">
+						<li class="mui-table-view-cell">
+							<a href="javascript:;" class="iconfont icon-message qc-font-size20-imp qc-color-fff-imp">
+								<i class="qc-font-size14-imp ">消息</i>
+							</a>
+						</li>
+						<li class="mui-table-view-cell">
+							<a href="/index.html" class="iconfont icon-home qc-font-size20-imp qc-color-fff-imp">
+								<i class="qc-font-size14-imp ">首页</i>
+							</a>
+						</li>
+						<li class="mui-table-view-cell">
+							<a href="/goods/search.html" class="iconfont icon-search qc-font-size20-imp qc-color-fff-imp">
+								<i class="qc-font-size14-imp ">搜索</i>
+							</a>
+						</li>
+						<li class="mui-table-view-cell">
+							<a href="javascript:;" class="iconfont icon-yuyue qc-font-size20-imp qc-color-fff-imp">
+								<i class="qc-font-size14-imp ">浏览历史</i>
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<script type="text/html" id="tmpl-car-advertisements">
+
+			<div class="mui-slider">
+				<div class="mui-slider-group mui-slider-loop">
+					<!-- 额外增加的一个节点(循环轮播：第一个节点是最后一张轮播) -->
+					<div class="mui-slider-item mui-slider-item-duplicate">
+						<a href="javascript:;">
+							<img data-lazyload="{{$data[$data.length-1].imgUrl}}" src="/framwork/global_icon/lazyload/banner650300.jpg" />
+						</a>
+					</div>
+					{{each $data as $value i}}
+					<!-- 第i张 -->
+					<div class="mui-slider-item">
+						<a href="javascript:;">
+							<img data-lazyload="{{$value.imgUrl}}" src="/framwork/global_icon/lazyload/banner650300.jpg" />
+						</a>
+					</div>
+					{{/each}}
+					<!-- 额外增加的一个节点(循环轮播：最后一个节点是第一张轮播) -->
+					<div class="mui-slider-item mui-slider-item-duplicate">
+						<a href="javascript:;">
+							<img data-lazyload="{{$data[0].imgUrl}}" src="/framwork/global_icon/lazyload/banner650300.jpg"/>
+						</a>
+					</div>
+				</div>
+				{{if $data.length > 1}}
+				<div class="mui-slider-indicator">
+					{{each $data as $value i}}
+					<div class="mui-indicator {{if i == 0}}mui-active{{/if}}"></div>
+					{{/each}}
+				</div>
+				{{/if}}
+			</div>
+
+		</script>
+		<script type="text/html" id="tmpl-model">
+
+			<div class="mui-content  ">
+				<!--<div class="mui-scroll mui-scroll-wrapper">-->
+					{{if $data.images.length > 0}} {{include 'tmpl-car-advertisements' $data.images}} {{/if}}
+					<!--限时秒杀-->
+					{{each $data.activities as $value i}} {{if $value.dailySeckill != null}}
+					<div class="mui-row">
+						<div class="mui-col-xs-8 sec-bgColor">
+							<i class="qc-font-size20 mg-r3"> &yen;</i><span class="qc-font-size20 ">{{$value.dailySeckill.price}}</span>
+							<p class="qc-color-fff qc-font-size12 fn_clearmarginbottom">
+								原价:
+								<span class="qc-font-size12 mui-text-decoration">
+					    			<i class="mg-r3">&yen;</i>{{$data.price}}
+					    		</span>
+								<span class="qc-font-size12 mui-pull-right">今日剩余资格:<i class="reset-number"></i></span>
+							</p>
+						</div>
+						<div class="mui-col-xs-4 qc-font-size12 mui-text-center qc-color-red sec-last">
+							<div class="fn_paddingtop5">
+								<span class="timer" data-output="true" data-startTime="{{$value.dailySeckill.dailySeckill.startTime}}" data-endTime="{{$value.dailySeckill.dailySeckill.endTime}}">
+			            	 		<div class="text"><i class="time-status">距结束还剩</i>:</div>
+					        		<i class="time time-h">00</i> :
+					        		<i class="time time-m">00</i> :
+					        		<i class="time time-s">00</i>
+				        		</span>
+							</div>
+						</div>
+					</div>
+					{{/if}} 
+					{{if $value.timeLimit != null}}
+					<div class="mui-row">
+						<div class="mui-col-xs-8 sec-bgColor">
+							<i class="qc-font-size20 mg-r3"> &yen;</i><span class="qc-font-size20 ">{{$value.timeLimit.price}}</span>
+							<p class="qc-color-fff qc-font-size12 fn_clearmarginbottom">
+								原价:
+								<span class="qc-font-size12 mui-text-decoration">
+									<i class="mg-r3">&yen;</i>{{$data.price}}
+								</span>
+								<span class="qc-font-size12 mui-pull-right">剩余资格:<i class="reset-number"></i></span>
+							</p>
+						</div>
+						<div class="mui-col-xs-4 qc-font-size12 mui-text-center qc-color-red sec-last">
+							<div class="fn_paddingtop5">
+								<span class="timer" data-output="true" data-startTime="{{$value.timeLimit.startTime}}" data-endTime="{{$value.timeLimit.endTime}}">
+			            	 		<div class="text"><i class="time-status">距结束还剩</i>:</div>
+					        		<i class="time time-h">00</i> :
+					        		<i class="time time-m">00</i> :
+					        		<i class="time time-s">00</i>
+				        		 </span>
+							</div>
+						</div>
+					</div>
+					{{/if}} 
+					{{/each}}
+					<div class="qc-bg-color-fff ">
+						<p class="qc-color-333 fn_padding10 fn_clearmarginbottom ">{{$data.name}}</p>
+						{{if $data.brief != ''}}
+						<p class="qc-color-666 fn_padding10 fn_clearpaddingtop fn_clearmarginbottom qc-font-size12">{{$data.brief}}</p>
+						{{/if}}
+						<!--价格区间-->
+						<p class="fn_paddinglr10 fn_clearmarginbottom clear">
+							<!--限时秒杀-->
+							{{if $data.activities[0].dailySeckill == null && $data.activities[1] != null && $data.activities[1].timeLimit == null}}
+							<span class="qc-font-size16  mui-color-red">&yen;<i class="qc-font-size18-imp">{{$data.price}}</i> </span>
+							<span class="qc-font-size12 mui-color-666 fn_paddingleft10 mui-text-decoration">
+								    市场价:&yen;{{$data.marketPrice}}
+							</span> 
+							{{/if}}
+						</p>
+						
+						<!---->
+						<div class="stock-detail">
+					        <dl>
+					            <dt>运费:</dt>
+					            <dd class="js-postage-desc" data-postage="免运费">
+					                        免运费           
+					            </dd>
+					        </dl>
+					        <dl>
+					            <dt>剩余:</dt>
+					            <dd>{{$data.stock}}</dd>
+					        </dl>
+					        <dl>
+					            <dt>销量:</dt>
+					            <dd>{{$data.sold}}</dd>
+					        </dl>
+					    </div>
+						
+					</div>
+					<!--选择数据-->
+					<ul class="mui-table-view fn_margintop10">
+						<li class="mui-table-view-cell mui-table-view-cart">
+							<a class="qc-font-size14 qc-color-333 qc-bg-color-fff mui-navigate-right {{if $data.shelve == false || $data.activities[0].dailySeckill != null || $data.activities[1] != null &&  $data.activities[1].timeLimit != null}}mui-disabled{{/if}}" href="javascript:;">
+								<i class="fn_marginright10">已选:</i>
+								<i class="sku-attrStr">请选择
+							 	{{each $data.short_vals}}
+							 		{{$value.name}}
+							 	{{/each}}
+							 	</i>
+							</a>
+						</li>
+						<!--发货-->
+					</ul>
+					<div class="mui-action-banner">
+						<img class="w100 mui-block" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAoAAAAAwCAIAAAF5/Wy+AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMDY3IDc5LjE1Nzc0NywgMjAxNS8wMy8zMC0yMzo0MDo0MiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTUgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjI0OEZBQURBNkMyQjExRTdBRUI5RTJBRTY2RkJBQUJGIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjI0OEZBQURCNkMyQjExRTdBRUI5RTJBRTY2RkJBQUJGIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6MjQ4RkFBRDg2QzJCMTFFN0FFQjlFMkFFNjZGQkFBQkYiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6MjQ4RkFBRDk2QzJCMTFFN0FFQjlFMkFFNjZGQkFBQkYiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz75JjFlAAAUfElEQVR42mL8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">
+					</div>
+					
+				
+					<div id="segmentedControl" class="mui-segmented-control mui-segmented-control-inverted qc-bg-color-fff-imp fn_margintop10">
+						<a class="mui-control-item mui-active" href="#item1mobile">
+							商品详情
+						</a>
+						<a class="mui-control-item" href="#item2mobile">
+							销量和评价
+						</a>
+					</div>
+					
+					<div id="item1mobile" class="mui-control-content mui-active">
+			 	         <!--规格参数-->
+						{{if $data.properties.length > 0}}
+						<div class="fn_margintop10  fn_padding15 specify qc-bg-color-fff">
+							<p class="qc-color-333 title">规格参数</p>
+							<p style="" class="content fn_clearmarginbottom">
+								{{each $data.properties}}
+								<span class=" fn_paddingright15 qc-font-size12 " style="display: table;"><b class="">{{$value.name}} </b>{{$value.value}}</span> {{/each}}
+							</p>
+						</div>
+						{{/if}}
+						<div class="fn_paddinglr10" id="details-container"></div>
+					</div>
+					<div id="item2mobile" class="mui-control-content">
+						<!--订单评价-->
+						<div class="spinner-child">
+							<div class="rect1"></div>
+							<div class="rect2"></div>
+							<div class="rect3"></div>
+							<div class="rect4"></div>
+							<div class="rect5"></div>
+						</div>
+					</div>
+					<ul class="mui-table-view">
+						<li class="mui-table-view-cell mui-collapse qc-font-size12-imp ">
+							<a class="mui-navigate-right" href="javascript:;">划线价格说明</a>
+							<div class="mui-collapse-content ">
+								<p class="qc-color-999 qc-font-size12-imp">划线价格：划线的价格可能是商品的专柜价、吊牌价、正品零售价、指导价、曾经展示过的销售价等，仅供您参考。</p>
+							    <p class="qc-color-999 qc-font-size12-imp">未划线价格：未划线的价格是商品的销售标价，具体的成交价格可能因会员使用优惠券、积分等发生变化，最终以订单结算价格为准。 </p>
+							    <p class="qc-color-999 qc-font-size12-imp">*此说明仅当出现价格比较时有效。若这件商品针对划线价格进行了特殊说明，以特殊说明为准。</p>
+							</div>
+						</li>
+					</ul>
+					<div class="" id="guess-container"></div>
+					<!--同类产品推荐-->
+					
+				<!--</div>-->
+			</div>
+		</script>
+		<script type="text/html" id="tmpl-footer">
+			{{each $data.activities as $value i}} {{if $value.dailySeckill != null }}
+			<div class="qc-bar-navs">
+				<div class="bar-item">
+					<div class="mui-pull-left item qc-color-333-imp">
+						<label class="qc-color-333-imp fn_paddingright10">{{$value.dailySeckill.origin}}支起</label>
+						<div class="mui-numbox clearBg" data-numbox-step='{{$value.dailySeckill.origin}}' data-numbox-min="{{$value.dailySeckill.origin ? $value.dailySeckill.origin : 1 }}">
+							<button class="mui-btn mui-btn-numbox-minus" type="button">-</button>
+							<input class="mui-input-numbox" type="number" readonly="readonly" id="seckill-input">
+							<button class="mui-btn mui-btn-numbox-plus" type="button">+</button>
+						</div>
+					</div>
+				</div>
+				<div class="bar-button mui-text-center qc-color-fff default-abs-bg-color " id="seckill-btn">
+					立即秒杀
+				</div>
+			</div>
+			{{/if}} {{if $value.timeLimit != null }}
+			<div class="qc-bar-navs">
+				<div class="bar-item">
+					<div class="mui-pull-left item qc-color-333-imp">
+						<label class="qc-color-333-imp fn_paddingright10">1支起</label>
+						<div class="mui-numbox clearBg" data-numbox-step='1' data-numbox-min="1">
+							<button class="mui-btn mui-btn-numbox-minus" type="button">-</button>
+							<input class="mui-input-numbox" type="number" readonly="readonly" id="seckill-input">
+							<button class="mui-btn mui-btn-numbox-plus" type="button">+</button>
+						</div>
+					</div>
+				</div>
+				<div class="bar-button mui-text-center qc-color-fff default-abs-bg-color " id="seckill-btn">
+					限时抢购
+				</div>
+			</div>
+			{{/if}} {{/each}} {{if $data.activities[0].dailySeckill == null && $data.activities[1] != null && $data.activities[1].timeLimit == null}}
+			<div class="taobap-footer clear" style="z-index:99;">
+				<div class="items">
+					<a href="javascript:" class="qc-color-666">
+						<div class="itmes-icondiv">
+							<span class="mui-icon iconfont qc-font-size22-imp icon-shoucang3"></span>
+						</div>
+						<div class="mui-font-size12 itmes-div">
+							收藏
+						</div>
+					</a>
+				</div>
+				<div class="items">
+					<a href="/cart/index.html" class="qc-color-666">
+						<div class="itmes-icondiv">
+							<span class="mui-icon iconfont qc-font-size22 icon-gouwuche2"></span>
+						</div>
+						<div class="mui-font-size12 itmes-div">
+							购物车
+						</div>
+					</a>
+				</div>
+				<div class="clear mui-text-center" style="padding-left: 100px;">
+					<div class="w50 mui-pull-left footerbuy mui-bg-cart {{if $data.shelve == false}}mui-disabled{{/if}}" id="footer-button">
+						加入购物车
+					</div>
+					<div class="w50 mui-pull-left footerbuy mui-bg-buy {{if $data.shelve == false}}mui-disabled{{/if}}" id="add-cart">
+						立即购买
+					</div>
+				</div>
+			</div>
+			{{/if}}
+			{{if $data.shelve == false}}
+			<div class="mui-not-sale mui-text-center qc-font-size14">抱歉,该商品已下架</div>
+			{{/if}}
+		</script>
+		<script type="text/html" id="tmpl-comment">
+			<div class="review-header">
+				<div class="mui-segmented-control mui-segmented-control-inverted qc-bg-color-fff multilayer-bar-tab">
+					{{each data as $value i}}
+					<a class="mui-control-item mui-control-fail qc-color-red {{if i == 0}}mui-active{{/if}}" href="#comment{{i}}" data-commentType="{{$value.commentType}}">
+						<span class="multilayer-text">{{$value.name}}</span>
+						<span class="multilayer-count">{{$value.count}}</span>
+					</a>
+					{{/each}}
+				</div>
+			</div>
+			{{each data as $value i}}
+			<div id="comment{{i}}" class="review-container mui-control-content review-control-content {{if i == 0}}mui-active{{/if}}">
+				<div class="mui-scroll-wrapper">
+					<div class="mui-scroll">
+						<!--这里放置真实显示的DOM内容-->
+						<div class="list-container" data-index="{{i}}" data-commentType="{{$value.commentType}}" data-pageindex='0'></div>
+					</div>
+				</div>
+			</div>
+			{{/each}}
+		</script>
+		<script type="text/html" id="tmpl-comment-item">
+			{{each data.content as $value i}}
+			<div class="qc-bg-color-fff review-item ">
+				<ul class="mui-table-view ">
+					<li class="mui-table-view-cell mui-media">
+						<a href="javascript:;"><img class="mui-media-object mui-pull-left isborder min-media-img" src="{{$value.headImgUrl}}">
+							<div class="mui-media-body qc-font-size12">
+								<div class="mui-table min-media-table">
+									<div class="mui-table-cell mui-col-xs-7 mui-font-middle mui-ellipsis">{{$value.nickname}}</div>
+									<div class="mui-table-cell mui-col-xs-5 mui-font-middle mui-text-right">
+										<p class="mui-ellipsis qc-color-9d9d qc-font-size10">{{$value.createTime | dateFormat:'yyyy-MM-dd hh:mm:ss'}}</p>
+									</div>
+								</div>
+							</div>
+						</a>
+					</li>
+				</ul>
+				<div class="fn_padding10">
+					<div class="mui-table fn_font-size14 mui-text-center css-review-start">
+						<div class="mui-table-cell mui-col-xs-12 mui-font-middle mui-text-left ">
+							{{score $value.score}}
+						</div>
+					</div>
+					<p class="qc-font-size12 qc-color-333 fn_paddingtop10">
+						{{$value.content == "" ? "此用户暂无评价" : $value.content}}
+					</p>
+					{{if $value.images != null}}
+					<div class="mui-media-imageArrays">
+						{{each $value.images}}
+						<img src="{{$value.thumbPath}}" data-sourcePath="{{$value.sourcePath}}" class="mui-media-icon"> {{/each}}
+					</div>
+					{{/if}}
+					<p class="qc-font-size12 qc-color-999 fn_clearmarginbottom">{{$value.goodsAttrVal}}</p>
+					<p class="qc-font-size12 qc-color-999 ">购买日期:{{$value.createTime | dateFormat:'yyyy-MM-dd hh:mm:ss'}}</p>
+				</div>
+			</div>
+			{{/each}}
+		</script>
+		<script type="text/html" id="tmpl-guess">
+			<!--猜你喜欢模块-->
+			<div class="mui-text-center fn_paddingtop10 ">
+				<i class="iconfont icon-wanyouxi fn_marginlr10"></i><span class="qc-font-size16 ">猜你喜欢</span>
+			</div>
+			<div class="z-content">
+				<div class="list-layout-demo demo1">
+					{{each $data.content as $value i}}
+					<div class="demo-model w50 fn_marginbottom10">
+						<div class="detail-body active mui-bg-fff">
+							<a href="/goods/view.html?goodsId={{$value.id}}">
+								<img src="/framwork/global_icon/lazyload/LOGO100100.jpg" data-lazyload="{{$value.imgUrl}}" onerror="this.src='/framwork/global_icon/lazyload/LOGO100100.jpg'" class="goodsImg">
+								<div class="detail-content-default">
+									<p class="mui-ellipsis-2 fn_font-size12 text gname">{{$value.name}}</p>
+									<h5 class="qc-font-size16 mui-color-red mui-ellipsis fn_paddingtop10 fn_clearmargintop">
+		 	  	 		 				<span class="fn_font-size12">¥</span>{{$value.price}}
+		 	  	 		 				<span class="fn_paddingleft5 mui-color-ccc mui-text-decoration qc-font-size12">¥{{$value.marketPrice}}</span>
+	 	  	 						</h5>
+								</div>
+							</a>
+						</div>
+					</div>
+					{{/each}}
+				</div>
+			</div>
+			<!--End-->
+		</script>
+		<script type="text/html" id="tmpl-cart">
+			<div id="popover-cart" class="mui-popover mui-popover-bottom mui-popover-action mui-cart-sku qc-bg-color-fff-imp">
+				<div class="mui-sku-head">
+					<img src="{{$data.imgUrl}}" class="mui-sku-object" />
+					<div class="mui-sku-body">
+						<p class="mui-color-red fn_marginbottom5"><i class="qc-font-size14">&yen;</i><i class="sku-price qc-font-size16">{{$data.price}}</i></p>
+						<p class="qc-font-size14 qc-color-333 fn_marginbottom5">库存:<i class="sku-stock">{{$data.stock}}</i>件</p>
+						<p class="qc-font-size14 qc-color-333 fn_marginbottom5">
+							<i class="sku-attrStr">请选择
+					 	{{if $data.skus != null}}
+						 	{{each $data.skus.short_vals}}
+						 		{{$value.name}}
+						 	{{/each}}
+					 	{{/if}}
+					 	</i>
+						</p>
+					</div>
+					<span class="mui-icon mui-icon-close mui-sku-close"></span>
+				</div>
+				<div class="mui-sku-attrs fn_clearmarginbottombyp">
+					{{if $data.skus != null}} {{each $data.skus.short_vals as $shorts i}}
+					<div class="qc-color-333 mui-sku-attr">
+						<p class="qc-color-333 mui-sku-attrname">{{$shorts.name}}</p>
+						{{each $shorts.vals}}
+						<button class="mui-button mui-button-online" data-itemId="{{$value.id}}">{{$value.name}}</button> {{/each}}
+					</div>
+					{{/each}} {{/if}}
+				</div>
+				<div class="mui-sku-button qc-color-333 fn_padding15 mui-text-right">
+					<span class="mui-pull-left qc-font-size14">
+					 	购买数量
+					</span>
+					<div class="input-group _self-group" data-stock="0" data-qty="1" data-price="0" data-goodsattrid="0"></div>
+				</div>
+				<div class="mui-table mui-sku-footer qc-font-size14 mui-text-center qc-color-fff">
+					<div class="mui-table-cell mui-col-xs-6 mui-bg-cart mui-sku-btn" data-type="cart">
+						加入购物车
+					</div>
+					<div class="mui-table-cell mui-col-xs-6 mui-bg-buy mui-sku-btn" data-type="order">
+						立即购买
+					</div>
+				</div>
+			</div>
+		</script>
+
+		<script src="/build/script/all.js"></script>
+		<!--多页上拉加载-->
+		<script src="/framwork/mui/pullToRefresh/mui.pullToRefresh.js"></script>
+		<script src="/framwork/mui/pullToRefresh/mui.pullToRefresh.material.js"></script>
+		<!--这是加减按钮-->
+		<script src="/framwork/plugins/plusminusbtn/1.0.2/js/plusminusbtn.min.js"></script>
+		<script src="/plugin/javascript/web/wxShare.js"></script>
+		<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+		
+		<script src="/plugin/javascript/web/phone/goods/view.js"></script>
+		<script type="text/html" id="tmpl-model-null">
+			<div class="qc-car-null mui-text-center">
+				<div class="qc-car-null-img-empty"></div>
+				<p class="qc-color-888 mui-text-center qc-car-null-text">哎呀！页面还没数据哦~</p>
+			</div>
+		</script>
+		<script type="text/html" id="tmpl-model-loading">
+			<div class="spinner-child spinner-child-fixed">
+				<div class="rect1"></div>
+				<div class="rect2"></div>
+				<div class="rect3"></div>
+				<div class="rect4"></div>
+				<div class="rect5"></div>
+			</div>
+		</script>
+		<script>
+			template.helper('score', function(rows) {
+				var html = '';
+				for(var i = 0; i < rows; i++) {
+					html += '<span class="mui-icon iconfont fn_font-size24 qc-color-yellow icon-shoucang2"></span>';
+				}
+				return html;
+			});
+			/** 
+			 * 对日期进行格式化， 
+			 * @param date 要格式化的日期 
+			 * @param format 进行格式化的模式字符串
+			 *     支持的模式字母有： 
+			 *     y:年, 
+			 *     M:年中的月份(1-12), 
+			 *     d:月份中的天(1-31), 
+			 *     h:小时(0-23), 
+			 *     m:分(0-59), 
+			 *     s:秒(0-59), 
+			 *     S:毫秒(0-999),
+			 *     q:季度(1-4)
+			 * @return String
+			 * @author yanis.wang
+			 * @see	http://yaniswang.com/frontend/2013/02/16/dateformat-performance/
+			 */
+			template.helper('dateFormat', function(date, format) {
+
+				date = new Date(date);
+				var map = {
+					"M": date.getMonth() + 1, //月份 
+					"d": date.getDate(), //日 
+					"h": date.getHours(), //小时 
+					"m": date.getMinutes(), //分 
+					"s": date.getSeconds(), //秒 
+					"q": Math.floor((date.getMonth() + 3) / 3), //季度 
+					"S": date.getMilliseconds() //毫秒 
+				};
+				format = format.replace(/([yMdhmsqS])+/g, function(all, t) {
+					var v = map[t];
+					if(v !== undefined) {
+						if(all.length > 1) {
+							v = '0' + v;
+							v = v.substr(v.length - 2);
+						}
+						return v;
+					} else if(t === 'y') {
+						return(date.getFullYear() + '').substr(4 - all.length);
+					}
+					return all;
+				});
+				
+				return format;
+			});
+			mui.ready(function() {
+				window.goodsview.init({
+					gid: common.queryToJSON().goodsId === undefined ? '' : common.queryToJSON().goodsId
+				});
+			});
+		</script>
+		<div style="display:none;">
+			<script src="https://s19.cnzz.com/z_stat.php?id=1262309795&web_id=1262309795 " language="JavaScript"></script>
+		</div>
+	</body>
+
+</html>

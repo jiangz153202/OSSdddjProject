@@ -1,0 +1,272 @@
+$vw_fontsize: 75; // iPhone 6尺寸的根元素大小基准值
+@function rem($px) {
+     @return ($px / $vw_fontsize ) * 1rem;
+}
+
+html {
+    font-size: calc(100vw /7.5) ; 
+}
+
+/* 重置样式 */
+* {
+  -webkit-tap-highlight-color: transparent;
+  outline: 0; }
+
+body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, dl, dt, dd, ul, ol, li, pre, form, fieldset, legend, button, input, textarea, th, td {
+  margin: 0;
+  padding: 0;
+  vertical-align: baseline; }
+
+img {
+  border: 0 none;
+  vertical-align: top; }
+
+i, em {
+  font-style: normal; }
+
+ol, ul {
+  list-style: none; }
+
+input, select, button, h1, h2, h3, h4, h5, h6 {
+  font-size: 100%;
+  font-family: inherit; }
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+a, a:visited {
+  text-decoration: none !important;
+  color: #333; }
+
+body {
+  margin: 0 auto;
+  background: #FFFFFF;
+  font-size: 14px;
+  font-family: -apple-system,Helvetica,sans-serif;
+  line-height: 1.5;
+  color: #666;
+  -webkit-text-size-adjust: 100% !important;
+  /*-webkit-user-select: none;
+  user-select: none;*/ }
+
+$theme_bg_one : rgb(241,245,219);
+$theme_bg_two : rgb(255,238,230);
+.img_block_100 {
+    display: block;
+    width: 100%;
+}
+.mui-ellipsis-2 {
+    display: -webkit-box;
+    overflow: hidden;
+    white-space: normal!important;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.dd_container{
+    &_header{
+        height: rem(50);
+    }
+    
+    &_bayer{
+        background-color: rgb(242,228,205);
+        &_flex{
+            display: flex;
+            &_item{
+                flex: 1;
+                margin-top: rem(12);
+                img{
+                    width: rem(322);
+                    height: rem(350);
+                    &:first-child{
+                        padding-right: rem(23);
+                    }
+                    &:last-child{
+                        padding-left: rem(23);
+                    }
+                }
+            }
+        }
+    }
+    &_lists{
+        
+        &_head{
+            height: rem(210);
+            background: #FFF;
+            background-repeat: repeat-x;
+            background-size: auto rem(20);
+            position: relative;
+            & > img {
+                padding: rem(48) rem(81);
+                width: rem(588);
+            }
+            & > img :not(.theme_bg_img_three){
+                width: auto;
+                padding: 0;
+            }
+            &.theme_bg_img_one{
+                background-image: url(../../framwork/activities/20180618/img/花边@2x.png);
+            }
+            &.theme_bg_img_two{
+                &::before{
+                    content: "";
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    height: rem(20);
+                    width: 100%;
+                    background-image: url(../../framwork/activities/20180618/img/花边3@2x.png);
+                    background-repeat: repeat-x;
+                    background-size: auto rem(20);
+                }
+                background : rgb(255,238,230) ;
+            }
+            &.theme_bg_img_three{
+                background-image: url(../../framwork/activities/20180618/img/花边2@2x.png);
+            }
+            &.theme_bg_img_three > .comment{
+                padding: rem(42) rem(30) rem(10);
+                & > img{
+                   width: 100%;
+                }
+                & > .go_top_footer{
+                    text-align: center;
+                    padding-bottom: rem(30);
+                    span{
+                        width: 0;
+                        height: 0;
+                        border-width: rem(20);
+                        border-style: solid;
+                        border-color: transparent transparent red transparent; 
+                    }
+                    p{
+                        padding-top: rem(30);
+                        font-size: rem(28);
+                        color: #000000;
+                    }
+                }
+            }
+           
+        }
+        &_items{
+            &.theme_bg_one{
+                background-color: $theme_bg_one;
+            }
+            &.theme_bg_two{
+                background-color: $theme_bg_two;
+            }
+            .items_item:last-child{
+                margin-bottom: rem(30);
+            }
+            .theme_bg_two.items_item:last-child{
+                margin-bottom: 0;
+            }
+            .items_item{
+                display:flex;
+                flex-wrap: wrap;
+                position: relative;
+                padding: 0 rem(30) rem(30);
+                margin-bottom: rem(16);
+                & .item:nth-child(odd) a{
+                    margin-right: rem(5);
+                }
+                & .item:nth-child(even) a{
+                    margin-left: rem(5);
+                }
+                &.theme_bg_one{
+                    background-color: $theme_bg_one;
+                } 
+                &.theme_bg_two{
+                    background-color: $theme_bg_two;
+                } 
+               
+                
+                &::before{
+                    position: absolute;
+                    top: rem(-6);
+                    content: "";
+                    display: block;
+                    width: rem(104);
+                    height: rem(88);
+                    background-image: url(../../framwork/activities/20180618/img/buy_left.png);
+                    background-size: 100%;
+                    background-repeat: no-repeat;
+                }
+                &.theme_icon_right::before{
+                    right: rem(30);
+                    background-image: url(../../framwork/activities/20180618/img/buy_right.png);
+                }
+                .item:nth-child(1),.item:nth-child(2){
+                    margin-top: rem(97);
+                }
+                
+                &.hide::before{
+                    display: none;
+                }
+                .item.hide:nth-child(1),.item.hide:nth-child(2){
+                    margin-top:rem(10); 
+                }
+                
+                .item{
+                    width: 50%;
+                    margin-top: rem(10);
+                    border-radius: rem(4);
+                    a{
+                        display:block; 
+                        background-color: #FFFFFF;
+                    }
+                    .item_img{
+                        padding: rem(10) rem(9);
+                        img{
+                            width: 100%;
+                        }
+                    }
+                    .item_context{
+                        padding: rem(12) rem(14) rem(24);
+                        .mod_qu_item_content_title{
+                            padding-bottom: rem(30);
+                            height: rem(53);
+                            font-size: rem(24);
+                            color: #000000;
+                            line-height: rem(30);
+                        }
+                        .mod_qu_item_content_price{
+                            display: flex;
+                            justify-content: space-between;
+                            align-content: center;
+                            &_item{
+                                width: 50%;
+                                .price1{
+                                    font-size: rem(28);
+                                    color: rgb(255,59,59);
+                                }
+                                .price2{
+                                    font-size: rem(22);
+                                    color: rgb(102,102,102);
+                                    em{
+                                        text-decoration: line-through;
+                                    }
+                                }
+                                .buy_now{
+                                    width: rem(124);
+                                    height: rem(40);
+                                    margin-top: rem(20);
+                                }
+                            }
+                            &_item.btnStyle{
+                                text-align: right;
+                            }
+                        }
+                    }
+                    
+                }
+                
+            }
+        }
+    }
+    
+    
+}

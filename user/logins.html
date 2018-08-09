@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=0,minimal-ui">
+		<title></title>
+		<link rel="stylesheet" href="/build/css/all.css" /> 
+		<!--一些对于单页面的描述 可以在HTML临时写在本页面  当接入jsp的时候，在写入css文件-->
+		<style type="text/css">
+			.mui-bar-nav {
+			    top: 0;
+			    -webkit-box-shadow: 0 1px 0 #e8e8e8;
+			    box-shadow: 0 1px 0 #e8e8e8;
+			}
+		</style>
+	</head>
+	<body class="">
+		<header class="mui-bar mui-bar-nav qc-bg-color-fff">
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left qc-color-333"></a>
+		    <h1 class="mui-title ">登录</h1>
+		    <!--<a href="javascript:;.html" class="mui-icon mui-icon-right-nav mui-pull-right">
+		    	<span class="mui-default-color mui-font-size14">注册</span>
+		    </a>-->
+		</header>
+		<div class="mui-content mui-scroll-wrapper mui-bgs-fff">
+			<div id="segmentedControl" class="mui-segmented-control mui-segmented-control-inverted mui-bg-fff">
+				<a class="mui-control-item mui-active" href="#item1.html">账号密码登陆</a>
+				<a class="mui-control-item" href="#item2.html">手机号快捷登录</a>
+			</div>
+			<div id="item1" class="mui-control-content mui-active">
+				<ul id="list-container" class="mui-table-view ms-item clearUl ms-items pd-a20">
+					<li class="mui-table-view-cell mui-media mui-transitioning border-def-all boreder-raius-a5 no_pd">
+						<div class="mui-input-row">
+						 	<img class="mui-input-clear ps-ad l5 t10" src="/framwork/global_icon/drawable-xhdpi/regi01.png" width="20" />
+					        <input type="number" name="userName" class="mui-input-clear no-border no_mg ft-s14 pd-l30" placeholder="请输入账号">
+					    </div>
+					</li> 
+					<li class="mui-table-view-cell mui-media mui-transitioning border-def-all boreder-raius-a5 no_pd mg-t15">
+						<div class="mui-input-row">
+						 	<img class="ps-ad l5 t10" src="/framwork/global_icon/drawable-xhdpi/ic_login_lock.png" width="20" />
+					        <input type="password" name="word" class="no-border no_mg ft-s14 pd-l30" placeholder="请输入密码">
+					        <span class="ps-ad r10 t15 us-word"></span>
+					    </div>
+					</li>
+					<li class="mui-table-view-cell mui-media mui-transitioning  boreder-raius-a5 no_pd mg-t20 ps-rt">
+						<button  class="submit mui-btn-default but-submit ft-s16 pd-a10 no_mg max-width opacity7">登录</button>
+					</li>
+					<li class="mui-table-view-cell mui-media mui-transitioning  boreder-raius-a5 no_pd mg-t10 ps-rt">
+						<a href="web/phone/user/retrievePassword.html.html" class="no_mg no-display ft-s13 cl-s6">忘记密码？</a>
+						<a href="web/phone/user/register.html.html" class="mui-pull-right no_mg no-display ft-s13 cl-s6">邀请注册</a>
+					</li>
+				</ul>
+			</div>
+			<div id="item2" class="mui-control-content">
+				<ul id="list-container" class="mui-table-view ms-item clearUl ms-items pd-a20">
+					<li class="mui-table-view-cell mui-media mui-transitioning border-def-all boreder-raius-a5 no_pd">
+						 <div class="mui-input-row">
+						 	<img class="mui-input-clear ps-ad l5 t10" src="/framwork/global_icon/drawable-xhdpi/regi01.png" width="20" />
+					        <input type="number" name="tel" class="mui-input-clear no-border no_mg ft-s14 pd-l30" placeholder="请输入手机号">
+					    </div>
+					</li>
+					<li class="mui-table-view-cell mui-media mui-transitioning border-def-all boreder-raius-a5 no_pd mg-t15">
+						 <div class="mui-input-row">
+						 	<img class="ps-ad l5 t10" src="/framwork/global_icon/drawable-xhdpi/ic_login_msg_code.png" width="20" />
+					        <input type="number" name="code" class="no-border no_mg ft-s14 pd-l30" placeholder="请输入验证码">
+					        <button id="code" class="default-transition ps-ad r10 t5 ft-s12 mui-button-bg cl-sf no-border">获取验证码</button>
+					    </div>
+					</li>
+					<li class="mui-table-view-cell mui-media mui-transitioning boreder-raius-a5 no_pd mg-t10">
+						 <p class="ft-s12 cl-s9 no_mg">提醒：未注册过的手机号登录将自动创建DD订酒账号，且表示您已同意<span class="buf-ft-bule">《DD订酒用户服务协议》</span></p>
+					</li>
+					<li class="mui-table-view-cell mui-media mui-transitioning  boreder-raius-a5 no_pd mg-t20 ps-rt">
+						<button class="submit mui-btn-default but-submit ft-s16 pd-a10 no_mg max-width opacity7">登录</button>
+					</li>
+				</ul>
+			</div>
+			<div class="logins-foot mui-text-center pd-a20 b0" ><!--style="display: none;"-->
+				<dl class="no_mg">
+					<dt class="mg-b15">
+						<div class="lg-ft-line"></div>
+						<h5 class="lg-ft-title">第三方登录</h5>
+					</dt>
+					<dd class="no_mg">
+						<figure class="no_mg">
+						  <img id="weixin" src="/framwork/global_icon/mipmap-xhdpi/login_weixin_2x.png" width="60" style="
+							    width: 45px;
+							    height: 45px;
+							">
+						  <figcaption class="ft-s12 cl-s6">微信登录</figcaption>
+						</figure>
+					</dd>
+				</dl> 
+			</div>
+		</div>
+		<script src="/framwork/mui/dist/js/mui.js"></script>
+		<!--这是写的一个辅助js库-->
+		<script src="/framwork/plugins/common.min.js"></script>
+		<!--tmpl模板本件 用户加载模板文件-->
+		<script src="/plugin/javascript/web/ajax.js"></script>
+		<script type="text/javascript" src="/plugin/javascript/web/phone/user/logins.js?t=1"></script>
+		<script>
+			mui.ready(function() {
+				//mui.init();
+				window.logins.init();
+			});
+		</script>
+		<div style="display:none;">
+			<script src="https://s19.cnzz.com/z_stat.php?id=1262309795&web_id=1262309795 " language="JavaScript"></script>
+		</div>
+	</body>
+
+</html>

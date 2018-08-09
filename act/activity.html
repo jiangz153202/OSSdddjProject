@@ -1,0 +1,128 @@
+<html>
+<head>
+    <meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=0,minimal-ui">
+	<title>DD订酒</title>
+	<link rel="stylesheet" href="/build/css/all.css" />
+	<style type="text/css">
+		.mui-card {
+		    box-shadow: 0 0px 0px rgba(0,0,0,.3);
+		}
+		.mui-card .mui-card-footer:before, .mui-card-header:after {
+		    background-color: #f8f8f8;
+		}
+	</style>
+</head>
+<body>
+	<!--<header class="mui-bar mui-bar-nav mui-bar-nav-hide default-abs-bg-color">
+		<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left mui-color-fff"></a>
+		<h1 class="mui-title mui-color-fff qc-font-size16">DD文章</h1>
+	</header>-->
+	<!--<header id="header" class="mui-bar mui-bar-transparent">
+		<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left default-abs-color"></a>
+		<h1 class="mui-title">8090专区</h1>
+	</header>-->
+    <div class="mui-scroll-wrapper mui-content" id="pullrefresh">
+        <div class="mui-scroll">
+            <!--这里放置真实显示的DOM内容-->
+            <div id="slider-container" class="mui-slider"></div>
+            <div class="" id="list-container"></div>
+        </div>
+    </div>
+    <script src="/build/script/all.js"></script>
+    <script src="/plugin/javascript/web/phone/article/actIndex.js"></script>
+	<script type="text/html" id="tmpl-slider">
+		<!--这里放置真实显示的DOM内容-->
+		{{if $data.length > 0}}
+		<div class="mui-slider-group mui-slider-loop">
+			<!-- 额外增加的一个节点(循环轮播：第一个节点是最后一张轮播) -->
+			<div class="mui-slider-item mui-slider-item-duplicate">
+				<a href="{{$data[$data.length - 1].link}}">
+					<img src="{{$data[$data.length - 1].imgUrl}}" />
+				</a>
+			</div>
+			{{each $data as $value i}}
+			<!-- 第i张 -->
+			<div class="mui-slider-item">
+				<a href="{{$value.link}}">
+					<img src="{{$value.imgUrl}}" />
+				</a>
+			</div>
+			{{/each}}
+			<!-- 额外增加的一个节点(循环轮播：最后一个节点是第一张轮播) -->
+			<div class="mui-slider-item mui-slider-item-duplicate">
+				<a href="{{$data[0].link}}">
+					<img src="{{$data[0].imgUrl}}" />
+				</a>
+			</div>
+		</div>
+		{{/if}}
+		<div class="">
+			<img src="/framwork/activities/20170928/8090.jpg" class="w100 mui-block" />
+		</div>
+	</script>
+    <script type="text/html" id="tmpl-model">
+		{{each $data.content as $value i}}
+		<a href="/article/actview.html?aid={{$value.id}}&type={{type}}">
+			<div class="mui-card  ">
+				<div class="mui-card-header mui-card-media" style="height:40vw;background-image:url('{{select $value.imgUrl}}')"></div>
+				<div class="mui-card-content">
+					<div class="mui-card-content-inner ">
+						<h4 class="qc-color-333 fn_marginbottom10">{{$value.title}}</h4>
+						<p class="qc-color-333 mui-ellipsis-2 fn_clearmarginbottom">{{$value.brief}} </p>
+					</div>
+				</div>
+				<div class="mui-card-footer">
+					<p class="qc-color-999 fn_clearmarginbottom mui-text-right">{{$value.createTime}}</p>
+				<!--	<span class="mui-pull-right qc-font-size14"><i class="iconfont">&#xe68b;</i></span>-->
+					<span class="mui-pull-right qc-font-size14 fn_marginright10"><i class="iconfont">&#xe680;</i>{{$value.readCount}}</span>
+				</div>
+			</div>
+		</a>
+		{{/each}}
+	</script>
+	<!--<div class="mui-card-footer">
+				<a class="mui-card-link qc-color-bcbc">
+					<span class="mui-icon mui-icon-eye "></span>{{$value.viewIntegral}}
+				</a>
+				<a class="mui-card-link qc-color-bcbc">
+					<span class="mui-icon iconfont icon-shoucang1 "></span>{{$value.shareIntegral}}
+				</a>
+				<a class="mui-card-link qc-color-bcbc ">
+					<span class="mui-icon iconfont icon-comments "></span>{{$value.commentCount}}
+				</a>
+			</div>-->
+	<script type="text/html" id="tmpl-model-loading">
+		<div class="spinner-child spinner-child-fixed" style="margin-top: 150px;">
+			<div class="rect1"></div>
+			<div class="rect2"></div>
+			<div class="rect3"></div>
+			<div class="rect4"></div>
+			<div class="rect5"></div>
+		</div>
+	</script>
+	<!--这就是HTML 模板 用于数据加载 -->
+	<script type="text/html" id="tmpl-model-null">
+		<div class="qc-car-null mui-text-center">
+			<div class="qc-car-null-img-empty"></div>
+			<p class="qc-color-888 mui-text-center qc-car-null-text">哎呀！页面还没数据哦~</p>
+		</div>
+	</script>
+	
+    <script>
+    	template.helper('select',function(imgUrl){
+    		return imgUrl == "" ? "/framwork/global_icon/lazyload/banner650300.jpg" : imgUrl
+    	});
+    	template.helper('type', function() {
+			return common.queryToJSON().type === undefined ? "" : common.queryToJSON().type;
+		});
+    	
+    	mui.ready(function(){
+    		window.actIndex.init();
+    	});
+    </script>
+    <div style="display:none;">
+			<script src="https://s19.cnzz.com/z_stat.php?id=1262309795&web_id=1262309795 " language="JavaScript"></script>
+		</div>
+</body>
+</html>

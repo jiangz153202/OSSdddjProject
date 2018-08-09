@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<base href="../../../" />
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=0,minimal-ui">
+		<title></title>
+		<link rel="stylesheet" href="framwork/mui/dist/css/mui.min.css" />
+		<link rel="stylesheet" type="text/css" href="plugin/style/basic/loading.css" />
+		<link rel="stylesheet" type="text/css" href="plugin/style/basic/main.css" />
+		<link rel="stylesheet" type="text/css" href="plugin/style/basic/aboutprogess.css" />
+		<!--对mui css 的优化-->
+		<link rel="stylesheet/less" type="text/css" href="plugin/style/global/module.less.html" />
+		<!--一些颜色  字体字号 -->
+		<link rel="stylesheet/less" type="text/css" href="plugin/style/global/orther.less.html" />
+		<!--对商品列表排版 的优化 如 demo1 demo2【在其他地方】 demo3 -->
+		<link rel="stylesheet/less" type="text/css" href="plugin/style/global/goodslist.less.html" />
+		<!--本地字体文件库-->
+		<link rel="stylesheet" href="framwork/iconfonts/basic/iconfont.css" />
+		<!--一些对于单页面的描述 可以在HTML临时写在本页面  当接入jsp的时候，在写入css文件-->
+	</head>
+	<body class="">
+		<header class="mui-bar mui-bar-nav head-bg-color">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left mui-color-fff"></a>
+			<h1 class="mui-title mui-color-fff">绑定心手机</h1>
+		</header>
+		<div class="mui-content mui-bgs-fff" id="pullrefresh">
+			<ul id="list-container" class="mui-table-view ms-item clearUl ms-items pd-a20">
+				<li class="mui-table-view-cell mui-media mui-transitioning border-def-all boreder-raius-a5 no_pd">
+					<div class="mui-input-row">
+					 	<img class="mui-input-clear ps-ad l5 t10" src="framwork/global_icon/drawable-xhdpi/regi01.png" width="20" />
+				        <input id="mobile" type="number" name="tel" class="mui-input-clear no-border no_mg ft-s14 pd-l30" placeholder="请输入手机号" value="">
+				    </div>
+				</li>
+				<li class="mui-table-view-cell mui-media mui-transitioning border-def-all boreder-raius-a5 no_pd mg-t15">
+					<div class="mui-input-row">
+					 	<img class="ps-ad l5 t10" src="framwork/global_icon/drawable-xhdpi/ic_login_msg_code.png" width="20" />
+				        <input type="number" name="code" class="no-border no_mg ft-s14 pd-l30" placeholder="请输入验证码">
+				        <button id="code" class="default-transition ps-ad r10 t5 ft-s12 mui-button-bg cl-sf no-border">获取验证码</button>
+				    </div>
+				</li>
+				<li class="mui-table-view-cell mui-media mui-transitioning boreder-raius-a5 no_pd mg-t10">
+					 <p class="ft-s12 cl-s9 no_mg">若手机号停用或者丢失，请联系客服：<a href="tel:4001559010.html" class="buf-ft-bule">400-155-9010</a></p>
+				</li>
+				<li class="mui-table-view-cell mui-media mui-transitioning  boreder-raius-a5 no_pd mg-t20 ps-rt">
+					<button id="submit" class="submit mui-btn-default but-submit ft-s16 pd-a10 no_mg max-width opacity7">验证完绑定新手机</button>
+				</li>
+			</ul>
+		</div>
+		
+		<script src="framwork/mui/dist/js/mui.min.js"></script>
+		<!--这是解析less 为css 的文件  本地编辑时用-->
+		<script src="framwork/less/dist/less.min.js"></script>
+		<!--这是写的一个辅助js库-->  
+		<script src="framwork/plugins/common.js"></script>  
+		<script src="framwork/plugins/encodes/md5.js"></script>
+		<script type="text/javascript" src="plugin/javascript/web/ajax.js" ></script>
+		<script type="text/javascript" src="plugin/javascript/web/phone/user/index.js" ></script>
+		<script>   
+			mui.ready(function() {
+				mui.init(); 
+				carUser.telephone();
+			});
+		</script>
+		<div style="display:none;">
+			<script src="https://s19.cnzz.com/z_stat.php?id=1262309795&web_id=1262309795 " language="JavaScript"></script>
+		</div>
+	</body>
+
+</html>

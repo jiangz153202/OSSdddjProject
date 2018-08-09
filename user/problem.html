@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=0,minimal-ui">
+		<title></title>
+		<link rel="stylesheet" href="/build/css/all.css" />
+	</head>
+	<body class="">
+		<header class="mui-bar mui-bar-nav mui-bar-nav-hide default-abs-bg-color">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left mui-color-fff"></a>
+			<h1 class="mui-title mui-color-fff qc-font-size16">问题反馈</h1>
+		</header>
+		<div class="mui-content mui-scroll-wrapper ms-bg-cl" id="pullrefresh">
+			<div class="mui-scroll">
+				<div class="mui-row">
+					<textarea rows="4" class="ft-s13 no-border no_mg" placeholder="请详细描述你的问题或者建议，我们将及时跟进与解决。建议添加相关问题截图）"></textarea>
+				</div>
+				 <ul id="list-container" class="mui-table-view clearUl ms-items mg-t5">
+					<li class="mui-table-view-cell">
+						<div id="image-list" class="row image-list">
+							<div class="image-item space">
+								<input type="file" accept="image/*" id="image-1">
+							</div>
+						</div>
+					</li>
+				</ul>
+				<ul id="list-container" class="mui-table-view clearUl ms-items mg-t10">
+					<li class="mui-table-view-cell mui-media mui-transitioning no_pd">
+						<input type="text" class="no-border ft-s14 no_mg" placeholder="手机号/邮箱(选填,方便我们联系您)"/>	
+					</li>
+				</ul>
+				<button id="submit" type="button" class="ps-ad mui-btn mui-btn-default but-submit ft-s16 pd-a10 mg-t45">提交</button>
+			</div>
+		</div>
+		<script src="/build/script/all.js"></script>
+		<script type="text/html" id="tmpl-model-null">
+			<p class="qc-color-888 mui-text-center" style="letter-spacing: 0px;margin-top: 50px;">暂无任何数据</p>
+		</script>
+		<script>
+			mui.ready(function() {
+				/*每个页面都要mui.init*/
+				mui.init();
+			});
+		</script>
+		<div style="display:none;">
+			<script src="https://s19.cnzz.com/z_stat.php?id=1262309795&web_id=1262309795 " language="JavaScript"></script>
+		</div>
+	</body>
+
+</html>

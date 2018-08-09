@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=0,minimal-ui">
+		<title>我的收货地址-DD订酒</title>
+		<link rel="stylesheet" href="/build/css/all.css" />
+		<!--一些对于单页面的描述 可以在HTML临时写在本页面  当接入jsp的时候，在写入css文件-->
+		<link rel="stylesheet" type="text/css" href="/plugin/style/web/phone/user/address.css" />
+		<style>
+			.mui-card {
+				margin: 10px 18px;
+				border-radius: 5px;
+				background-color: #fff;
+				position: relative;
+			}
+			
+			.mui-table-view {
+				background-color: inherit;
+			}
+			
+			.mui-input-row {
+				font-size: 9px;
+				color: #A2A2A2;
+				height: 24px;
+				margin-top: 2px;
+				margin-bottom: 1px;
+			}
+			
+			.mui-radio input[type=radio] {
+				top: 0;
+			}
+			
+			.mui-input-row label {
+				padding: 0px 10px;
+				line-height: 2.0;
+			}
+			
+			.mui-radio input[type=radio]:before,
+			.mui-radio input[type=radio]:checked:before {
+				font-size: 19px;
+				line-height: 24px;
+			}
+			
+			.isChecked {
+				background: #faede2;
+			}
+			
+			.isChecked:after {
+				content: "";
+				position: absolute;
+				bottom: 0;
+				width: 100%;
+				height: 2px!important;
+				background: url(/framwork/activities/new_ui_luz/Address_box.png) repeat-x;
+				background-size: auto 4px!important;
+				z-index: 2;
+			}
+			
+			.isChecked:before {
+				content: "";
+				position: absolute;
+				top: 0;
+				width: 100%;
+				height: 2px!important;
+				background: url(/framwork/activities/new_ui_luz/Address_box.png) repeat-x;
+				background-size: auto 4px!important;
+				z-index: 2;
+			}
+			
+			.mui-table-view-cell:after,
+			.mui-table-view-cell:before,
+			.mui-table-view:after,
+			.mui-table-view:before {
+				background-color: #c4c8cc;
+			}
+			
+			.mui-popup {
+				border-radius: 0;
+			}
+			
+			.mui-popup-inner {
+				border-radius: 0;
+			}
+			
+			.mui-popup-button:first-child {
+				border-radius: 0;
+			}
+			
+			.mui-popup-button:last-child {
+				border-radius: 0;
+			}
+		</style>
+	</head>
+
+	<body class="">
+		<header class="mui-bar mui-bar-nav mui-bar-nav-hide default-abs-bg-color">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left mui-color-fff"></a>
+			<h1 class="mui-title mui-color-fff qc-font-size16">我的收货地址</h1>
+		</header>
+		<nav class="mui-bar mui-bar-tab clearBg">
+			<button type="button" class="mui-btn mui-btn-default mui-btn-shadow w100 ft-s16 pd-a10 " id="edit-address-btn" style="top: 0px;">
+				<span class="ft-s18 mg-r5">+</span>添加新地址
+			</button>
+		</nav>
+		<div class="mui-content mui-scroll-wrapper ms-bg-cl" id="pullrefresh">
+			<div class="mui-scroll" id="list-container">
+				<!--这里放置真实显示的DOM内容-->
+			</div>
+		</div>
+		<script type="text/html" id="tmpl-model">
+			{{each $data as $value i }}
+			<div class="mui-card mui-clear-card-boxShadow {{if $value.selected}}isChecked{{/if}}">
+				<ul class="mui-table-view list-item-{{$value.id}} {{checkitembg $value.id}} callback-item" data-aid="{{$value.id}}">
+					<li class="mui-table-view-cell mui-media fn_padding10">
+						<h5 class="mg-b10 ft-s14">
+								<i class="mui-color-000">{{$value.name}}</i>
+								<span class="mg-l10 mui-color-000">{{$value.mobile}}</span>
+							</h5>
+						<p class="mui-color-000" style="font-size: 9px; font-weight: normal;">
+							{{$value.city}}{{$value.street}}{{$value.town}}{{$value.address}}
+						</p>
+					</li>
+					<li class="mui-table-view-cell mui-media no_pd">
+						<div class="mui-input-row mui-radio mui-left pd-l10">
+							<label class="pd-l20" data-aid="{{$value.id}}">设为默认</label>
+							<input class="l10" name="radio-select" type="radio" data-aid="{{$value.id}}" {{if $value.selected}}checked="checked" {{/if}}>
+
+							<span class="mui-pull-right mg-r15 delete-address-icon {{chechIsShow $value.id}}" data-aid="{{$value.id}}">
+									<img class="mg-b5" src="/framwork/global_icon/mipmap-xhdpi/general_delete_2x.png" width="19">
+									删除
+								</span>
+							<span class="mui-pull-right mg-r15 update-address-icon" data-aid="{{$value.id}}">
+									<img src="/framwork/global_icon/mipmap-xhdpi/general_modify_2x.png" width="19">
+									编辑
+								</span>
+
+						</div>
+					</li>
+				</ul>
+			</div>
+			{{/each}}
+		</script>
+
+		<script src="/framwork/mui/dist/js/mui.min.js"></script>
+		<!--这是写的一个辅助js库-->
+		<script src="/framwork/plugins/common.js"></script>
+
+		<!--tmpl模板本件 用户加载模板文件-->
+		<script src="/framwork/plugins/artTemplate/3.0.3/dist/template.js"></script>
+
+		<!--加密库 请求需要-->
+		<script src="/plugin/javascript/web/ajax.js"></script>
+		<script src="/plugin/javascript/web/phone/user/userAddress.js"></script>
+		<script type="text/html" id="tmpl-model-loading">
+			<div class="spinner-child spinner-child-fixed">
+				<div class="rect1"></div>
+				<div class="rect2"></div>
+				<div class="rect3"></div>
+				<div class="rect4"></div>
+				<div class="rect5"></div>
+			</div>
+		</script>
+		<!--这就是HTML 模板 用于数据加载 -->
+		<script type="text/html" id="tmpl-model-null">
+			<div class="qc-car-null mui-text-center">
+				<div class="qc-car-null-img-empty"></div>
+				<p class="qc-color-888 mui-text-center qc-car-null-text">哎呀！页面还没数据哦~</p>
+			</div>
+		</script>
+		<script>
+			template.helper('checkitembg', function(aid) {
+				var urlAid = common.queryToJSON().aid == undefined ? '' : common.queryToJSON().aid;
+				if(urlAid == aid) {
+					return 'mui-bg-address';
+				} else {
+					return 'clearUl';
+				}
+			});
+			template.helper('chechIsShow', function() {
+				var urlAid = common.queryToJSON().aid == undefined ? '' : common.queryToJSON().aid;
+				if(urlAid != '') {
+					return 'mui-hide';
+				}
+			});
+
+			mui.ready(function() {
+				/*每个页面都要mui.init*/
+				window.userAddress.list.init();
+			});
+		</script>
+		<div style="display:none;">
+			<script src="https://s19.cnzz.com/z_stat.php?id=1262309795&web_id=1262309795 " language="JavaScript"></script>
+		</div>
+	</body>
+
+</html>
