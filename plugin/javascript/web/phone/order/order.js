@@ -514,7 +514,7 @@
 						{
 							result.data.reverse();
 						}
-						var res = options.result.data.find(item => JSON.stringify(item.activity) != "{}");
+						var res = options.result.data.find(item => JSON.stringify(item.activity) != "{}" && item.activity.index != 0);
 						if(res && result.data.length > 0){
 							//如果没有才进来
 							var filterData = result.data.filter(function(item){
